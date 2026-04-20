@@ -68,10 +68,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
             <button
               onClick={() => setStep(s.n as 1|2|3)}
               disabled={s.n === 3 && picked.size === 0 && !area}
-              className={
-                'flex items-center gap-[10px] bg-transparent border-none cursor-pointer p-0 ' +
-                (step >= s.n ? 'opacity-100' : 'opacity-50')
-              }
+              className="flex items-center gap-[10px] bg-transparent border-none cursor-pointer p-0 disabled:cursor-not-allowed"
             >
               <span
                 className={
