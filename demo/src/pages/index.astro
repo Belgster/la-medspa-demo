@@ -5,6 +5,9 @@ import LeaderIntro from '../components/LeaderIntro.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import HormoneSpotlight from '../components/HormoneSpotlight.astro';
 import ConcernFinderSection from '../components/ConcernFinderSection.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FinancingInstagram from '../components/FinancingInstagram.astro';
 import heroImage from '../assets/245.jpg';
 ---
 <Layout preloadImage={heroImage}>
@@ -13,19 +16,7 @@ import heroImage from '../assets/245.jpg';
   <CategoryGrid />
   <HormoneSpotlight />
   <ConcernFinderSection />
-
-  {/* §6 placeholder — Before & After */}
-  <section id="before-after" class="max-w-[1400px] mx-auto px-card py-section-l">
-    <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-base">
-      Section placeholder · §6 next
-    </div>
-    <h2 class="font-display font-medium uppercase text-[clamp(28px,4vw,40px)] text-ink tracking-[-0.01em] leading-[1.1] max-w-[720px]">
-      Before & After
-    </h2>
-    <p class="mt-card font-body font-light text-[16px] leading-[1.7] text-charcoal max-w-[560px]">
-      Styled slider with "Real client results. Coming soon." lands in §6.
-    </p>
-  </section>
-
-  <section class="h-[400px]"></section>
+  <BeforeAfter />
+  <Testimonials />
+  <FinancingInstagram />
 </Layout>

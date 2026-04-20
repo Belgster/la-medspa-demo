@@ -1,0 +1,62 @@
+---
+/*
+ * §6 — Before & After placeholder
+ *
+ * No consented B&A library exists in the asset pack — flagged in the
+ * phase-3-refinements note. The demo ships a styled placeholder slider
+ * that communicates the pattern without simulating real outcomes.
+ *
+ * Brand-voice tight: "Real client results. Coming soon."
+ * Decorative middle handle, fixed position, no JS.
+ */
+---
+<section id="results" class="max-w-[1400px] mx-auto px-card py-section-l">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-comfort mb-stack">
+    <div class="max-w-[560px]">
+      <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+        Before & After · Phase 3
+      </div>
+      <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+        Real Client<br />Results
+      </h2>
+    </div>
+    <p class="max-w-[420px] font-body font-light text-[15px] leading-[1.7] text-charcoal">
+      Sourced from actual treatments — with consent, not stock. The gallery
+      is being curated alongside the full site rebuild.
+    </p>
+  </div>
+
+  <div class="relative aspect-[16/9] rounded-card overflow-hidden border border-hairline">
+    {/* Before half — cooler tone */}
+    <div aria-hidden="true" class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-br from-beige to-hairline flex items-end p-card">
+      <span class="font-display font-medium text-[11px] uppercase tracking-[0.2em] text-brown/60">
+        Before
+      </span>
+    </div>
+    {/* After half — warmer tone */}
+    <div aria-hidden="true" class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-bl from-gold-wash to-peach/40 flex items-end justify-end p-card">
+      <span class="font-display font-medium text-[11px] uppercase tracking-[0.2em] text-brown/70">
+        After
+      </span>
+    </div>
+
+    {/* Decorative divider handle — centered, not functional */}
+    <div aria-hidden="true" class="absolute inset-y-0 left-1/2 w-[2px] bg-cream -translate-x-1/2 shadow-sm"></div>
+    <div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[52px] h-[52px] rounded-pill bg-cream border border-hairline shadow-md flex items-center justify-center gap-[4px]">
+      <span class="text-brown text-[12px] leading-none">◂</span>
+      <span class="text-brown text-[12px] leading-none">▸</span>
+    </div>
+
+    {/* Coming-soon cartouche — opacity-90 backdrop so the tonal halves read through */}
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="bg-cream/90 backdrop-blur-sm border border-hairline rounded-card px-stack py-card text-center max-w-[440px] shadow-md">
+        <div class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-charcoal-soft mb-[8px]">
+          Coming with Phase 3
+        </div>
+        <div class="font-display font-medium uppercase text-ink text-[clamp(18px,2.4vw,22px)] leading-[1.3]">
+          Real Client Results,<br />Being Curated Now
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
