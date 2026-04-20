@@ -37,7 +37,6 @@ try {
   });
   await new Promise((r) => setTimeout(r, 200));
 
-  const continueBtn = await page.$$('#finder button');
   // Find "Continue →"
   const continueClicked = await page.evaluate(() => {
     const btns = [...document.querySelectorAll('#finder button')];
