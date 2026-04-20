@@ -34,50 +34,39 @@
  * Fallback = scrolled/solid state (fail-safe for older browsers).
  * Supporting browsers interpolate transparent → opaque over the first 40px.
  */
+/*
+ * Nav colors are STATIC dark — legible against any bar state and any
+ * hero image. Only the bar surface (bg/blur/border) reveals on scroll.
+ * This matches the "charcoal at scroll 0, stays dark" direction from
+ * the design team after reviewing the §0 placeholder.
+ */
 .la-nav {
-  background-color: rgba(254, 253, 247, 0.85); /* cream/85 */
+  background-color: rgba(254, 253, 247, 0.85); /* cream/85 — fallback */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid #E8E1D8; /* hairline */
-  will-change: background-color, backdrop-filter, border-bottom-color;
+  border-bottom: 1px solid #E8E1D8;             /* hairline — fallback */
 }
-/* Fallback colors = scrolled/legible-on-cream state. */
-.la-nav-logo  { color: #16110E; } /* ink  */
-.la-nav-item  { color: #2B211B; } /* brown */
+.la-nav-logo { color: #16110E; } /* ink */
+.la-nav-item { color: #2B211B; } /* brown */
 
 @supports (animation-timeline: scroll()) {
   @keyframes la-nav-reveal {
-    0% {
+    from {
       background-color: rgba(254, 253, 247, 0);
       backdrop-filter: blur(0);
       -webkit-backdrop-filter: blur(0);
       border-bottom-color: rgba(232, 225, 216, 0);
     }
-    100% {
+    to {
       background-color: rgba(254, 253, 247, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom-color: rgba(232, 225, 216, 1);
     }
   }
-  /* Text interpolates cream → ink/brown over the same 40px. */
-  @keyframes la-nav-logo-reveal {
-    0%   { color: #FEFDF7; }
-    100% { color: #16110E; }
-  }
-  @keyframes la-nav-item-reveal {
-    0%   { color: #FEFDF7; }
-    100% { color: #2B211B; }
-  }
-  .la-nav,
-  .la-nav-logo,
-  .la-nav-item {
+  .la-nav {
+    animation: la-nav-reveal linear both;
     animation-timeline: scroll(root);
     animation-range: 0 40px;
-    animation-fill-mode: both;
-    animation-timing-function: linear;
   }
-  .la-nav      { animation-name: la-nav-reveal; }
-  .la-nav-logo { animation-name: la-nav-logo-reveal; }
-  .la-nav-item { animation-name: la-nav-item-reveal; }
 }
