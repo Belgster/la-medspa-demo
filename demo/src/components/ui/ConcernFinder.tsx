@@ -17,7 +17,8 @@ export interface FinderTreatment {
   cats: CategoryKey[];
   concerns: string[];
   areas: string[];
-  price: string;
+  /** Optional. The wrapping TreatmentCard hides the "From" column when absent. */
+  price?: string;
   duration: string;
   blurb: string;
 }
@@ -26,12 +27,15 @@ interface ConcernFinderProps {
   concerns: Concern[];
   areas: Area[];
   treatments: FinderTreatment[];
-  onBookConsultation?: () => void;
+  /** External booking URL — opens in a new tab. Astro islands can't serialize
+   *  function props across the SSR boundary, so we take a string and window.open. */
+  bookHref: string;
 }
 
 export const ConcernFinder: React.FC<ConcernFinderProps> = ({
-  concerns, areas, treatments, onBookConsultation,
+  concerns, areas, treatments, bookHref,
 }) => {
+  const book = () => window.open(bookHref, '_blank', 'noopener,noreferrer');
   const [step, setStep] = React.useState<1 | 2 | 3>(1);
   const [picked, setPicked] = React.useState<Set<string>>(new Set());
   const [area, setArea] = React.useState<string | null>(null);
@@ -200,7 +204,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
               <p className="font-body font-light text-[14px] text-charcoal-soft max-w-[440px] m-0 mx-auto mb-[20px] leading-[1.7]">
                 That's what a consultation is for. Our medical team will walk through options in person, no pressure.
               </p>
-              <Button variant="primary" onClick={onBookConsultation}>Book Consultation</Button>
+              <Button variant="primary" onClick={book}>Book Consultation</Button>
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-[14px]">
@@ -222,7 +226,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
               <div className="font-display font-medium text-[18px] uppercase text-brown mb-[4px]">Still Deciding?</div>
               <div className="font-body font-light text-[14px] text-charcoal-soft">A consultation is the shortest path to the right plan.</div>
             </div>
-            <Button variant="primary" onClick={onBookConsultation}>Book Consultation →</Button>
+            <Button variant="primary" onClick={book}>Book Consultation →</Button>
           </div>
         </div>
       )}

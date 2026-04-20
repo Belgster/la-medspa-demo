@@ -1,0 +1,38 @@
+---
+/*
+ * §5 — Concern Finder section wrapper
+ *
+ * Wraps the shipped ConcernFinder.tsx React island with section chrome,
+ * editorial headline, and the data it consumes. The TSX hydrates on
+ * viewport intersection (client:visible) — no hydration cost until the
+ * user scrolls to it.
+ */
+import { ConcernFinder } from './ui/ConcernFinder';
+import { concerns, areas, treatments } from '../data/finder';
+
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+---
+<section id="finder" class="max-w-[1400px] mx-auto px-card py-section-l">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-comfort mb-stack">
+    <div class="max-w-[620px]">
+      <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+        Concern Finder · 3 Steps
+      </div>
+      <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+        Not Sure Where<br />To Start?
+      </h2>
+    </div>
+    <p class="max-w-[420px] font-body font-light text-[15px] leading-[1.7] text-charcoal">
+      Tell us what you'd like to address and where. We'll surface the
+      treatments that actually match — the rest of the menu can wait.
+    </p>
+  </div>
+
+  <ConcernFinder
+    client:visible
+    concerns={concerns}
+    areas={areas}
+    treatments={treatments}
+    bookHref={JANE_URL}
+  />
+</section>

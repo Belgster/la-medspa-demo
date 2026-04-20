@@ -32,7 +32,8 @@ export interface TreatmentCardProps {
   name: string;
   /** Primary category — drives the top rail color. First entry in `categories`. */
   categories: CategoryKey[];
-  price: string;
+  /** Optional. Omit to hide the "From" column — duration stays, right-aligned. */
+  price?: string;
   duration: string;
   concerns: string[];
   image?: { src: string; alt: string };
@@ -82,11 +83,13 @@ export const TreatmentCard: React.FC<TreatmentCardProps> = ({
           </div>
         </div>
         <div className="flex justify-between items-baseline gap-[16px] pt-[14px] mt-auto border-t border-beige">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-charcoal-soft mb-[2px]">From</div>
-            <div className="font-display font-medium text-[17px] text-ink">{price}</div>
-          </div>
-          <div className="text-right">
+          {price && (
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-charcoal-soft mb-[2px]">From</div>
+              <div className="font-display font-medium text-[17px] text-ink">{price}</div>
+            </div>
+          )}
+          <div className={price ? 'text-right' : 'text-right ml-auto'}>
             <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-charcoal-soft mb-[2px]">Duration</div>
             <div className="font-body font-light text-[14px] text-brown">{duration}</div>
           </div>
