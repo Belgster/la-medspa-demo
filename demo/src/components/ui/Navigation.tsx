@@ -109,20 +109,20 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
   const [active, setActive] = React.useState<CategoryKey | null>(null);
 
   return (
-    <header className="bg-cream border-b border-hairline">
+    <header className="la-nav sticky top-0 z-40">
       <div className="flex items-center justify-between px-[20px] py-[16px]">
-        <a href="/" className="font-display font-medium text-[15px] tracking-[0.2em] uppercase text-ink">
+        <a href="/" className="la-nav-logo font-display font-medium text-[15px] tracking-[0.2em] uppercase">
           LA Medspa
         </a>
         <button
           onClick={() => { setOpen(!open); setActive(null); }}
-          className="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-brown bg-transparent border-none px-[12px] py-[8px]"
+          className="la-nav-item font-display font-medium text-[11px] uppercase tracking-[0.14em] bg-transparent border-none px-[12px] py-[8px]"
         >
           {open ? 'Close' : 'Menu'}
         </button>
       </div>
       {open && !active && (
-        <div className="animate-la-fade-rise py-[12px]">
+        <div className="animate-la-fade-rise py-[12px] bg-cream border-b border-hairline">
           {CATEGORIES.map((c) => (
             <button
               key={c.key}
@@ -149,7 +149,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
         </div>
       )}
       {open && active && (
-        <div className="animate-la-fade-rise py-[12px]">
+        <div className="animate-la-fade-rise py-[12px] bg-cream border-b border-hairline">
           <button
             onClick={() => setActive(null)}
             className="w-full text-left px-[24px] py-[14px] font-display text-[11px] uppercase tracking-[0.14em] text-charcoal-soft bg-transparent border-none"

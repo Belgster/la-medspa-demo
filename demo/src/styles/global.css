@@ -17,6 +17,7 @@
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scroll-padding-top: 72px; /* anchor-skip past sticky nav */
   }
   body {
     background: #FEFDF7;
@@ -26,4 +27,57 @@
     box-shadow: 0 0 0 3px rgba(201, 138, 28, 0.35);
     border-radius: 4px;
   }
+}
+
+/*
+ * Nav scroll-reveal — CSS scroll-driven animation, zero JS.
+ * Fallback = scrolled/solid state (fail-safe for older browsers).
+ * Supporting browsers interpolate transparent → opaque over the first 40px.
+ */
+.la-nav {
+  background-color: rgba(254, 253, 247, 0.85); /* cream/85 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E8E1D8; /* hairline */
+  will-change: background-color, backdrop-filter, border-bottom-color;
+}
+/* Fallback colors = scrolled/legible-on-cream state. */
+.la-nav-logo  { color: #16110E; } /* ink  */
+.la-nav-item  { color: #2B211B; } /* brown */
+
+@supports (animation-timeline: scroll()) {
+  @keyframes la-nav-reveal {
+    0% {
+      background-color: rgba(254, 253, 247, 0);
+      backdrop-filter: blur(0);
+      -webkit-backdrop-filter: blur(0);
+      border-bottom-color: rgba(232, 225, 216, 0);
+    }
+    100% {
+      background-color: rgba(254, 253, 247, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: rgba(232, 225, 216, 1);
+    }
+  }
+  /* Text interpolates cream → ink/brown over the same 40px. */
+  @keyframes la-nav-logo-reveal {
+    0%   { color: #FEFDF7; }
+    100% { color: #16110E; }
+  }
+  @keyframes la-nav-item-reveal {
+    0%   { color: #FEFDF7; }
+    100% { color: #2B211B; }
+  }
+  .la-nav,
+  .la-nav-logo,
+  .la-nav-item {
+    animation-timeline: scroll(root);
+    animation-range: 0 40px;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+  }
+  .la-nav      { animation-name: la-nav-reveal; }
+  .la-nav-logo { animation-name: la-nav-logo-reveal; }
+  .la-nav-item { animation-name: la-nav-item-reveal; }
 }

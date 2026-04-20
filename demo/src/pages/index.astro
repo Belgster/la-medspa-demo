@@ -3,17 +3,35 @@ import Layout from '../layouts/Layout.astro';
 export const prerender = true;
 ---
 <Layout>
+  <!--
+    Preview hero zone — placeholder only, exists so §0 can demonstrate
+    the scroll-driven nav reveal. §1 replaces this with the real hero.
+    Hero lives in natural flow below the nav; the reveal effect becomes
+    visible as the user scrolls and the hero slides under the (transparent)
+    nav bar. (Earlier negative-margin trick triggered margin collapse that
+    pulled the body up ~28px — removed.)
+  -->
+  <section class="min-h-screen bg-brown text-cream flex items-center">
+    <div class="max-w-[1400px] mx-auto px-card w-full py-section-l">
+      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
+        Hero placeholder · §1 will land here
+      </div>
+      <h1 class="font-display font-medium uppercase text-[clamp(40px,6vw,72px)] tracking-[-0.01em] leading-[1.05] max-w-[900px]">
+        Less Is More.<br />Simple Is Best.<br />Always Natural.
+      </h1>
+      <p class="font-body font-light text-[18px] leading-[1.7] text-cream/80 mt-card max-w-[520px]">
+        Scroll down — the nav reveals itself from transparent to a warm cream/85 with blur over the first 40px of scroll.
+      </p>
+    </div>
+  </section>
+
   <section class="max-w-[1400px] mx-auto px-card py-section-l">
     <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-base">
-      Section 0 · Chrome baseline
+      Content zone · cream surface
     </div>
-    <h1 class="font-display font-medium uppercase text-[clamp(40px,6vw,72px)] text-ink tracking-[-0.01em] leading-[1.05] max-w-[900px]">
-      Less Is More.<br />Simple Is Best.<br />Always Natural.
-    </h1>
-    <p class="font-body font-light text-[18px] leading-[1.7] text-charcoal mt-card max-w-[520px]">
-      Placeholder body for spacing and rhythm review. Nav flyouts, footer, fonts, and tokens verify before the hero lands in §1.
-    </p>
-
+    <h2 class="font-display font-medium uppercase text-[clamp(28px,4vw,40px)] text-ink tracking-[-0.01em] leading-[1.1] max-w-[720px]">
+      Section 2 Content Starts Here
+    </h2>
     <div class="mt-stack grid gap-comfort max-w-[620px] font-body font-light text-[14px] text-charcoal-soft">
       <div class="flex items-baseline gap-comfort">
         <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink">Desktop</span>
@@ -29,6 +47,4 @@ export const prerender = true;
       </div>
     </div>
   </section>
-
-  <section class="h-[600px]"></section>
 </Layout>

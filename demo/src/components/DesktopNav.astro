@@ -4,17 +4,11 @@ import ButtonLink from './ui/ButtonLink.astro';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
 ---
-<header
-  class:list={[
-    'sticky top-0 z-40',
-    'bg-cream/85 backdrop-blur-md',
-    'border-b border-hairline',
-  ]}
->
+<header class="la-nav sticky top-0 z-40">
   <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-stack px-card py-[20px]">
     <a
       href="/"
-      class="font-display font-medium text-[20px] tracking-[0.24em] uppercase text-ink no-underline whitespace-nowrap"
+      class="la-nav-logo font-display font-medium text-[20px] tracking-[0.24em] uppercase no-underline whitespace-nowrap"
       aria-label="LA Medspa — home"
     >
       LA Medspa
@@ -26,11 +20,9 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
           data-flyout-trigger={c.key}
           href={`#category-${c.key}`}
           class:list={[
-            'font-display font-medium text-[12px] uppercase tracking-[0.14em] text-brown',
+            'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
             'py-[6px] border-b border-transparent no-underline',
-            'transition-colors duration-la-base ease-la-ease',
-            'hover:text-ink hover:border-gold',
-            'focus-visible:text-ink focus-visible:border-gold',
+            'hover:border-gold focus-visible:border-gold',
           ]}
         >
           {c.label}
