@@ -1,0 +1,134 @@
+---
+/*
+ * §3 — Six service categories
+ *
+ * Tailwind can't resolve dynamic utility names like `bg-category-${key}-line`
+ * without safelisting, so the rail + ink classes are emitted via a static
+ * lookup (same pattern as the shipped TreatmentCard.tsx CAT_CLASSES).
+ */
+
+type CategoryKey = 'face' | 'body' | 'hair' | 'medical' | 'wellness' | 'skincare';
+
+const CAT_CLASSES: Record<CategoryKey, { rail: string; ink: string; tone: string }> = {
+  face:     { rail: 'bg-category-face-line',     ink: 'text-category-face-ink',     tone: 'bg-category-face-tone'     },
+  body:     { rail: 'bg-category-body-line',     ink: 'text-category-body-ink',     tone: 'bg-category-body-tone'     },
+  hair:     { rail: 'bg-category-hair-line',     ink: 'text-category-hair-ink',     tone: 'bg-category-hair-tone'     },
+  medical:  { rail: 'bg-category-medical-line',  ink: 'text-category-medical-ink',  tone: 'bg-category-medical-tone'  },
+  wellness: { rail: 'bg-category-wellness-line', ink: 'text-category-wellness-ink', tone: 'bg-category-wellness-tone' },
+  skincare: { rail: 'bg-category-skincare-line', ink: 'text-category-skincare-ink', tone: 'bg-category-skincare-tone' },
+};
+
+interface CategoryCard {
+  key: CategoryKey;
+  label: string;
+  index: string;
+  marquee: string[];
+  blurb: string;
+}
+
+const CATEGORIES: CategoryCard[] = [
+  {
+    key: 'face',
+    label: 'Face',
+    index: '01',
+    marquee: ['Botox', 'Fillers', 'HydraFacial', 'Bela MD', 'Microneedling'],
+    blurb:
+      'Injectables, editorial facials, and laser resurfacing. The range of non-surgical rejuvenation delivered by prescribers.',
+  },
+  {
+    key: 'body',
+    label: 'Body',
+    index: '02',
+    marquee: ['CoolSculpting', 'TightSculpting', 'TightWave', 'Laser Hair Removal'],
+    blurb:
+      'Contouring, tightening, and body-wide treatments — from fat reduction to tattoo removal and vein therapy.',
+  },
+  {
+    key: 'hair',
+    label: 'Hair',
+    index: '03',
+    marquee: ['PRP', 'Keravive', 'HAIRestart', 'Mesotherapy'],
+    blurb:
+      'Follicle-level restoration using the plasma, laser, and nutrient therapies with evidence behind them.',
+  },
+  {
+    key: 'medical',
+    label: 'Medical',
+    index: '04',
+    marquee: ['Hormone Therapy', 'Botox · Migraines', 'NightLase', 'Sclerotherapy'],
+    blurb:
+      'Prescriber-led treatments with clinical indication. Hormone therapy, neurological Botox, vein medicine, and sleep therapy.',
+  },
+  {
+    key: 'wellness',
+    label: 'Wellness',
+    index: '05',
+    marquee: ['IV Therapy', 'Vitamin Injections', 'Hormone Therapy'],
+    blurb:
+      'IV drips, vitamin injections, hormone support, and sleep therapies. Medicine that works from the inside out.',
+  },
+  {
+    key: 'skincare',
+    label: 'Skin Care',
+    index: '06',
+    marquee: ['Bela MD', 'Skin Booster', 'Chemical Peel', 'SmoothEye'],
+    blurb:
+      'Medical-grade facials and products that extend what clinic visits start — carried between appointments.',
+  },
+];
+---
+<section id="services" class="max-w-[1400px] mx-auto px-card py-section-l">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-comfort mb-stack">
+    <div class="max-w-[620px]">
+      <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+        Six categories · one standard
+      </div>
+      <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+        What We Do
+      </h2>
+    </div>
+    <p class="max-w-[420px] font-body font-light text-[15px] leading-[1.7] text-charcoal">
+      From injectables to hormone therapy, every category sits under one
+      prescriber-led roof. The color you see on each card is how we mark
+      it across the site.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-comfort">
+    {CATEGORIES.map((c) => (
+      <a
+        href={`#category-${c.key}`}
+        class="group relative flex flex-col bg-cream border border-hairline rounded-card overflow-hidden no-underline transition-all duration-la-base ease-la-ease hover:border-[#D4C8B8] hover:shadow-md focus-visible:border-[#D4C8B8] focus-visible:shadow-md"
+      >
+        <span aria-hidden="true" class:list={['absolute top-0 inset-x-0 h-[3px] z-10', CAT_CLASSES[c.key].rail]} />
+        <div class="p-card flex flex-col flex-1">
+          <div class="flex items-baseline justify-between mb-comfort">
+            <div class:list={['font-mono text-[10.5px] uppercase tracking-[0.14em]', CAT_CLASSES[c.key].ink]}>
+              Category · {c.index}
+            </div>
+            <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft">
+              {c.marquee.length}+ treatments
+            </div>
+          </div>
+          <div class="font-display font-medium uppercase text-ink text-[26px] leading-[1.1] mb-[12px]">
+            {c.label}
+          </div>
+          <p class="font-body font-light text-[14px] leading-[1.7] text-charcoal mb-card">
+            {c.blurb}
+          </p>
+          <div class="flex flex-wrap gap-[6px] mb-stack">
+            {c.marquee.map((name) => (
+              <span class:list={['font-display font-medium text-[10px] uppercase tracking-[0.12em] px-[10px] py-[4px] rounded-pill', CAT_CLASSES[c.key].tone, CAT_CLASSES[c.key].ink]}>
+                {name}
+              </span>
+            ))}
+          </div>
+          <div class:list={['mt-auto font-display font-medium text-[11px] uppercase tracking-[0.14em] flex items-center gap-[8px]', CAT_CLASSES[c.key].ink]}>
+            <span>Explore {c.label.toLowerCase()}</span>
+            <span aria-hidden="true" class="transition-transform duration-la-base ease-la-ease group-hover:translate-x-[4px]">→</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
