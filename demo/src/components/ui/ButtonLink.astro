@@ -1,0 +1,54 @@
+---
+type Variant = 'primary' | 'secondary' | 'ghost' | 'on-dark';
+type Size = 'sm' | 'md' | 'lg';
+
+interface Props {
+  href: string;
+  variant?: Variant;
+  size?: Size;
+  external?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  external = false,
+  class: className = '',
+} = Astro.props;
+
+const base =
+  'inline-flex items-center gap-[10px] font-display font-medium uppercase tracking-[0.12em] ' +
+  'rounded-pill border border-transparent whitespace-nowrap cursor-pointer no-underline ' +
+  'transition-all duration-la-base ease-la-ease ' +
+  'focus-visible:outline-none focus-visible:shadow-focus';
+
+const sizes: Record<Size, string> = {
+  sm: 'text-[11px] px-[20px] py-[10px]',
+  md: 'text-[13px] px-[28px] py-[14px]',
+  lg: 'text-[14px] px-[36px] py-[18px]',
+};
+
+const variants: Record<Variant, string> = {
+  primary:
+    'bg-gold text-ink border-gold ' +
+    'hover:bg-transparent hover:text-brown hover:border-gold ' +
+    'active:bg-gold-hover active:border-gold-hover',
+  secondary: 'bg-transparent text-brown border-brown hover:bg-brown hover:text-cream',
+  ghost:
+    'bg-transparent text-brown border-transparent px-[14px] ' +
+    'hover:bg-gold-wash hover:text-ink',
+  'on-dark':
+    'bg-transparent text-cream border-cream ' +
+    'hover:bg-gold hover:text-ink hover:border-gold',
+};
+---
+<a
+  href={href}
+  class={`${base} ${sizes[size]} ${variants[variant]} ${className}`}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <slot />
+</a>

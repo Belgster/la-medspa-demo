@@ -1,0 +1,29 @@
+/* Self-hosted fonts — fontsource variable where available. font-display: swap. */
+@import '@fontsource-variable/figtree/index.css';
+@import '@fontsource-variable/montserrat/index.css';
+/* TODO(phase3): swap for real Karma Italic WOFF2 — fontsource/karma ships normal-only.
+   Falls back to synthesized italic via font-style: italic on the .font-serif class. */
+@import '@fontsource/karma/400.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background: #FEFDF7; /* cream — never pure white */
+    color: #464646;      /* charcoal */
+    font-family: Montserrat, system-ui, sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: #FEFDF7;
+  }
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(201, 138, 28, 0.35);
+    border-radius: 4px;
+  }
+}

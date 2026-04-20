@@ -1,0 +1,137 @@
+---
+import { CATEGORIES, treatmentsByCategory } from '../data/navigation';
+import ButtonLink from './ui/ButtonLink.astro';
+
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+---
+<header
+  class:list={[
+    'sticky top-0 z-40',
+    'bg-cream/85 backdrop-blur-md',
+    'border-b border-hairline',
+  ]}
+>
+  <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-stack px-card py-[20px]">
+    <a
+      href="/"
+      class="font-display font-medium text-[20px] tracking-[0.24em] uppercase text-ink no-underline whitespace-nowrap"
+      aria-label="LA Medspa — home"
+    >
+      LA Medspa
+    </a>
+
+    <nav aria-label="Primary" class="flex gap-stack">
+      {CATEGORIES.map((c) => (
+        <a
+          data-flyout-trigger={c.key}
+          href={`#category-${c.key}`}
+          class:list={[
+            'font-display font-medium text-[12px] uppercase tracking-[0.14em] text-brown',
+            'py-[6px] border-b border-transparent no-underline',
+            'transition-colors duration-la-base ease-la-ease',
+            'hover:text-ink hover:border-gold',
+            'focus-visible:text-ink focus-visible:border-gold',
+          ]}
+        >
+          {c.label}
+        </a>
+      ))}
+    </nav>
+
+    <ButtonLink href={JANE_URL} external variant="primary">
+      Book Consultation
+    </ButtonLink>
+  </div>
+
+  {CATEGORIES.map((c) => (
+    <div
+      data-flyout={c.key}
+      role="region"
+      aria-label={`${c.label} treatments`}
+      class:list={[
+        'la-flyout',
+        'absolute left-0 right-0 top-full',
+        'bg-cream border-b border-hairline shadow-md',
+      ]}
+    >
+      <div class="max-w-[1400px] mx-auto grid grid-cols-[220px_1fr] gap-stack px-card py-card">
+        <div>
+          <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[14px]">
+            Category
+          </div>
+          <div class="font-display font-medium text-[32px] uppercase leading-[1.05] text-ink mb-[16px]">
+            {c.label}
+          </div>
+          <ButtonLink href={`#category-${c.key}`} variant="secondary" size="sm">
+            See all {c.label.toLowerCase()} →
+          </ButtonLink>
+        </div>
+        <div class="grid grid-cols-3 gap-[4px]">
+          {(treatmentsByCategory[c.key] ?? []).map((t) => (
+            <a
+              href={t.href}
+              class="block px-[18px] py-[14px] rounded-[8px] no-underline transition-colors duration-la-base ease-la-ease hover:bg-gold-wash focus-visible:bg-gold-wash"
+            >
+              <div class="font-display font-medium text-[14px] uppercase text-brown mb-[4px]">
+                {t.name}
+              </div>
+              <div class="font-body font-light text-[12px] text-charcoal-soft">
+                {t.meta}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
+</header>
+
+<style is:global>
+  /*
+   * DesktopNav flyouts — pure CSS using :has() and :focus-within.
+   * Shown on trigger hover/focus-visible OR when the flyout itself is hovered
+   * or contains focus. Motion follows the 400ms la-ease rule, fade + 8px rise.
+   * No JS; no scroll listener.
+   */
+  .la-flyout {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition:
+      opacity 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 400ms;
+  }
+
+  header:has([data-flyout-trigger='face']:hover) [data-flyout='face'],
+  header:has([data-flyout-trigger='face']:focus-visible) [data-flyout='face'],
+  header [data-flyout='face']:hover,
+  header [data-flyout='face']:focus-within,
+  header:has([data-flyout-trigger='body']:hover) [data-flyout='body'],
+  header:has([data-flyout-trigger='body']:focus-visible) [data-flyout='body'],
+  header [data-flyout='body']:hover,
+  header [data-flyout='body']:focus-within,
+  header:has([data-flyout-trigger='hair']:hover) [data-flyout='hair'],
+  header:has([data-flyout-trigger='hair']:focus-visible) [data-flyout='hair'],
+  header [data-flyout='hair']:hover,
+  header [data-flyout='hair']:focus-within,
+  header:has([data-flyout-trigger='medical']:hover) [data-flyout='medical'],
+  header:has([data-flyout-trigger='medical']:focus-visible) [data-flyout='medical'],
+  header [data-flyout='medical']:hover,
+  header [data-flyout='medical']:focus-within,
+  header:has([data-flyout-trigger='wellness']:hover) [data-flyout='wellness'],
+  header:has([data-flyout-trigger='wellness']:focus-visible) [data-flyout='wellness'],
+  header [data-flyout='wellness']:hover,
+  header [data-flyout='wellness']:focus-within,
+  header:has([data-flyout-trigger='skincare']:hover) [data-flyout='skincare'],
+  header:has([data-flyout-trigger='skincare']:focus-visible) [data-flyout='skincare'],
+  header [data-flyout='skincare']:hover,
+  header [data-flyout='skincare']:focus-within {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+</style>

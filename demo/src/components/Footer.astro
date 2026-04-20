@@ -1,0 +1,234 @@
+---
+/*
+ * Footer — dark brown, all links verified against the live site inventory.
+ * Service/legal links point at current WordPress URLs; Phase 3 migrates them.
+ * Copyright reflects the March 2025 rebrand: "LA Medspa" with the handoff-casing wordmark.
+ */
+import { CATEGORIES } from '../data/navigation';
+
+const PHONE = '705.256.5420';
+const PHONE_TEL = 'tel:+17052565420';
+const EMAIL = 'mail@ssmlaseradvantage.com';
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+const BEAUTIFI_URL = 'https://app.beautifi.com/application/laser-advantage-medspa';
+const SHOP_URL = 'https://laseradvantage.myshopify.com/';
+const ACKROO_URL = 'https://ssmlaseradvantage.ackroo.net/en/gifts/new';
+const FB_URL = 'https://www.facebook.com/ssmlaseradvantage';
+const IG_URL = 'https://www.instagram.com/laseradvantage/';
+
+// Current WordPress URLs — migrate in Phase 3.
+const WP = (path: string) => `https://ssmlaseradvantage.com${path}`;
+
+const hours = [
+  { day: 'Monday',    time: '9:30am – 5pm' },
+  { day: 'Tuesday',   time: '9:30am – 7pm' },
+  { day: 'Wednesday', time: '9:30am – 7pm' },
+  { day: 'Thursday',  time: '9:30am – 5pm' },
+  { day: 'Friday',    time: '9:30am – 5pm' },
+  { day: 'Saturday',  time: '9:30am – 3pm' },
+  { day: 'Sunday',    time: 'Closed' },
+];
+
+const year = new Date().getFullYear();
+---
+<footer class="bg-brown text-cream">
+  <div class="max-w-[1400px] mx-auto px-card py-section-m grid gap-stack md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+
+    <div>
+      <div class="font-display font-medium text-[22px] tracking-[0.24em] uppercase mb-comfort">
+        LA Medspa
+      </div>
+      <p class="font-body font-light text-[14px] leading-[1.75] text-cream/80 max-w-[360px] mb-stack">
+        Less is more. Simple is best. Always natural. Nineteen years of medical aesthetics in Sault Ste. Marie.
+      </p>
+      <div class="flex items-center gap-[14px]">
+        <a
+          href={FB_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LA Medspa on Facebook"
+          class="w-[44px] h-[44px] rounded-pill border border-cream/30 text-cream flex items-center justify-center transition-all duration-la-base ease-la-ease hover:border-gold hover:text-gold focus-visible:border-gold focus-visible:text-gold"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.2-1.5 1.5-1.5h1.6V4.4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4V10.5H7.5v3h2.6V21z" />
+          </svg>
+        </a>
+        <a
+          href={IG_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LA Medspa on Instagram"
+          class="w-[44px] h-[44px] rounded-pill border border-cream/30 text-cream flex items-center justify-center transition-all duration-la-base ease-la-ease hover:border-gold hover:text-gold focus-visible:border-gold focus-visible:text-gold"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+            <circle cx="12" cy="12" r="3.5" />
+            <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
+        Explore
+      </div>
+      <ul class="flex flex-col gap-[10px]">
+        {CATEGORIES.map((c) => (
+          <li>
+            <a
+              href={`#category-${c.key}`}
+              class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+            >
+              {c.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href={WP('/before-after/')}
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Before & After
+          </a>
+        </li>
+        <li>
+          <a
+            href={WP('/specials/')}
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Specials
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
+        Connect
+      </div>
+      <ul class="flex flex-col gap-[10px]">
+        <li>
+          <a
+            href={JANE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Book · Jane App ↗
+          </a>
+        </li>
+        <li>
+          <a
+            href={WP('/about-us/')}
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            About
+          </a>
+        </li>
+        <li>
+          <a
+            href={WP('/contact/')}
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Contact
+          </a>
+        </li>
+        <li>
+          <a
+            href={SHOP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Shop ↗
+          </a>
+        </li>
+        <li>
+          <a
+            href={BEAUTIFI_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Financing ↗
+          </a>
+        </li>
+        <li>
+          <a
+            href={ACKROO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Gift Cards ↗
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
+        Visit
+      </div>
+      <ul class="flex flex-col gap-[4px] mb-card">
+        {hours.map((h) => (
+          <li class="flex justify-between gap-comfort font-body font-light text-[13px] text-cream/80">
+            <span class="font-display font-medium uppercase tracking-[0.1em] text-[11px] text-cream/90">
+              {h.day}
+            </span>
+            <span>{h.time}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="flex flex-col gap-[6px]">
+        <a
+          href={PHONE_TEL}
+          class="font-display font-medium text-[14px] tracking-[0.08em] text-cream no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+        >
+          {PHONE}
+        </a>
+        <a
+          href={`mailto:${EMAIL}`}
+          class="font-body font-light text-[13px] text-cream/80 no-underline break-all hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+        >
+          {EMAIL}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-cream/15">
+    <div class="max-w-[1400px] mx-auto px-card py-comfort flex flex-col sm:flex-row justify-between gap-[12px] sm:items-center">
+      <div class="font-body font-light text-[12px] text-cream/60">
+        © {year} LA Medspa. All rights reserved.
+      </div>
+      <ul class="flex flex-wrap gap-stack">
+        <li>
+          <a
+            href={WP('/privacy-policy/')}
+            class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Privacy
+          </a>
+        </li>
+        <li>
+          <a
+            href={WP('/terms-condition/')}
+            class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Terms
+          </a>
+        </li>
+        <li>
+          <a
+            href={WP('/disclaimer/')}
+            class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            Disclaimer
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
