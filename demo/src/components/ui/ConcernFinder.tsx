@@ -56,7 +56,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
   const reset = () => { setPicked(new Set()); setArea(null); setStep(1); };
 
   return (
-    <div className="bg-beige rounded-[14px] p-stack">
+    <div className="bg-beige rounded-[14px] p-card sm:p-stack">
       {/* Progress */}
       <div className="flex items-center gap-[16px] mb-stack flex-wrap">
         {[
@@ -106,7 +106,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
           <p className="font-body font-light text-[15px] text-charcoal leading-[1.75] max-w-[520px] m-0 mb-card">
             Pick one or a few. We'll show you the treatments that best address these concerns.
           </p>
-          <div className="grid grid-cols-3 gap-[12px] mb-card">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] mb-card">
             {concerns.map((c) => (
               <ConcernCheckCard
                 key={c.v}
@@ -117,7 +117,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
               />
             ))}
           </div>
-          <div className="flex gap-[14px] items-center">
+          <div className="flex flex-wrap gap-[14px] items-center">
             <Button variant="primary" onClick={() => setStep(2)} disabled={picked.size === 0}>
               Continue →
             </Button>
@@ -139,7 +139,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
           <p className="font-body font-light text-[15px] text-charcoal leading-[1.75] max-w-[520px] m-0 mb-card">
             Optional. Pick an area if you already know — otherwise we'll show everything that matches your concerns.
           </p>
-          <div className="grid grid-cols-3 gap-[12px] mb-card">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] mb-card">
             {areas.map((a) => (
               <RadioCard
                 key={a.v}
@@ -150,7 +150,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
               />
             ))}
           </div>
-          <div className="flex gap-[14px]">
+          <div className="flex flex-wrap gap-[14px]">
             <Button variant="secondary" onClick={() => setStep(1)}>← Back</Button>
             <Button variant="primary" onClick={() => setStep(3)}>See Matches →</Button>
           </div>
@@ -204,7 +204,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
               <Button variant="primary" onClick={book}>Book Consultation</Button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-[14px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
               {matches.slice(0, 6).map((t) => (
                 <TreatmentCard
                   key={t.name}
