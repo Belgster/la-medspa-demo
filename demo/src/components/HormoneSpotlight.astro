@@ -1,0 +1,115 @@
+---
+/*
+ * §4 — Featured treatment spotlight: Hormone Therapy (BHRT + TRT)
+ *
+ * Side-by-side with copy on the left, image on the right (inverted from §2
+ * for visual variation). Background is beige — warmer than cream — so the
+ * section reads as an emphasized beat. All category-color references use
+ * the Medical triplet (oxblood) to cross-reference §3's color system.
+ *
+ * Copy is mined verbatim-adjacent from ssmlaseradvantage.com/bhrt-hormone-therapy/
+ * and /trt-hormone-therapy/: 1-3% annual hormone decline, the 3-step protocol,
+ * delivery methods, lab-panel composition. Voice is tightened to the brand.
+ *
+ * TODO(phase3): confirm final copy with Jennifer; the live pages have more
+ * educational depth (symptom checklists, statistics) that a dedicated
+ * /hormone-therapy/ route should carry in the full rebuild.
+ */
+import { Picture } from 'astro:assets';
+import editorial from '../assets/90.jpg';
+import ButtonLink from './ui/ButtonLink.astro';
+
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+const BHRT_URL = 'https://ssmlaseradvantage.com/bhrt-hormone-therapy/';
+
+const steps = [
+  {
+    n: '01',
+    label: 'Comprehensive Testing',
+    body: 'A full lab panel — estrogen, progesterone, testosterone, thyroid, cortisol, DHEA.',
+  },
+  {
+    n: '02',
+    label: 'Personalized Plan',
+    body: 'Built from your labs, not a template. Transdermal cream, injection, troche, pellet — whatever fits.',
+  },
+  {
+    n: '03',
+    label: 'Ongoing Monitoring',
+    body: 'Follow-ups across the first year, dosage tuned to symptoms as much as numbers.',
+  },
+];
+---
+<section class="bg-beige">
+  <div class="max-w-[1400px] mx-auto px-card py-section-l">
+    <div class="grid md:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
+      <div class="max-w-[560px] order-2 md:order-1">
+        {/* Category chip — Medical oxblood */}
+        <div class="inline-flex items-center gap-[8px] px-[12px] py-[6px] rounded-pill bg-category-medical-tone mb-comfort">
+          <span aria-hidden="true" class="w-[6px] h-[6px] rounded-pill bg-category-medical-line"></span>
+          <span class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-category-medical-ink">
+            Featured · Medical
+          </span>
+        </div>
+
+        <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.8vw,56px)] tracking-[-0.01em] leading-[1.02] mb-card">
+          Hormone Therapy
+        </h2>
+        <div class="font-display font-medium uppercase text-category-medical-ink text-[13px] tracking-[0.14em] mb-card">
+          Bioidentical · Prescriber-Led · Men & Women
+        </div>
+
+        <p class="font-body font-light text-[16px] leading-[1.75] text-charcoal mb-stack">
+          Hormone levels drop <span class="text-ink font-normal">1–3<span class="text-gold">%</span></span> every
+          year after thirty. The symptoms rarely arrive with an alarm — energy,
+          sleep, mood, libido, the thousand small things that show up before a
+          blood panel does. We rebalance what the body is already asking for,
+          using compounds molecularly identical to the ones you'd produce
+          yourself.
+        </p>
+
+        <ol class="space-y-comfort mb-stack">
+          {steps.map((s) => (
+            <li class="flex gap-comfort">
+              <div class="font-display font-medium text-[22px] leading-none text-category-medical-line min-w-[36px]">
+                {s.n}
+              </div>
+              <div>
+                <div class="font-display font-medium text-[13px] uppercase tracking-[0.12em] text-ink mb-[4px]">
+                  {s.label}
+                </div>
+                <div class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
+                  {s.body}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div class="flex gap-[14px] flex-wrap">
+          <ButtonLink href={JANE_URL} external variant="primary">
+            Book Consultation
+          </ButtonLink>
+          <ButtonLink href={BHRT_URL} external variant="ghost">
+            Read more · BHRT ↗
+          </ButtonLink>
+        </div>
+      </div>
+
+      <div class="order-1 md:order-2 relative">
+        <Picture
+          src={editorial}
+          formats={['avif', 'webp']}
+          widths={[480, 720, 960, 1200]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          alt="LA Medspa clinician in a warm editorial portrait"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-auto aspect-[4/5] object-cover object-[60%_center] rounded-[10px]"
+        />
+        {/* Decorative oxblood hairline accent — reinforces Medical category */}
+        <div aria-hidden="true" class="hidden md:block absolute -left-[18px] top-[32px] bottom-[32px] w-[2px] bg-category-medical-line opacity-70"></div>
+      </div>
+    </div>
+  </div>
+</section>

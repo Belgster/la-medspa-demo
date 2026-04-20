@@ -1,5 +1,4 @@
 import puppeteer from 'puppeteer-core';
-import { writeFileSync } from 'node:fs';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const URL = process.argv[2] ?? 'http://localhost:4321/';
