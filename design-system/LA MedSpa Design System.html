@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LA MedSpa — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Karma:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: light; }
+  html, body { margin: 0; padding: 0; background: #FEFDF7; }
+  body {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 300;
+    color: #464646;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .la-display {
+    font-family: 'Figtree', system-ui, sans-serif;
+  }
+  @keyframes la-fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  * { box-sizing: border-box; }
+  button { font-family: inherit; }
+  button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(201,138,28,0.35); }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; }
+  ::selection { background: #FFF0D4; color: #16110E; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+  window.TWEAKS = /*EDITMODE-BEGIN*/{
+    "goldHue": 42,
+    "fontDisplay": "Figtree",
+    "fontBody": "Montserrat",
+    "categoryApproach": "editorial"
+  }/*EDITMODE-END*/;
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="components/Tokens.jsx"></script>
+<script type="text/babel" src="components/Primitives.jsx"></script>
+<script type="text/babel" src="components/01-Color.jsx"></script>
+<script type="text/babel" src="components/02-Type.jsx"></script>
+<script type="text/babel" src="components/03-Foundations.jsx"></script>
+<script type="text/babel" src="components/04-Buttons.jsx"></script>
+<script type="text/babel" src="components/05-Nav.jsx"></script>
+<script type="text/babel" src="components/06-Forms.jsx"></script>
+<script type="text/babel" src="components/07-TreatmentCard.jsx"></script>
+<script type="text/babel" src="components/08-Finder.jsx"></script>
+
+<script type="text/babel">
+  const Header = () => (
+    <header
+      style={{
+        padding: '80px 0 64px',
+        maxWidth: 1240,
+        margin: '0 auto',
+        paddingLeft: 48,
+        paddingRight: 48,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          justifyContent: 'space-between',
+          gap: 32,
+          flexWrap: 'wrap',
+          marginBottom: 48,
+        }}
+      >
+        <div
+          className="la-display"
+          style={{
+            fontSize: 20,
+            letterSpacing: '0.24em',
+            color: '#16110E',
+            fontWeight: 500,
+          }}
+        >
+          LA MEDSPA
+        </div>
+        <div
+          style={{
+            fontFamily: 'ui-monospace, Menlo, monospace',
+            fontSize: 11,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: '#8A7F78',
+          }}
+        >
+          Design System · v0.2 · April 2026
+        </div>
+      </div>
+      <div
+        style={{
+          fontFamily: 'ui-monospace, Menlo, monospace',
+          fontSize: 11,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: '#8A7F78',
+          marginBottom: 18,
+        }}
+      >
+        For the marketing manager · to share with the owner
+      </div>
+      <h1
+        className="la-display"
+        style={{
+          fontSize: 'clamp(48px, 7vw, 96px)',
+          lineHeight: 1.02,
+          letterSpacing: '-0.02em',
+          textTransform: 'uppercase',
+          color: '#16110E',
+          margin: '0 0 32px',
+          fontWeight: 500,
+          maxWidth: 1100,
+        }}
+      >
+        Less Is More.<br />Simple Is Best.<br />Always Natural.
+      </h1>
+      <p
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          fontWeight: 300,
+          fontSize: 18,
+          lineHeight: 1.7,
+          color: '#464646',
+          maxWidth: 680,
+          margin: '0 0 12px',
+        }}
+      >
+        The token and component system behind the LA MedSpa rebuild. Every section names what
+        you're looking at, what each state is called, and why it exists — so this sheet can be
+        read without a designer in the room.
+      </p>
+      <p
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          fontWeight: 300,
+          fontSize: 14,
+          lineHeight: 1.7,
+          color: '#8A7F78',
+          maxWidth: 680,
+          margin: 0,
+        }}
+      >
+        Imagery in these examples is shown as warm placeholder blocks labeled with the intended
+        asset slot. Real photography from the asset pack drops in when the shell is wired.
+      </p>
+      <nav
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 20,
+          marginTop: 48,
+          paddingTop: 32,
+          borderTop: '1px solid #E8E1D8',
+        }}
+      >
+        {[
+          ['01', 'Color',        '#color'],
+          ['02', 'Type',         '#type'],
+          ['03', 'Space + Motion', '#foundations'],
+          ['04', 'Buttons',      '#buttons'],
+          ['05', 'Navigation',   '#nav'],
+          ['06', 'Forms',        '#forms'],
+          ['07', 'Treatment Card', '#treatment-card'],
+          ['08', 'Finder',       '#finder'],
+        ].map(([n, l, h]) => (
+          <a
+            key={n}
+            href={h}
+            style={{
+              textDecoration: 'none',
+              fontFamily: "'Figtree', sans-serif",
+              fontSize: 12,
+              fontWeight: 500,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: '#2B211B',
+              display: 'flex',
+              gap: 8,
+              alignItems: 'baseline',
+            }}
+          >
+            <span style={{ color: '#8A7F78', fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 11 }}>
+              {n}
+            </span>
+            {l}
+          </a>
+        ))}
+      </nav>
+    </header>
+  );
+
+  const Footer = () => (
+    <footer
+      style={{
+        borderTop: '1px solid #E8E1D8',
+        padding: '56px 48px 80px',
+        maxWidth: 1240,
+        margin: '0 auto',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: 'ui-monospace, Menlo, monospace',
+          fontSize: 11,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: '#8A7F78',
+          marginBottom: 12,
+        }}
+      >
+        End of sheet · Next session
+      </div>
+      <div
+        className="la-display"
+        style={{ fontSize: 22, textTransform: 'uppercase', color: '#2B211B', fontWeight: 500, marginBottom: 16 }}
+      >
+        What's not in this document
+      </div>
+      <ul
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          fontWeight: 300,
+          fontSize: 14,
+          color: '#464646',
+          lineHeight: 1.9,
+          maxWidth: 720,
+          paddingLeft: 18,
+          margin: 0,
+        }}
+      >
+        <li>Page designs — foundations live here first, page templates come next.</li>
+        <li>Real photography — placeholder slots are labeled with the asset pack's recommended match.</li>
+        <li>Provider card, testimonial block, before/after — next pass. Flagged as open.</li>
+        <li>Jane App embed treatment — will be specced once the booking context is mapped.</li>
+      </ul>
+    </footer>
+  );
+
+  const Handoff = () => {
+    const bulletStyle = {
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: 300,
+      fontSize: 14,
+      color: '#464646',
+      lineHeight: 1.75,
+      marginBottom: 20,
+    };
+    const labelStyle = {
+      fontFamily: "'Figtree', sans-serif",
+      fontWeight: 500,
+      fontSize: 11,
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase',
+      color: '#8A3A30',
+      display: 'block',
+      marginBottom: 6,
+    };
+    const codeStyle = {
+      fontFamily: 'ui-monospace, Menlo, monospace',
+      fontSize: 12.5,
+      background: '#F1EDE9',
+      color: '#2B211B',
+      padding: '1px 6px',
+      borderRadius: 4,
+    };
+    return (
+      <section
+        style={{
+          background: '#2B211B',
+          color: '#FEFDF7',
+          borderRadius: 14,
+          padding: 'clamp(40px, 5vw, 64px)',
+          margin: '0 48px 80px',
+          maxWidth: 1240,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}
+      >
+        <div
+          style={{
+            fontFamily: 'ui-monospace, Menlo, monospace',
+            fontSize: 11,
+            letterSpacing: '0.16em',
+            textTransform: 'uppercase',
+            color: '#F1AC32',
+            marginBottom: 18,
+          }}
+        >
+          09 — Handoff
+        </div>
+        <h2
+          className="la-display"
+          style={{
+            fontSize: 'clamp(32px, 4vw, 52px)',
+            lineHeight: 1.05,
+            textTransform: 'uppercase',
+            color: '#FEFDF7',
+            margin: '0 0 16px',
+            fontWeight: 500,
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Handoff Notes<br />— For Claude Code
+        </h2>
+        <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 300,
+            fontSize: 15,
+            lineHeight: 1.7,
+            color: '#D4C8B8',
+            maxWidth: 640,
+            margin: '0 0 40px',
+          }}
+        >
+          The ten-minute sync before the demo build. These are the load-bearing decisions — the
+          rest is latitude.
+        </p>
+
+        <div style={{ display: 'grid', gap: 28, maxWidth: 820 }}>
+          <div>
+            <span style={labelStyle}>01 · Load-Bearing Tokens</span>
+            <div style={{ ...bulletStyle, color: '#FEFDF7' }}>
+              Do not rename when moving into <span style={codeStyle}>tailwind.config.ts</span>:
+              the six category triplets <span style={codeStyle}>face/body/hair/medical/wellness/skincare</span>
+              each with <span style={codeStyle}>tone · line · ink</span>, the warm neutral scale
+              (<span style={codeStyle}>cream · beige · hairline · brown · ink</span>), and
+              the focus ring (<span style={codeStyle}>focus: #C98A1C</span>). The Tone/Line/Ink
+              triplet structure is the API components rely on — preserve it.
+            </div>
+          </div>
+
+          <div>
+            <span style={labelStyle}>02 · Components With Required State Coverage</span>
+            <div style={{ ...bulletStyle, color: '#FEFDF7' }}>
+              Ship all states, not just defaults. <b>Buttons</b>: default, hover, focus-visible,
+              active, disabled — all five, for primary / secondary / ghost / on-dark / icon.
+              <b> Check &amp; radio cards</b>: default, hover, selected. <b>Nav</b>: desktop
+              (top-bar + flyout), mobile closed / root-open / category-open. <b>Finder</b>: all
+              three steps plus the 0-match empty state. <b>Inputs</b>: default, hover, focus,
+              filled, error.
+            </div>
+          </div>
+
+          <div>
+            <span style={labelStyle}>03 · Motion Rule</span>
+            <div style={{ ...bulletStyle, color: '#FEFDF7' }}>
+              For any animation not explicitly specced:
+              <span style={{ ...codeStyle, marginLeft: 6 }}>400ms cubic-bezier(0.22, 1, 0.36, 1)</span>,
+              fade + 8px translate, no scale, no bounce. Hover is a temperature shift, never a size change.
+            </div>
+          </div>
+
+          <div>
+            <span style={labelStyle}>04 · Photography Wiring</span>
+            <div style={{ ...bulletStyle, color: '#FEFDF7' }}>
+              Placeholder blocks in the spec are labeled with the real asset-pack filenames — e.g.
+              <span style={codeStyle}>SLOT · 121.JPG — HERO CLINICIAN</span>. Swap the
+              placeholder components for <span style={codeStyle}>&lt;img&gt;</span> against those
+              files, portrait-first. Side-by-side column is the primary pattern when images appear next to copy; landscape crops are a variant, not the default.
+            </div>
+          </div>
+
+          <div>
+            <span style={labelStyle}>05 · Latitude — The System Does Not Specify</span>
+            <div style={{ ...bulletStyle, color: '#FEFDF7' }}>
+              Scroll-trigger thresholds and exact per-section animation timings. Footer layout.
+              SEO / schema markup. Loading states beyond form errors. Cookie/consent chrome.
+              Responsive breakpoint counts (use 3 or 4 — your call). Pick sensibly; don't wait
+              for design approval on these.
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const App = () => (
+    <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 48px' }}>
+      <ColorSection />
+      <TypeSection />
+      <FoundationsSection />
+      <ButtonSection />
+      <NavSection />
+      <FormSection />
+      <TreatmentCardSection />
+      <FinderSection />
+    </div>
+  );
+
+  const Root = () => (
+    <>
+      <Header />
+      <App />
+      <Footer />
+      <Handoff />
+      <TweakPanel />
+    </>
+  );
+
+  // ——— TWEAKS ———
+  const TweakPanel = () => {
+    const [visible, setVisible] = React.useState(false);
+    const [tweaks, setTweaks] = React.useState(window.TWEAKS);
+
+    React.useEffect(() => {
+      const onMsg = (e) => {
+        const d = e.data || {};
+        if (d.type === '__activate_edit_mode') setVisible(true);
+        if (d.type === '__deactivate_edit_mode') setVisible(false);
+      };
+      window.addEventListener('message', onMsg);
+      window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+      return () => window.removeEventListener('message', onMsg);
+    }, []);
+
+    React.useEffect(() => {
+      // Gold hue
+      const hue = tweaks.goldHue;
+      // shift gold: base hsl(42, 87%, 57%)
+      const gold = `hsl(${hue}, 87%, 57%)`;
+      const goldWash = `hsl(${hue}, 90%, 92%)`;
+      document.documentElement.style.setProperty('--la-gold', gold);
+      // Category approach
+      const root = document.documentElement;
+      root.style.setProperty('--la-gold', gold);
+      // Font swap
+      const body = document.body;
+      body.style.fontFamily = `'${tweaks.fontBody}', system-ui, sans-serif`;
+      document.querySelectorAll('.la-display').forEach((el) => {
+        el.style.fontFamily = `'${tweaks.fontDisplay}', system-ui, sans-serif`;
+      });
+      // Category hues
+      const approaches = {
+        whisper: {
+          face:     { ink: '#6B4426', tone: '#F1E4D4', line: '#B88250' },
+          body:     { ink: '#6B5226', tone: '#EEE2CC', line: '#B8935A' },
+          hair:     { ink: '#6B4426', tone: '#EEE0CE', line: '#B88250' },
+          medical:  { ink: '#4A2E28', tone: '#E6D6CE', line: '#8A4E42' },
+          wellness: { ink: '#6B4A2E', tone: '#F0E2CE', line: '#B88258' },
+          skincare: { ink: '#6B5A26', tone: '#EDE6CC', line: '#B8A25A' },
+        },
+        editorial: window.LA_TOKENS.categories,
+        bold: {
+          face:     { ink: '#5A2418', tone: '#F4C9B4', line: '#B8533A' },
+          body:     { ink: '#34482A', tone: '#C8D4B0', line: '#6E8A5E' },
+          hair:     { ink: '#4C2E12', tone: '#E8C6A0', line: '#A6663A' },
+          medical:  { ink: '#3A0F0D', tone: '#E8B4AA', line: '#6E1F18' },
+          wellness: { ink: '#5A2A3E', tone: '#ECBBC8', line: '#A45878' },
+          skincare: { ink: '#3E3C14', tone: '#D4D094', line: '#807A38' },
+        },
+      };
+      const picked = approaches[tweaks.categoryApproach] || approaches.editorial;
+      Object.keys(picked).forEach((k) => {
+        window.LA_TOKENS.categories[k] = { ...window.LA_TOKENS.categories[k], ...picked[k] };
+      });
+      // Force re-render by bumping a key on body
+      window.dispatchEvent(new Event('la-tokens-updated'));
+    }, [tweaks]);
+
+    const update = (patch) => {
+      const next = { ...tweaks, ...patch };
+      setTweaks(next);
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*');
+    };
+
+    if (!visible) return null;
+
+    const labelStyle = {
+      fontFamily: "'Figtree', sans-serif",
+      fontWeight: 500,
+      fontSize: 10.5,
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase',
+      color: '#2B211B',
+      marginBottom: 8,
+      display: 'block',
+    };
+
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          width: 300,
+          background: '#FEFDF7',
+          border: '1px solid #E8E1D8',
+          borderRadius: 14,
+          padding: 20,
+          boxShadow: '0 2px 6px rgba(43,33,27,0.05), 0 10px 32px rgba(43,33,27,0.12)',
+          zIndex: 9999,
+          fontFamily: "'Montserrat', sans-serif",
+        }}
+      >
+        <div
+          className="la-display"
+          style={{
+            fontSize: 13,
+            letterSpacing: '0.16em',
+            textTransform: 'uppercase',
+            color: '#16110E',
+            fontWeight: 500,
+            marginBottom: 18,
+            paddingBottom: 12,
+            borderBottom: '1px solid #F1EDE9',
+          }}
+        >
+          Tweaks
+        </div>
+
+        <div style={{ marginBottom: 20 }}>
+          <label style={labelStyle}>Gold Hue · {tweaks.goldHue}°</label>
+          <input
+            type="range"
+            min={20}
+            max={55}
+            step={1}
+            value={tweaks.goldHue}
+            onChange={(e) => update({ goldHue: +e.target.value })}
+            style={{ width: '100%', accentColor: '#F1AC32' }}
+          />
+          <div
+            style={{
+              display: 'flex', justifyContent: 'space-between',
+              fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 10, color: '#8A7F78', marginTop: 4,
+            }}
+          >
+            <span>warmer</span><span>cooler</span>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 20 }}>
+          <label style={labelStyle}>Display Font</label>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {['Figtree', 'Karma', 'Montserrat'].map((f) => (
+              <button
+                key={f}
+                onClick={() => update({ fontDisplay: f })}
+                style={{
+                  fontSize: 11,
+                  padding: '7px 12px',
+                  borderRadius: 999,
+                  border: `1px solid ${tweaks.fontDisplay === f ? '#F1AC32' : '#E8E1D8'}`,
+                  background: tweaks.fontDisplay === f ? '#FFF0D4' : 'transparent',
+                  color: '#2B211B',
+                  cursor: 'pointer',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  fontWeight: 500,
+                }}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginBottom: 20 }}>
+          <label style={labelStyle}>Body Font</label>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {['Montserrat', 'Figtree'].map((f) => (
+              <button
+                key={f}
+                onClick={() => update({ fontBody: f })}
+                style={{
+                  fontSize: 11,
+                  padding: '7px 12px',
+                  borderRadius: 999,
+                  border: `1px solid ${tweaks.fontBody === f ? '#F1AC32' : '#E8E1D8'}`,
+                  background: tweaks.fontBody === f ? '#FFF0D4' : 'transparent',
+                  color: '#2B211B',
+                  cursor: 'pointer',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  fontWeight: 500,
+                }}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label style={labelStyle}>Category Color Approach</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {[
+              { v: 'whisper',   l: 'Whisper — one warm family' },
+              { v: 'editorial', l: 'Editorial — distinct warm hues' },
+              { v: 'bold',      l: 'Bold — saturated, still warm' },
+            ].map((a) => (
+              <button
+                key={a.v}
+                onClick={() => update({ categoryApproach: a.v })}
+                style={{
+                  textAlign: 'left',
+                  fontSize: 11,
+                  padding: '9px 12px',
+                  borderRadius: 8,
+                  border: `1px solid ${tweaks.categoryApproach === a.v ? '#F1AC32' : '#E8E1D8'}`,
+                  background: tweaks.categoryApproach === a.v ? '#FFF0D4' : 'transparent',
+                  color: '#2B211B',
+                  cursor: 'pointer',
+                  fontFamily: "'Figtree', sans-serif",
+                  fontWeight: 500,
+                  letterSpacing: '0.05em',
+                }}
+              >
+                {a.l}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Re-render root when tokens change so category-driven components update
+  const Mount = () => {
+    const [bump, setBump] = React.useState(0);
+    React.useEffect(() => {
+      const h = () => setBump((b) => b + 1);
+      window.addEventListener('la-tokens-updated', h);
+      return () => window.removeEventListener('la-tokens-updated', h);
+    }, []);
+    return <div key={bump}><Root /></div>;
+  };
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<Mount />);
+</script>
+</body>
+</html>
