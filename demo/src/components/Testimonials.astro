@@ -50,7 +50,10 @@ const team: Person[] = [
 
   <div class="relative grid grid-cols-1 md:grid-cols-3 gap-comfort">
     {[0, 1, 2].map((i) => (
-      <article class="relative bg-cream border border-hairline rounded-card p-card flex flex-col gap-card opacity-60">
+      <article
+        aria-hidden="true"
+        class="relative bg-cream border border-hairline rounded-card p-card flex flex-col gap-card"
+      >
         {/* Stars — gold, static, visual placeholder */}
         <div class="flex gap-[4px]" aria-hidden="true">
           {[0,0,0,0,0].map(() => (

@@ -21,16 +21,12 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
 let preloadAvif: string | null = null;
-let preloadWebp: string | null = null;
 if (preloadImage) {
-  const avifWidths = await Promise.all(
-    [960, 1280, 1600, 2000, 2400].map((w) => getImage({ src: preloadImage, format: 'avif', width: w })),
+  const widths = [960, 1280, 1600, 2000, 2400];
+  const avifEntries = await Promise.all(
+    widths.map((w) => getImage({ src: preloadImage, format: 'avif', width: w })),
   );
-  const webpWidths = await Promise.all(
-    [960, 1280, 1600, 2000, 2400].map((w) => getImage({ src: preloadImage, format: 'webp', width: w })),
-  );
-  preloadAvif = avifWidths.map((i, idx) => `${i.src} ${[960, 1280, 1600, 2000, 2400][idx]}w`).join(', ');
-  preloadWebp = webpWidths.map((i, idx) => `${i.src} ${[960, 1280, 1600, 2000, 2400][idx]}w`).join(', ');
+  preloadAvif = avifEntries.map((i, idx) => `${i.src} ${widths[idx]}w`).join(', ');
 }
 ---
 <!doctype html>
@@ -52,6 +48,14 @@ if (preloadImage) {
 
     <meta name="theme-color" content="#FEFDF7" />
 
+    {/*
+      Preload only AVIF — every browser that renders this site (target
+      Cloudflare Pages, 2026+) supports AVIF. Preloading both formats
+      doubles the fetch because Chrome respects the `type` on both
+      <link rel=preload> even though the <Picture> element would only
+      pick AVIF. WebP remains in the srcset as a fallback for any
+      renderer that ever lacks AVIF support.
+    */}
     {preloadAvif && (
       <link
         rel="preload"
@@ -59,16 +63,6 @@ if (preloadImage) {
         imagesrcset={preloadAvif}
         imagesizes="100vw"
         type="image/avif"
-        fetchpriority="high"
-      />
-    )}
-    {preloadWebp && (
-      <link
-        rel="preload"
-        as="image"
-        imagesrcset={preloadWebp}
-        imagesizes="100vw"
-        type="image/webp"
         fetchpriority="high"
       />
     )}
