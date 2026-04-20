@@ -1,0 +1,85 @@
+---
+import { Picture } from 'astro:assets';
+import consultation from '../assets/332.jpg';
+
+/*
+ * §2 — "The Leader in Medical Aesthetics"
+ * Side-by-side pattern per design-system.md: portrait 332.jpg on the left,
+ * copy on the right, stat bar as a full-width horizontal beat below.
+ */
+---
+<section class="max-w-[1400px] mx-auto px-card py-section-l">
+  <div class="grid md:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
+    <div class="relative">
+      <Picture
+        src={consultation}
+        formats={['avif', 'webp']}
+        widths={[480, 720, 960, 1200]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        alt="Two clinicians at a glass consultation table with natural light and an olive tree"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-auto aspect-[4/5] object-cover rounded-[10px]"
+      />
+    </div>
+
+    <div class="max-w-[520px]">
+      <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+        Established 2005 · Queenstown District
+      </div>
+      <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05] mb-card">
+        The Leader In<br />Medical Aesthetics
+      </h2>
+      <div class="font-body font-light text-[16px] leading-[1.75] text-charcoal space-y-[14px]">
+        <p>
+          Nineteen years, one clinic, one standard. The only full-service
+          medspa in Sault Ste. Marie, and the longest-standing practice of
+          its kind in Northern Ontario.
+        </p>
+        <p>
+          Every consultation sits with a prescriber — Registered Nurses,
+          a Nurse Practitioner, a board-certified plastic surgeon, and
+          medical estheticians trained to carry the standard between visits.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-section-s grid md:grid-cols-3 border-t border-b border-hairline">
+    <div class="py-card md:px-card border-b md:border-b-0 md:border-r border-hairline">
+      <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[10px]">
+        Experience
+      </div>
+      <div class="font-display font-medium text-[clamp(48px,6vw,64px)] leading-[1] text-ink mb-[8px]">
+        19<span class="text-gold">+</span>
+      </div>
+      <div class="font-body font-light text-[14px] leading-[1.55] text-charcoal-soft">
+        years of medical aesthetics in one clinic.
+      </div>
+    </div>
+
+    <div class="py-card md:px-card border-b md:border-b-0 md:border-r border-hairline">
+      <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[10px]">
+        Team
+      </div>
+      <div class="font-display font-medium text-[clamp(48px,6vw,64px)] leading-[1] text-ink mb-[8px]">
+        10
+      </div>
+      <div class="font-body font-light text-[14px] leading-[1.55] text-charcoal-soft">
+        clinicians — RN, NP, MD, and medical estheticians.
+      </div>
+    </div>
+
+    <div class="py-card md:px-card">
+      <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[10px]">
+        Recognition
+      </div>
+      <div class="font-display font-medium text-[clamp(48px,6vw,64px)] leading-[1] text-ink mb-[8px]">
+        1<span class="text-charcoal-soft text-[clamp(28px,3.5vw,36px)]">/15</span>
+      </div>
+      <div class="font-body font-light text-[14px] leading-[1.55] text-charcoal-soft">
+        North American Cynoglow Pioneer Award recipients. 2023.
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,25 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import LeaderIntro from '../components/LeaderIntro.astro';
 import heroImage from '../assets/245.jpg';
 ---
 <Layout preloadImage={heroImage}>
   <Hero />
+  <LeaderIntro />
 
-  {/* §2 lands here — "Leader in Medical Aesthetics" intro + stat bar */}
+  {/* §3 placeholder — service categories land here */}
   <section id="services" class="max-w-[1400px] mx-auto px-card py-section-l">
     <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-base">
-      Section placeholder · §2 next
+      Section placeholder · §3 next
     </div>
     <h2 class="font-display font-medium uppercase text-[clamp(28px,4vw,40px)] text-ink tracking-[-0.01em] leading-[1.1] max-w-[720px]">
-      The Leader In Medical Aesthetics
+      Six Service Categories
     </h2>
     <p class="mt-card font-body font-light text-[16px] leading-[1.7] text-charcoal max-w-[560px]">
-      Stat bar, intro paragraph, and two-column photography pattern land in §2.
-      This anchor exists so the hero's <em class="not-italic">Explore Treatments</em> CTA resolves.
+      Category grid with the Tone / Line / Ink triplet system — Face · Body ·
+      Hair · Medical (oxblood) · Wellness · Skin Care — lands in §3.
     </p>
   </section>
 
-  {/* Bottom spacer so the scroll-reveal has room to finish cleanly */}
   <section class="h-[400px]"></section>
 </Layout>
