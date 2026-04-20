@@ -5,10 +5,15 @@ import { treatmentsByCategory } from '../data/navigation';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
 ---
-<div class="hidden md:block">
+<!--
+  display: contents so the sticky <header> inside each nav becomes a direct
+  child of <body> for layout purposes. Without this the wrapper box is only
+  ~72px tall and sticky releases on the first px of scroll.
+-->
+<div class="hidden md:contents">
   <DesktopNav />
 </div>
-<div class="md:hidden">
+<div class="contents md:hidden">
   <MobileNav
     client:visible
     treatmentsByCategory={treatmentsByCategory}

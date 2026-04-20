@@ -1,0 +1,61 @@
+---
+import { Picture } from 'astro:assets';
+import hero from '../assets/245.jpg';
+import ButtonLink from './ui/ButtonLink.astro';
+
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+---
+<section class="relative min-h-screen min-h-[100dvh] overflow-hidden bg-brown text-cream">
+  <Picture
+    src={hero}
+    formats={['avif', 'webp']}
+    widths={[640, 960, 1280, 1600, 2000, 2400]}
+    sizes="100vw"
+    alt="LA Medspa clinician holding laser equipment, softly lit against a cream wall"
+    loading="eager"
+    decoding="sync"
+    fetchpriority="high"
+    pictureAttributes={{ class: 'absolute inset-0 block' }}
+    class="absolute inset-0 w-full h-full object-cover object-center md:object-[72%_center]"
+  />
+
+  {/* Warm dark overlay — darker on the left where copy lands, lighter on the right where her face is */}
+  <div
+    aria-hidden="true"
+    class="absolute inset-0"
+    style="background: linear-gradient(to right, rgba(22,17,14,0.55), rgba(22,17,14,0.2));"
+  ></div>
+
+  <div class="relative z-10 min-h-screen min-h-[100dvh] flex items-center">
+    <div class="max-w-[1400px] mx-auto w-full px-card py-section-l">
+      <div class="max-w-[640px]">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-cream/80 mb-comfort">
+          Medical Aesthetics · Sault Ste. Marie
+        </div>
+        <h1 class="font-display font-medium uppercase text-cream text-[clamp(40px,6.5vw,72px)] leading-[1.05] tracking-[-0.015em] mb-card">
+          Less Is More.<br />Simple Is Best.<br />Always Natural.
+        </h1>
+        <p class="font-body font-light text-[18px] leading-[1.7] text-cream/85 max-w-[480px] mb-stack">
+          Medical-led aesthetics for the client who wants to look rested, not redone.
+        </p>
+        <div class="flex gap-[14px] flex-wrap">
+          <ButtonLink href={JANE_URL} external variant="primary" size="lg">
+            Book Consultation
+          </ButtonLink>
+          <ButtonLink href="#services" variant="on-dark" size="lg">
+            Explore Treatments
+          </ButtonLink>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Subtle scroll indicator — pulsing opacity only, no scale per motion rule */}
+  <div
+    aria-hidden="true"
+    class="absolute left-1/2 -translate-x-1/2 bottom-[28px] text-cream/70 flex flex-col items-center gap-[10px] pointer-events-none"
+  >
+    <span class="font-display font-medium text-[10px] uppercase tracking-[0.22em]">Scroll</span>
+    <span class="block w-px h-[28px] bg-current la-scroll-pulse"></span>
+  </div>
+</section>
