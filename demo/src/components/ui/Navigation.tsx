@@ -102,9 +102,11 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ treatmentsByCategory }) 
 interface MobileNavProps {
   treatmentsByCategory: Record<CategoryKey, Treatment[]>;
   bookHref: string;
+  /** Outbound Shopify URL — rendered as a 7th drawer link with an ↗ glyph. */
+  shopHref: string;
 }
 
-export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, bookHref }) => {
+export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, bookHref, shopHref }) => {
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState<CategoryKey | null>(null);
 
@@ -137,6 +139,20 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
               <span className="text-[#B8A898]">→</span>
             </button>
           ))}
+          {/* Shopify — 7th drawer entry, outbound */}
+          <a
+            href={shopHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={
+              'w-full text-left px-[24px] py-[18px] border-b border-beige ' +
+              'font-display font-medium text-[16px] uppercase tracking-[0.1em] text-brown ' +
+              'flex justify-between items-center no-underline'
+            }
+          >
+            <span>Shop</span>
+            <span aria-hidden="true" className="text-[#B8A898]">↗</span>
+          </a>
           <div className="px-[24px] py-[18px]">
             <Button
               variant="primary"

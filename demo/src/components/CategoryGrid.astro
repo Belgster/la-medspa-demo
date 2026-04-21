@@ -22,9 +22,13 @@ interface CategoryCard {
   key: CategoryKey;
   label: string;
   index: string;
-  marquee: string[];
+  /** Strings are non-interactive pills. Objects with `href` render as outbound
+   *  links with an ↗ glyph — used for the Skin Care → Shopify touchpoint. */
+  marquee: Array<string | { name: string; href: string }>;
   blurb: string;
 }
+
+const SHOP_URL = 'https://laseradvantage.myshopify.com/';
 
 const CATEGORIES: CategoryCard[] = [
   {
@@ -71,7 +75,13 @@ const CATEGORIES: CategoryCard[] = [
     key: 'skincare',
     label: 'Skin Care',
     index: '06',
-    marquee: ['Bela MD', 'Skin Booster', 'Chemical Peel', 'SmoothEye'],
+    marquee: [
+      'Bela MD',
+      'Skin Booster',
+      'Chemical Peel',
+      'SmoothEye',
+      { name: 'Medical-Grade Products', href: SHOP_URL },
+    ],
     blurb:
       'Medical-grade facials and products that extend what clinic visits start — carried between appointments.',
   },
@@ -96,9 +106,8 @@ const CATEGORIES: CategoryCard[] = [
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-comfort">
     {CATEGORIES.map((c) => (
-      <a
-        href={`#category-${c.key}`}
-        class="group relative flex flex-col bg-cream border border-hairline rounded-card overflow-hidden no-underline transition-all duration-la-base ease-la-ease hover:border-[#D4C8B8] hover:shadow-md focus-visible:border-[#D4C8B8] focus-visible:shadow-md"
+      <article
+        class="group relative flex flex-col bg-cream border border-hairline rounded-card overflow-hidden transition-all duration-la-base ease-la-ease hover:border-[#D4C8B8] hover:shadow-md focus-within:border-[#D4C8B8] focus-within:shadow-md"
       >
         <span aria-hidden="true" class:list={['absolute top-0 inset-x-0 h-[3px] z-10', CAT_CLASSES[c.key].rail]} />
         <div class="p-card flex flex-col flex-1">
@@ -117,18 +126,48 @@ const CATEGORIES: CategoryCard[] = [
             {c.blurb}
           </p>
           <div class="flex flex-wrap gap-[6px] mb-stack">
-            {c.marquee.map((name) => (
-              <span class:list={['font-display font-medium text-[10px] uppercase tracking-[0.12em] px-[10px] py-[4px] rounded-pill', CAT_CLASSES[c.key].tone, CAT_CLASSES[c.key].ink]}>
-                {name}
-              </span>
-            ))}
+            {c.marquee.map((m) => {
+              const isLink = typeof m !== 'string';
+              const label = isLink ? m.name : m;
+              const base = 'font-display font-medium text-[10px] uppercase tracking-[0.12em] px-[10px] py-[4px] rounded-pill inline-flex items-center gap-[4px]';
+              if (isLink) {
+                return (
+                  <a
+                    href={m.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class:list={[
+                      base,
+                      CAT_CLASSES[c.key].tone,
+                      CAT_CLASSES[c.key].ink,
+                      'no-underline transition-all duration-la-base ease-la-ease hover:brightness-95 focus-visible:brightness-95 focus-visible:outline-none focus-visible:shadow-focus',
+                    ]}
+                  >
+                    {label}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                );
+              }
+              return (
+                <span class:list={[base, CAT_CLASSES[c.key].tone, CAT_CLASSES[c.key].ink]}>
+                  {label}
+                </span>
+              );
+            })}
           </div>
-          <div class:list={['mt-auto font-display font-medium text-[11px] uppercase tracking-[0.14em] flex items-center gap-[8px]', CAT_CLASSES[c.key].ink]}>
+          <a
+            href={`#category-${c.key}`}
+            class:list={[
+              'mt-auto font-display font-medium text-[11px] uppercase tracking-[0.14em] no-underline flex items-center gap-[8px] w-fit',
+              'focus-visible:outline-none focus-visible:shadow-focus rounded-[4px]',
+              CAT_CLASSES[c.key].ink,
+            ]}
+          >
             <span>Explore {c.label.toLowerCase()}</span>
             <span aria-hidden="true" class="transition-transform duration-la-base ease-la-ease group-hover:translate-x-[4px]">→</span>
-          </div>
+          </a>
         </div>
-      </a>
+      </article>
     ))}
   </div>
 </section>

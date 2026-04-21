@@ -3,6 +3,7 @@ import { CATEGORIES, treatmentsByCategory } from '../data/navigation';
 import ButtonLink from './ui/ButtonLink.astro';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
+const SHOP_URL = 'https://laseradvantage.myshopify.com/';
 ---
 <header class="la-nav sticky top-0 z-40">
   <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-stack px-card py-[20px]">
@@ -28,6 +29,20 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
           {c.label}
         </a>
       ))}
+      {/* Shopify — outbound, no flyout, 7th link per Natalie's ask */}
+      <a
+        href={SHOP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
+          'py-[6px] border-b border-transparent no-underline',
+          'hover:border-gold focus-visible:border-gold',
+          'inline-flex items-center gap-[4px]',
+        ]}
+      >
+        Shop <span aria-hidden="true">↗</span>
+      </a>
     </nav>
 
     <ButtonLink href={JANE_URL} external variant="primary">

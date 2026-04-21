@@ -4,6 +4,7 @@ import { MobileNav } from './ui/Navigation';
 import { treatmentsByCategory } from '../data/navigation';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
+const SHOP_URL = 'https://laseradvantage.myshopify.com/';
 ---
 <!--
   display: contents so the sticky <header> inside each nav becomes a direct
@@ -18,5 +19,6 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
     client:visible
     treatmentsByCategory={treatmentsByCategory}
     bookHref={JANE_URL}
+    shopHref={SHOP_URL}
   />
 </div>
