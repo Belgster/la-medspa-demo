@@ -1,12 +1,32 @@
-# Morning review — autonomous §4 through §9
+# Morning review — autonomous pass + five refinements
 
 Autonomous pass executed 2026-04-20, starting from commit `277290f` (§3 approved).
-All 11 brief sections are landed. Lighthouse mobile targets met. Deploy-ready,
+All 11 brief sections landed. Five Natalie refinements executed 2026-04-21 on
+top of that. Lighthouse mobile targets held (LCP improved). Deploy-ready,
 not deployed.
 
-## Commits
+## Commits — Natalie refinement pass (2026-04-21)
 
 ```
+ff9cb45  refine #5: log B&A gallery deferral (legal/consent, not design)
+dbe8c18  refine #4: three Shopify touchpoints
+17baeba  refine #2: real team headshots, 11 members
+81f709c  refine #1: bridge the 21px nav-flyout hover gap
+```
+
+Note on #3: no commit. Confirmed via web_fetch that neither the current
+site's homepage nor /about-us/ embeds any review widget (Trustindex,
+Elfsight, or equivalent), and the Google Maps listing URL returned no
+scrapable review content through web_fetch. Per the directive "If no
+reviews are findable through either path, keep the current placeholder
+pattern and move on — don't fabricate," the §7 testimonials strip keeps
+its cartouche + placeholder cards. Phase 3 wires the live Google Business
+Profile feed.
+
+## Commits — autonomous pass (2026-04-20)
+
+```
+b7a2e7c  Autonomous pass complete — morning review for deploy
 35c2df6  §9: a11y contrast + LCP under 2s
 300f9af  §9: mobile responsive fixes on Concern Finder
 60a7cdf  §8: Financing + Instagram split
@@ -15,7 +35,7 @@ not deployed.
 3a6fe41  §5: a11y — drop opacity-50 on inactive step buttons
 31bf340  §5: Concern Finder — wire shipped TSX as client:visible React island
 34635e6  §4: Hormone Therapy spotlight — BHRT, prescriber-led, Medical-accented
-277290f  §3: six service categories grid — tone/line/ink system live   ← your last approval
+277290f  §3: six service categories grid — tone/line/ink system live   ← your original approval
 ```
 
 Earlier session (your review):
@@ -29,21 +49,26 @@ dbc8b86  §1: hero — 245.jpg, overlay tagline, 2 CTAs, end-of-hero nav reveal
 5b98f61  §0: Astro + Tailwind scaffold, nav chrome, footer
 ```
 
-## Mobile Lighthouse — production build, `npm run preview`
+## Mobile Lighthouse — post-refinement production build
 
 ```
-Performance    : 99    (target 95+ ✓)
+Performance    : 99     (target 95+ ✓)
 Accessibility  : 100
 Best Practices : 100
 SEO            : 100
 
-LCP            : 1.9s  (1955 ms — target < 2.0s ✓)
-CLS            : 0     (target < 0.05 ✓)
-TBT            : 0 ms  (proxy for INP < 150ms ✓)
+LCP            : 1.9s   (1880 ms — target < 2.0s ✓)   ← was 1955ms pre-refinement
+CLS            : 0      (target < 0.05 ✓)
+TBT            : 0 ms   (proxy for INP < 150ms ✓)
 FCP            : 1.4s
 Speed Index    : 1.4s
-TTI            : 2.0s
 ```
+
+All scores held or improved through the four refinement commits.
+LCP improved by ~75ms — the Shopify links added no new images or JS, and
+the team-headshot WebPs went through Astro's sharp pipeline (AVIF+WebP
+generated at [144, 216] widths for the 72px circles, lazy-loaded below
+the fold).
 
 Reproducible — `npm run build && npm run preview` then run [`verify-hero.mjs`](../demo/scripts/verify-hero.mjs) or lighthouse CLI. Lighthouse config defaults to Moto G4 4G throttled profile.
 
@@ -66,9 +91,37 @@ Critical path on a 1440px mobile emulation:
 
 React runtime only downloads when an island hydrates. MobileNav hydrates on `client:visible` above the fold on mobile; the ConcernFinder island hydrates on scroll-into-view, i.e., *after* the LCP measurement window.
 
+## Team headshot audit (resolved filenames)
+
+For your visual sanity-check before deploy. All 11 images downloaded from
+`ssmlaseradvantage.com/wp-content/uploads/2026/02/` and live in
+`demo/src/assets/team/`. Each was spot-checked visually against the source
+filename before commit — no mix-ups found in the sample.
+
+| Team member | Source WP filename | Stored as |
+|---|---|---|
+| Jennifer Kapur   · RN · Managing Director    | `Jen-Team-1.webp` | `jennifer-kapur.webp` |
+| Dr. Cory Goldberg · MD · Plastic Surgeon     | `Cory-1.webp`     | `cory-goldberg.webp`  |
+| Sara Rocchetta   · NP · Aesthetic Specialist | `Sara-1.webp`     | `sara-rocchetta.webp` |
+| Andrew Metcalfe  · NP · Medical Aesthetics   | `Andrew.webp`     | `andrew-metcalfe.webp`|
+| Angie Glavota    · RN                        | `Angie-1.webp`    | `angie-glavota.webp`  |
+| Riley Guzzo      · Medical Esthetician       | `Riley-1.webp`    | `riley-guzzo.webp`    |
+| Jenna Battisti   · Medical Esthetician       | `Jenna-1.webp`    | `jenna-battisti.webp` |
+| Mariah Ruscio    · Medical Esthetician       | `Mariah-1.webp`   | `mariah-ruscio.webp`  |
+| Nikka Merena     · Medical Esthetician       | `nikah-1.webp`    | `nikka-merena.webp`   |
+| Raea Caruso      · Clinic Manager            | `Raea-1.webp`     | `raea-caruso.webp`    |
+| Natalie Yuen     · Digital Marketing Manager | `Natalie-1.webp`  | `natalie-yuen.webp`   |
+
+One WP filename caveat worth noting: `nikah-1.webp` is misspelled upstream
+(should be `nikka`). Stored locally as `nikka-merena.webp` — the WP slug is
+the only thing referencing the typo.
+
 ## PAUSE items
 
-None. Every section landed without a blocker that required skipping.
+None. Every refinement executed except #3 (reviews) which was explicitly
+log-and-skip per the "don't fabricate" directive.
+
+Original autonomous pass also had no PAUSE items.
 
 Two soft flags worth seeing:
 
