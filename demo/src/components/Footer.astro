@@ -3,6 +3,12 @@
  * Footer — dark brown, all links verified against the live site inventory.
  * Service/legal links point at current WordPress URLs; Phase 3 migrates them.
  * Copyright reflects the March 2025 rebrand: "LA Medspa" with the handoff-casing wordmark.
+ *
+ * Two layout variants within a single component:
+ *   - Mobile (< md): vertical bands — brand / hours / 2-col links / contact
+ *     Service category links are dropped on mobile (already in the hamburger).
+ *   - Desktop (md+):  the 4-column grid as originally shipped. Unchanged.
+ * Bottom bar (© + Privacy/Terms/Disclaimer) is shared.
  */
 import { CATEGORIES } from '../data/navigation';
 
@@ -29,37 +35,32 @@ const hours = [
   { day: 'Sunday',    time: 'Closed' },
 ];
 
+const linkCx = 'font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease';
+const kickerCx = 'font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base';
+const socialCx = 'w-[44px] h-[44px] rounded-pill border border-cream/30 text-cream flex items-center justify-center transition-all duration-la-base ease-la-ease hover:border-gold hover:text-gold focus-visible:border-gold focus-visible:text-gold';
+
 const year = new Date().getFullYear();
 ---
 <footer class="bg-brown text-cream">
-  <div class="max-w-[1400px] mx-auto px-card py-section-m grid gap-stack md:grid-cols-[1.3fr_1fr_1fr_1fr]">
 
-    <div>
+  {/* ───── MOBILE (< md) — vertical bands ───── */}
+  <div class="md:hidden">
+
+    {/* Row 1 — Brand (centered) */}
+    <div class="px-card py-stack text-center">
       <div class="font-display font-medium text-[22px] tracking-[0.24em] uppercase mb-comfort">
         LA Medspa
       </div>
-      <p class="font-body font-light text-[14px] leading-[1.75] text-cream/80 max-w-[360px] mb-stack">
+      <p class="font-body font-light text-[14px] leading-[1.75] text-cream/80 mx-auto max-w-[340px] mb-stack">
         Less is more. Simple is best. Always natural. Nineteen years of medical aesthetics in Sault Ste. Marie.
       </p>
-      <div class="flex items-center gap-[14px]">
-        <a
-          href={FB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LA Medspa on Facebook"
-          class="w-[44px] h-[44px] rounded-pill border border-cream/30 text-cream flex items-center justify-center transition-all duration-la-base ease-la-ease hover:border-gold hover:text-gold focus-visible:border-gold focus-visible:text-gold"
-        >
+      <div class="flex items-center justify-center gap-[14px]">
+        <a href={FB_URL} target="_blank" rel="noopener noreferrer" aria-label="LA Medspa on Facebook" class={socialCx}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.2-1.5 1.5-1.5h1.6V4.4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4V10.5H7.5v3h2.6V21z" />
           </svg>
         </a>
-        <a
-          href={IG_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LA Medspa on Instagram"
-          class="w-[44px] h-[44px] rounded-pill border border-cream/30 text-cream flex items-center justify-center transition-all duration-la-base ease-la-ease hover:border-gold hover:text-gold focus-visible:border-gold focus-visible:text-gold"
-        >
+        <a href={IG_URL} target="_blank" rel="noopener noreferrer" aria-label="LA Medspa on Instagram" class={socialCx}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
             <circle cx="12" cy="12" r="3.5" />
@@ -69,109 +70,10 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div>
-      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
-        Explore
-      </div>
-      <ul class="flex flex-col gap-[10px]">
-        {CATEGORIES.map((c) => (
-          <li>
-            <a
-              href={`#category-${c.key}`}
-              class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-            >
-              {c.label}
-            </a>
-          </li>
-        ))}
-        <li>
-          <a
-            href={WP('/before-after/')}
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Before & After
-          </a>
-        </li>
-        <li>
-          <a
-            href={WP('/specials/')}
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Specials
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
-        Connect
-      </div>
-      <ul class="flex flex-col gap-[10px]">
-        <li>
-          <a
-            href={JANE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Book · Jane App ↗
-          </a>
-        </li>
-        <li>
-          <a
-            href={WP('/about-us/')}
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            About
-          </a>
-        </li>
-        <li>
-          <a
-            href={WP('/contact/')}
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Contact
-          </a>
-        </li>
-        <li>
-          <a
-            href={SHOP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Shop ↗
-          </a>
-        </li>
-        <li>
-          <a
-            href={BEAUTIFI_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Financing ↗
-          </a>
-        </li>
-        <li>
-          <a
-            href={ACKROO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-body font-light text-[14px] text-cream/90 no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-          >
-            Gift Cards ↗
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-base">
-        Visit
-      </div>
-      <ul class="flex flex-col gap-[4px] mb-card">
+    {/* Row 2 — Hours */}
+    <div class="px-card py-stack border-t border-cream/10">
+      <div class={kickerCx}>Visit</div>
+      <ul class="flex flex-col gap-[4px]">
         {hours.map((h) => (
           <li class="flex justify-between gap-comfort font-body font-light text-[13px] text-cream/80">
             <span class="font-display font-medium uppercase tracking-[0.1em] text-[11px] text-cream/90">
@@ -181,29 +83,134 @@ const year = new Date().getFullYear();
           </li>
         ))}
       </ul>
-      <div class="flex flex-col gap-[6px]">
-        <a
-          href={PHONE_TEL}
-          class="font-display font-medium text-[14px] tracking-[0.08em] text-cream no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-        >
-          {PHONE}
-        </a>
-        <a
-          href={`mailto:${EMAIL}`}
-          class="font-body font-light text-[13px] text-cream/80 no-underline break-all hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
-        >
-          {EMAIL}
-        </a>
+    </div>
+
+    {/* Row 3 — Explore / Connect (2-col) */}
+    <div class="px-card py-stack border-t border-cream/10 grid grid-cols-2 gap-comfort">
+      <div>
+        <div class={kickerCx}>Explore</div>
+        <ul class="flex flex-col gap-[10px]">
+          <li><a href={WP('/before-after/')} class={linkCx}>Before & After</a></li>
+          <li><a href={WP('/specials/')} class={linkCx}>Specials</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class={kickerCx}>Connect</div>
+        <ul class="flex flex-col gap-[10px]">
+          <li><a href={JANE_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Book · Jane App ↗</a></li>
+          <li><a href={WP('/about-us/')} class={linkCx}>About</a></li>
+          <li><a href={WP('/contact/')} class={linkCx}>Contact</a></li>
+          <li><a href={SHOP_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Shop ↗</a></li>
+          <li><a href={BEAUTIFI_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Financing ↗</a></li>
+          <li><a href={ACKROO_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Gift Cards ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    {/* Row 4 — Contact (centered) */}
+    <div class="px-card py-stack border-t border-cream/10 text-center flex flex-col items-center gap-[8px]">
+      <a
+        href={PHONE_TEL}
+        class="font-display font-medium text-[17px] tracking-[0.08em] text-cream no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+      >
+        {PHONE}
+      </a>
+      <a
+        href={`mailto:${EMAIL}`}
+        class="font-body font-light text-[13px] text-cream/80 no-underline break-all hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+      >
+        {EMAIL}
+      </a>
+    </div>
+  </div>
+
+  {/* ───── DESKTOP (md+) — 4-column grid, unchanged ───── */}
+  <div class="hidden md:block">
+    <div class="max-w-[1400px] mx-auto px-card py-section-m grid gap-stack md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+
+      <div>
+        <div class="font-display font-medium text-[22px] tracking-[0.24em] uppercase mb-comfort">
+          LA Medspa
+        </div>
+        <p class="font-body font-light text-[14px] leading-[1.75] text-cream/80 max-w-[360px] mb-stack">
+          Less is more. Simple is best. Always natural. Nineteen years of medical aesthetics in Sault Ste. Marie.
+        </p>
+        <div class="flex items-center gap-[14px]">
+          <a href={FB_URL} target="_blank" rel="noopener noreferrer" aria-label="LA Medspa on Facebook" class={socialCx}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.2-1.5 1.5-1.5h1.6V4.4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.4-4 4V10.5H7.5v3h2.6V21z" />
+            </svg>
+          </a>
+          <a href={IG_URL} target="_blank" rel="noopener noreferrer" aria-label="LA Medspa on Instagram" class={socialCx}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+              <circle cx="12" cy="12" r="3.5" />
+              <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class={kickerCx}>Explore</div>
+        <ul class="flex flex-col gap-[10px]">
+          {CATEGORIES.map((c) => (
+            <li><a href={`#category-${c.key}`} class={linkCx}>{c.label}</a></li>
+          ))}
+          <li><a href={WP('/before-after/')} class={linkCx}>Before & After</a></li>
+          <li><a href={WP('/specials/')} class={linkCx}>Specials</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class={kickerCx}>Connect</div>
+        <ul class="flex flex-col gap-[10px]">
+          <li><a href={JANE_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Book · Jane App ↗</a></li>
+          <li><a href={WP('/about-us/')} class={linkCx}>About</a></li>
+          <li><a href={WP('/contact/')} class={linkCx}>Contact</a></li>
+          <li><a href={SHOP_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Shop ↗</a></li>
+          <li><a href={BEAUTIFI_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Financing ↗</a></li>
+          <li><a href={ACKROO_URL} target="_blank" rel="noopener noreferrer" class={linkCx}>Gift Cards ↗</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class={kickerCx}>Visit</div>
+        <ul class="flex flex-col gap-[4px] mb-card">
+          {hours.map((h) => (
+            <li class="flex justify-between gap-comfort font-body font-light text-[13px] text-cream/80">
+              <span class="font-display font-medium uppercase tracking-[0.1em] text-[11px] text-cream/90">
+                {h.day}
+              </span>
+              <span>{h.time}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="flex flex-col gap-[6px]">
+          <a
+            href={PHONE_TEL}
+            class="font-display font-medium text-[14px] tracking-[0.08em] text-cream no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            {PHONE}
+          </a>
+          <a
+            href={`mailto:${EMAIL}`}
+            class="font-body font-light text-[13px] text-cream/80 no-underline break-all hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+          >
+            {EMAIL}
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
+  {/* ───── Bottom bar — shared ───── */}
   <div class="border-t border-cream/15">
     <div class="max-w-[1400px] mx-auto px-card py-comfort flex flex-col sm:flex-row justify-between gap-[12px] sm:items-center">
-      <div class="font-body font-light text-[12px] text-cream/60">
+      <div class="font-body font-light text-[12px] text-cream/60 text-center sm:text-left">
         © {year} LA Medspa. All rights reserved.
       </div>
-      <ul class="flex flex-wrap gap-stack">
+      <ul class="flex flex-wrap justify-center sm:justify-end gap-stack">
         <li>
           <a
             href={WP('/privacy-policy/')}
