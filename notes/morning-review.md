@@ -1,9 +1,16 @@
-# Morning review — autonomous pass + five refinements
+# Morning review — autonomous pass + five refinements + mobile/B&A pass
 
 Autonomous pass executed 2026-04-20, starting from commit `277290f` (§3 approved).
 All 11 brief sections landed. Five Natalie refinements executed 2026-04-21 on
-top of that. Lighthouse mobile targets held (LCP improved). Deploy-ready,
-not deployed.
+top of that. Mobile polish + real B/A landed in a follow-up pass the same day.
+Lighthouse mobile targets held (LCP improved). Deploy-ready, not deployed.
+
+## Commits — mobile polish + real B/A (2026-04-21, later)
+
+```
+d742d20  §6: real lip-filler B/A — drag-comparison slider, two pairs (replaces placeholder)
+f9eacbd  mobile polish: iPhone 14 Pro (390px) — hero svh, §5 tighten, section padding
+```
 
 ## Commits — Natalie refinement pass (2026-04-21)
 
@@ -127,7 +134,7 @@ Two soft flags worth seeing:
 
 - **§7 testimonials are placeholder cards + "Coming Phase 3" cartouche.** The live site publishes no reviews on `/`, `/about-us/`, `/specials/`, or `/testimonials/` (404). Per the hard-limit "no testimonials you can't source," the demo ships a layout preview. Phase 3 wires the live Google Business Profile reviews feed.
 
-- **§6 Before & After is a styled placeholder with the same cartouche treatment.** The asset manifest flags "no before/after imagery." Phase 3 requires a consented B&A library from Jennifer before the component can take real content.
+- **§6 Before & After now ships two real lip-filler pairs** (commit `d742d20`) — mirrored from the existing public display on `ssmlaseradvantage.com/wp-content/uploads/2024/04/{1-4,2,3,4}.png`. Interactive drag-comparison slider (zero-dep React island, client:visible). Phase 3 still needs the full consented B&A library from Jennifer to open the gallery wider — the "View all results →" link stubs to `#phase3-ba`.
 
 ## Deploy command
 
