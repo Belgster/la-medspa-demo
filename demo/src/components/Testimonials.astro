@@ -10,25 +10,41 @@
  * Phase 3 will wire real Google Reviews via their Business Profile API
  * or equivalent embed.
  *
- * Team preview: real names + credentials sourced from the live /about-us/
- * page. 10 team members — matches the "10 clinicians" stat in §2.
- * Initial-circle avatars since no headshots are in the asset pack
- * (flagged in the manifest and phase3-refinements notes).
+ * Team preview: real names + credentials + headshots sourced from the live
+ * /about-us/ and /wp-content/uploads/2026/02/. 11 team members — matches
+ * the "10 clinicians" stat in §2 (Natalie is marketing, not clinical).
+ * Initials stay on the Person interface as a fallback path in case a
+ * headshot 404s in the future.
  */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
-interface Person { name: string; initials: string; role: string; }
+import jenImg      from '../assets/team/jennifer-kapur.webp';
+import coryImg     from '../assets/team/cory-goldberg.webp';
+import saraImg     from '../assets/team/sara-rocchetta.webp';
+import andrewImg   from '../assets/team/andrew-metcalfe.webp';
+import angieImg    from '../assets/team/angie-glavota.webp';
+import rileyImg    from '../assets/team/riley-guzzo.webp';
+import jennaImg    from '../assets/team/jenna-battisti.webp';
+import mariahImg   from '../assets/team/mariah-ruscio.webp';
+import nikkaImg    from '../assets/team/nikka-merena.webp';
+import raeaImg     from '../assets/team/raea-caruso.webp';
+import natalieImg  from '../assets/team/natalie-yuen.webp';
+
+interface Person { name: string; initials: string; role: string; image?: ImageMetadata; }
 
 const team: Person[] = [
-  { name: 'Jennifer Kapur',  initials: 'JK', role: 'RN · Managing Director' },
-  { name: 'Dr. Cory Goldberg', initials: 'CG', role: 'MD · Plastic Surgeon' },
-  { name: 'Sara Rocchetta',  initials: 'SR', role: 'NP · Aesthetic Specialist' },
-  { name: 'Andrew Metcalfe', initials: 'AM', role: 'NP · Medical Aesthetics' },
-  { name: 'Angie Glavota',   initials: 'AG', role: 'RN' },
-  { name: 'Riley Guzzo',     initials: 'RG', role: 'Medical Esthetician' },
-  { name: 'Jenna Battisti',  initials: 'JB', role: 'Medical Esthetician' },
-  { name: 'Mariah Ruscio',   initials: 'MR', role: 'Medical Esthetician' },
-  { name: 'Nikka Merena',    initials: 'NM', role: 'Medical Esthetician' },
-  { name: 'Raea Caruso',     initials: 'RC', role: 'Clinic Manager' },
+  { name: 'Jennifer Kapur',   initials: 'JK', role: 'RN · Managing Director',   image: jenImg },
+  { name: 'Dr. Cory Goldberg',initials: 'CG', role: 'MD · Plastic Surgeon',     image: coryImg },
+  { name: 'Sara Rocchetta',   initials: 'SR', role: 'NP · Aesthetic Specialist',image: saraImg },
+  { name: 'Andrew Metcalfe',  initials: 'AM', role: 'NP · Medical Aesthetics',  image: andrewImg },
+  { name: 'Angie Glavota',    initials: 'AG', role: 'RN',                        image: angieImg },
+  { name: 'Riley Guzzo',      initials: 'RG', role: 'Medical Esthetician',      image: rileyImg },
+  { name: 'Jenna Battisti',   initials: 'JB', role: 'Medical Esthetician',      image: jennaImg },
+  { name: 'Mariah Ruscio',    initials: 'MR', role: 'Medical Esthetician',      image: mariahImg },
+  { name: 'Nikka Merena',     initials: 'NM', role: 'Medical Esthetician',      image: nikkaImg },
+  { name: 'Raea Caruso',      initials: 'RC', role: 'Clinic Manager',           image: raeaImg },
+  { name: 'Natalie Yuen',     initials: 'NY', role: 'Digital Marketing Mgr',    image: natalieImg },
 ];
 ---
 {/* Testimonials strip */}
@@ -116,10 +132,25 @@ const team: Person[] = [
       <ul class="flex gap-comfort snap-x snap-mandatory w-max">
         {team.map((p) => (
           <li class="snap-start flex-shrink-0 w-[220px] bg-cream border border-hairline rounded-card p-card flex flex-col gap-base">
-            <div class="w-[64px] h-[64px] rounded-pill bg-gold-wash border border-gold/30 flex items-center justify-center">
-              <span class="font-display font-medium text-[22px] text-ink tracking-[0.05em]">
-                {p.initials}
-              </span>
+            <div class="w-[72px] h-[72px] rounded-pill overflow-hidden border border-gold/30 flex-shrink-0">
+              {p.image ? (
+                <Picture
+                  src={p.image}
+                  formats={['avif', 'webp']}
+                  widths={[144, 216]}
+                  sizes="72px"
+                  alt={`${p.name} — ${p.role}`}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover object-[center_20%]"
+                />
+              ) : (
+                <div class="w-full h-full bg-gold-wash flex items-center justify-center">
+                  <span class="font-display font-medium text-[22px] text-ink tracking-[0.05em]">
+                    {p.initials}
+                  </span>
+                </div>
+              )}
             </div>
             <div class="mt-auto">
               <div class="font-display font-medium uppercase text-ink text-[15px] leading-[1.2]">
