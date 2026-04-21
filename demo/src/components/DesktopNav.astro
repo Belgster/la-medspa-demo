@@ -21,7 +21,7 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
           href={`#category-${c.key}`}
           class:list={[
             'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
-            'py-[6px] border-b border-transparent no-underline',
+            'py-[6px] border-b border-transparent no-underline relative',
             'hover:border-gold focus-visible:border-gold',
           ]}
         >
@@ -94,6 +94,23 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
       opacity 400ms cubic-bezier(0.22, 1, 0.36, 1),
       transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
       visibility 0s linear 400ms;
+  }
+
+  /*
+   * Hover bridge — the top bar's py-[20px] leaves ~29px of dead space
+   * between the trigger and the flyout below. Pseudo-element extends the
+   * trigger's hover target down to the flyout's top edge so the cursor
+   * never leaves the trigger's hover zone during transit. :hover on ::after
+   * propagates to the parent anchor, keeping `:has(trigger:hover)` true.
+   */
+  [data-flyout-trigger]::after {
+    content: '';
+    position: absolute;
+    left: -12px;
+    right: -12px;
+    top: 100%;
+    height: 32px;
+    /* transparent — purely hover-catching */
   }
 
   header:has([data-flyout-trigger='face']:hover) [data-flyout='face'],
