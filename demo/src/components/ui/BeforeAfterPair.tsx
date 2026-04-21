@@ -67,7 +67,7 @@ export const BeforeAfterPair: React.FC<Props> = ({
 
         <div
           className="absolute inset-0"
-          style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+          style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
           aria-hidden="true"
         >
           <picture>
