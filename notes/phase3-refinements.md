@@ -44,6 +44,15 @@ flyouts + footer Explore column update automatically via the nav data file.
 
 ## Before & After slider
 
-Phase 2 §7 is a styled "Coming soon" placeholder. Phase 3 needs a consented
+Phase 2 §6 is a styled "Coming soon" placeholder. Phase 3 needs a consented
 B&A library from the client, then an actual slider primitive. Confirm with
 Jennifer that a consented library exists before scoping the component.
+
+B&A gallery — source exists at ssmlaseradvantage.com/before-after/ with
+~25+ images organized by concern (Acne, Fine Lines & Deep Wrinkles,
+Tightening, Lifting, Body Contouring, Pigmentation & Redness, Hair, Volume
+Loss, Tattoo Removal, Skin Tone & Texture, Men). Needs consent verification
+with Jennifer before republication — the current site hosting them doesn't
+imply consent to republish on the demo URL. Propose as a standalone Phase 3
+conversation — confirm each pair has a signed release, then migrate.
+Existing §6 placeholder is acceptable until that clears.
