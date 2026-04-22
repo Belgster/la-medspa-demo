@@ -8,26 +8,35 @@ import type { ImageMetadata } from 'astro';
 interface Props {
   title?: string;
   description?: string;
-  /** If set, pre-computes AVIF/WebP URLs and emits <link rel="preload"> hints for LCP. */
+  /** Desktop LCP candidate — emits a <link rel="preload" media="(min-width: 768px)"> hint. WebP. */
   preloadImage?: ImageMetadata;
+  /** Mobile LCP candidate — emits a <link rel="preload" media="(max-width: 767px)"> hint. WebP.
+   *  Pass when using an art-directed responsive hero; omit for single-image pages. */
+  preloadImageMobile?: ImageMetadata;
 }
 
 const {
   title = 'LA Medspa — Medical Aesthetics in Sault Ste. Marie',
   description = 'Medical-grade expertise delivered with the warmth of a high-end spa. Less is more. Simple is best. Always natural.',
   preloadImage,
+  preloadImageMobile,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
-let preloadAvif: string | null = null;
-if (preloadImage) {
-  const widths = [960, 1280, 1600, 2000, 2400];
-  const avifEntries = await Promise.all(
-    widths.map((w) => getImage({ src: preloadImage, format: 'avif', width: w })),
+const buildWebpSrcset = async (src: ImageMetadata, widths: number[]) => {
+  const entries = await Promise.all(
+    widths.map((w) => getImage({ src, format: 'webp', width: w })),
   );
-  preloadAvif = avifEntries.map((i, idx) => `${i.src} ${widths[idx]}w`).join(', ');
-}
+  return entries.map((e, i) => `${e.src} ${widths[i]}w`).join(', ');
+};
+
+const desktopPreload = preloadImage
+  ? await buildWebpSrcset(preloadImage, [960, 1280, 1600, 1920, 2400])
+  : null;
+const mobilePreload = preloadImageMobile
+  ? await buildWebpSrcset(preloadImageMobile, [480, 640, 828, 1080, 1280])
+  : null;
 ---
 <!doctype html>
 <html lang="en">
@@ -49,20 +58,30 @@ if (preloadImage) {
     <meta name="theme-color" content="#FEFDF7" />
 
     {/*
-      Preload only AVIF — every browser that renders this site (target
-      Cloudflare Pages, 2026+) supports AVIF. Preloading both formats
-      doubles the fetch because Chrome respects the `type` on both
-      <link rel=preload> even though the <Picture> element would only
-      pick AVIF. WebP remains in the srcset as a fallback for any
-      renderer that ever lacks AVIF support.
+      Responsive WebP preload — one hint per breakpoint via the `media`
+      attribute so the browser fetches exactly one LCP candidate. AVIF
+      is deliberately skipped for photographic heroes; its encoder cost
+      (and slower browser decode) doesn't pay off versus WebP @ q80.
     */}
-    {preloadAvif && (
+    {desktopPreload && (
       <link
         rel="preload"
         as="image"
-        imagesrcset={preloadAvif}
+        media="(min-width: 768px)"
+        imagesrcset={desktopPreload}
         imagesizes="100vw"
-        type="image/avif"
+        type="image/webp"
+        fetchpriority="high"
+      />
+    )}
+    {mobilePreload && (
+      <link
+        rel="preload"
+        as="image"
+        media="(max-width: 767px)"
+        imagesrcset={mobilePreload}
+        imagesizes="100vw"
+        type="image/webp"
         fetchpriority="high"
       />
     )}

@@ -8,9 +8,10 @@ import ConcernFinderSection from '../components/ConcernFinderSection.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import Testimonials from '../components/Testimonials.astro';
 import FinancingInstagram from '../components/FinancingInstagram.astro';
-import heroImage from '../assets/245.jpg';
+import heroDesktop from '../assets/hero-desktop.jpg';
+import heroMobile from '../assets/hero-mobile.jpg';
 ---
-<Layout preloadImage={heroImage}>
+<Layout preloadImage={heroDesktop} preloadImageMobile={heroMobile}>
   <Hero />
   <LeaderIntro />
   <CategoryGrid />

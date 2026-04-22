@@ -1,33 +1,55 @@
 ---
-import { Picture } from 'astro:assets';
-import hero from '../assets/245.jpg';
+import { getImage } from 'astro:assets';
 import ButtonLink from './ui/ButtonLink.astro';
+import heroDesktop from '../assets/hero-desktop.jpg';
+import heroMobile from '../assets/hero-mobile.jpg';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
+
+const ALT = 'LA Medspa consultation — clinician reviewing treatment plan with client on tablet';
+
+// Art-direction responsive hero: vertical composition on mobile
+// (subject bottom-right), horizontal on tablet/desktop (subject right).
+// WebP only — AVIF build cost isn't worth it for photographic hero content.
+const mobileWidths  = [480, 640, 828, 1080, 1280];
+const desktopWidths = [960, 1280, 1600, 1920, 2400];
+
+const toSrcset = async (src: ImageMetadata, widths: number[]) => {
+  const entries = await Promise.all(
+    widths.map((w) => getImage({ src, format: 'webp', width: w })),
+  );
+  return entries.map((e, i) => `${e.src} ${widths[i]}w`).join(', ');
+};
+
+const [mobileWebp, desktopWebp, fallback] = await Promise.all([
+  toSrcset(heroMobile,  mobileWidths),
+  toSrcset(heroDesktop, desktopWidths),
+  getImage({ src: heroDesktop, format: 'webp', width: 1600 }),
+]);
 ---
 <section class="relative min-h-screen min-h-[100svh] overflow-hidden bg-brown text-cream">
-  <Picture
-    src={hero}
-    formats={['avif', 'webp']}
-    widths={[640, 960, 1280, 1600, 2000, 2400]}
-    sizes="100vw"
-    alt="LA Medspa clinician holding laser equipment, softly lit against a cream wall"
-    loading="eager"
-    decoding="sync"
-    fetchpriority="high"
-    pictureAttributes={{ class: 'absolute inset-0 block' }}
-    class="absolute inset-0 w-full h-full object-cover object-center md:object-[72%_center]"
-  />
+  <picture class="absolute inset-0 block">
+    <source media="(min-width: 768px)" type="image/webp" srcset={desktopWebp} sizes="100vw" />
+    <source media="(max-width: 767px)" type="image/webp" srcset={mobileWebp}  sizes="100vw" />
+    <img
+      src={fallback.src}
+      alt={ALT}
+      width={heroDesktop.width}
+      height={heroDesktop.height}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover object-center"
+    />
+  </picture>
 
-  {/* Warm dark overlay — darker on the left where copy lands, lighter on the right where her face is */}
-  <div
-    aria-hidden="true"
-    class="absolute inset-0"
-    style="background: linear-gradient(to right, rgba(22,17,14,0.55), rgba(22,17,14,0.2));"
-  ></div>
+  {/* Warm dark overlay — diagonal on mobile (darker upper-left, where the
+      text lives; clear lower-right over the subject), horizontal on
+      desktop (darker-left, lighter-right). Scoped via <style> below. */}
+  <div aria-hidden="true" class="absolute inset-0 hero-overlay"></div>
 
-  <div class="relative z-10 min-h-screen min-h-[100svh] flex items-center">
-    <div class="max-w-[1400px] mx-auto w-full px-card py-section-s lg:py-section-l">
+  <div class="relative z-10 min-h-screen min-h-[100svh] flex items-start md:items-center">
+    <div class="max-w-[1400px] mx-auto w-full px-card pt-[max(64px,15vh)] pb-section-s md:py-section-s lg:py-section-l max-h-[55vh] md:max-h-none md:pl-[8%]">
       <div class="max-w-[640px]">
         <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-cream/80 mb-comfort">
           Medical Aesthetics · Sault Ste. Marie
@@ -50,7 +72,7 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
     </div>
   </div>
 
-  {/* Subtle scroll indicator — pulsing opacity only, no scale per motion rule */}
+  {/* Subtle scroll indicator — absolute bottom, out of the content flow */}
   <div
     aria-hidden="true"
     class="absolute left-1/2 -translate-x-1/2 bottom-[28px] text-cream/70 flex flex-col items-center gap-[10px] pointer-events-none"
@@ -59,3 +81,25 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
     <span class="block w-px h-[28px] bg-current la-scroll-pulse"></span>
   </div>
 </section>
+
+<style>
+  /* Mobile (default): diagonal — darker top-left over copy, clear bottom-right over subject */
+  .hero-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(22, 17, 14, 0.62) 0%,
+      rgba(22, 17, 14, 0.15) 65%,
+      rgba(22, 17, 14, 0.10) 100%
+    );
+  }
+  /* Tablet+ (≥768px): horizontal — darker-left over copy, lighter-right over subject */
+  @media (min-width: 768px) {
+    .hero-overlay {
+      background: linear-gradient(
+        to right,
+        rgba(22, 17, 14, 0.55),
+        rgba(22, 17, 14, 0.20)
+      );
+    }
+  }
+</style>
