@@ -1,20 +1,565 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+
+import heroImg from '../assets/section-2.jpg';
+
+import jenImg      from '../assets/team/jennifer-kapur.webp';
+import coryImg     from '../assets/team/cory-goldberg.webp';
+import saraImg     from '../assets/team/sara-rocchetta.webp';
+import andrewImg   from '../assets/team/andrew-metcalfe.webp';
+import angieImg    from '../assets/team/angie-glavota.webp';
+import rileyImg    from '../assets/team/riley-guzzo.webp';
+import jennaImg    from '../assets/team/jenna-battisti.webp';
+import mariahImg   from '../assets/team/mariah-ruscio.webp';
+import nikkaImg    from '../assets/team/nikka-merena.webp';
+import raeaImg     from '../assets/team/raea-caruso.webp';
+import natalieImg  from '../assets/team/natalie-yuen.webp';
+
+/*
+ * About page — 8 editorial bands (hero / story / mission pull-quote / team /
+ * recognition / before & after / financing / visit us).
+ *
+ * Content-source status, per the scrape + editorial rules for this commit:
+ *   Hero           — spec strings from the Phase 5 brief, verbatim
+ *   Our Story      — Jennifer's scraped paragraph tightened for voice
+ *                    consistency with LeaderIntro / HormoneSpotlight. Facts
+ *                    (2005, Sault Area Hospital, trained across Canada and
+ *                    Europe) are preserved. TODO block marks the
+ *                    founder-narrative depth the live site doesn't carry.
+ *   Mission        — verbatim from ssmlaseradvantage.com/about-us/, rendered
+ *                    in Karma italic on a beige band to signal "official
+ *                    statement" rather than editorial voice.
+ *   Team           — all 11 bios scraped. Credentials, schools, graduation
+ *                    years, training programs are preserved verbatim. Prose
+ *                    tightened from the live site's promotional register.
+ *                    Raea has no scraped credential list (she's the Clinic
+ *                    Manager) — rendered as a functional description per the
+ *                    Phase 5 direction.
+ *   Recognition    — three stats cross-referenced with homepage LeaderIntro.
+ *                    Goldberg's affiliations rendered verbatim (CPSO #,
+ *                    California Medical Board #, society memberships, etc.).
+ *                    Clinic-wide compliance sentence is a fallback + TODO
+ *                    for Natalie to confirm specifics.
+ *   Before & After — reuses the homepage <BeforeAfter /> island as-is.
+ *   Financing      — Beautifi specifics (loan range, rates, term length)
+ *                    scraped verbatim. Rewards page is thin — TODO for the
+ *                    earning rate + redemption specifics. Gift card CTA uses
+ *                    the existing Ackroo URL from the footer.
+ *   Visit Us       — contact/hours mirrored from Footer. Street address is
+ *                    a TODO (not in any scrape). Map is a Phase-3 placeholder.
+ */
+
+const PHONE = '705.256.5420';
+const PHONE_TEL = 'tel:+17052565420';
+const EMAIL = 'mail@ssmlaseradvantage.com';
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+const BEAUTIFI_URL = 'https://app.beautifi.com/application/laser-advantage-medspa';
+const ACKROO_URL = 'https://ssmlaseradvantage.ackroo.net/en/gifts/new';
+const REWARDS_URL = 'https://ssmlaseradvantage.com/cash-back-rewards-program/';
+
+const hours = [
+  { day: 'Monday',    time: '9:30am – 5pm' },
+  { day: 'Tuesday',   time: '9:30am – 7pm' },
+  { day: 'Wednesday', time: '9:30am – 7pm' },
+  { day: 'Thursday',  time: '9:30am – 5pm' },
+  { day: 'Friday',    time: '9:30am – 5pm' },
+  { day: 'Saturday',  time: '9:30am – 3pm' },
+  { day: 'Sunday',    time: 'Closed' },
+];
+
+interface TeamMember {
+  name: string;
+  role: string;
+  image: ImageMetadata;
+  bio: string;
+}
+
+const team: TeamMember[] = [
+  {
+    name: 'Jennifer Kapur',
+    role: 'RN · Managing Director',
+    image: jenImg,
+    bio:
+      "Founded LA Medspa in 2005 after a career at Sault Area Hospital. A Registered Nurse with over a decade in medical aesthetics, Jennifer has trained with plastic surgeons across Canada and Europe and continues to set the clinical standard for every treatment offered here.",
+  },
+  {
+    name: 'Dr. Cory Goldberg',
+    role: 'MD · Plastic & Craniofacial Surgeon',
+    image: coryImg,
+    bio:
+      "Board-certified plastic and craniofacial surgeon; former Head of Plastic Surgery at Trillium Health Partners. Medical school at Queen's; plastic surgery residency at the University of Toronto; craniofacial fellowship at USC and Cedars-Sinai; executive MBA from Cornell and Queen's. Appointed Lecturer in the U of T Division of Plastic Surgery. Volunteer surgeon with Operation Smile.",
+  },
+  {
+    name: 'Sara Rocchetta',
+    role: 'NP · Aesthetic Specialist',
+    image: saraImg,
+    bio:
+      "Nurse Practitioner with over fourteen years in health care. Bachelor's in Nursing from the University of Ottawa (2010); Master's in Nursing and NP Diploma from the University of Toronto (2016). Practicing NP at the Algoma Nurse Practitioner–Led Clinic since 2017.",
+  },
+  {
+    name: 'Andrew Metcalfe',
+    role: 'NP · Medical Aesthetics',
+    image: andrewImg,
+    bio:
+      "Nurse Practitioner and medical aesthetics specialist. Faculty of Nursing at Sault College since 2006. Bachelor's from Lakehead (2007); Master of Nursing from Athabasca (2010); Post-Master's Advanced NP certification (2014). Certified in Botox administration with a clinical focus on migraine treatment.",
+  },
+  {
+    name: 'Angie Glavota',
+    role: 'RN',
+    image: angieImg,
+    bio:
+      "Registered Nurse. Graduated Sault College's nursing program. Nine years of critical care experience across the United States; currently also practicing at Sault Area Hospital's medical follow-up clinic.",
+  },
+  {
+    name: 'Riley Guzzo',
+    role: 'Licensed Medical Esthetician',
+    image: rileyImg,
+    bio:
+      "Three-year medical esthetics and skin care specialization from Georgian College. Prior experience at Novo Spa Yorkville, Old Mill Toronto, and resort spas in Muskoka and Orillia. CoolSculpting University (Washington) and Bodify Clinic (Arizona) certified; phlebotomy certified.",
+  },
+  {
+    name: 'Jenna Battisti',
+    role: 'Licensed Medical Esthetician',
+    image: jennaImg,
+    bio:
+      "Graduated Sault College (2017) and the Looks Aesthetics Academy in Toronto; phlebotomy certified through CIMT College. One of the first medical estheticians practicing in Sault Ste. Marie.",
+  },
+  {
+    name: 'Mariah Ruscio',
+    role: 'Medical Esthetician',
+    image: mariahImg,
+    bio:
+      "Two-year Medical Esthetician and Spa Management diploma from Humber College's Longo Faculty of Business (2024). Trained across laser, IPL, chemical peels, microdermabrasion, radiofrequency, and LED therapy.",
+  },
+  {
+    name: 'Nikka Merena',
+    role: 'Licensed Medical Esthetician',
+    image: nikkaImg,
+    bio:
+      "Esthetics diploma from Sault College (2023) and Advanced Medical Esthetics Practitioner diploma with honours from St. Clair College (2024), where she received the Faculty Academic Award. Oncology Esthetics trained and dermaplaning certified.",
+  },
+  {
+    name: 'Raea Caruso',
+    role: 'Clinic Manager',
+    image: raeaImg,
+    bio:
+      "Manages day-to-day clinic operations — scheduling, supply, and the service and product representatives the clinic works with. The operational backbone that keeps a ten-clinician practice moving.",
+  },
+  {
+    name: 'Natalie Yuen',
+    role: 'Digital Marketing Manager',
+    image: natalieImg,
+    bio:
+      "Business Administration Honours degree from Algoma University (2015) and Public Relations & Event Management diploma from Sault College (2016).",
+  },
+];
 ---
 <Layout
   title="About LA Medspa — Medical Aesthetics in Sault Ste. Marie"
   description="Nineteen years of medical aesthetics under one roof. Meet the team, see the work, and understand the standard."
 >
-  {/* Phase 5 content lands here: Our Story, Full Team with bios, Recognition,
-      Before & After Gallery, Financing & Rewards, Visit Us. */}
-  <section class="max-w-[1400px] mx-auto px-card py-section-s">
-    <h1 class="font-display font-medium uppercase text-ink text-[clamp(40px,6vw,64px)] leading-[1.05]">
-      About LA Medspa
-    </h1>
-    <p class="font-body text-charcoal mt-stack max-w-[600px]">
-      The full About page launches in Phase 5 with: Our Story, Full Team with
-      bios, Recognition, Before &amp; After Gallery, Financing &amp; Rewards,
-      and Visit Us.
-    </p>
+
+  {/* 1 — Hero strip */}
+  <section class="relative overflow-hidden aspect-[4/3] md:aspect-[16/7] bg-brown text-cream">
+    <Picture
+      src={heroImg}
+      formats={['avif', 'webp']}
+      widths={[960, 1280, 1600, 1920]}
+      sizes="100vw"
+      alt="LA Medspa consultation — olive-tree lounge, Queenstown District"
+      loading="eager"
+      decoding="async"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div
+      aria-hidden="true"
+      class="absolute inset-0"
+      style="background: linear-gradient(180deg, rgba(22,17,14,0.65) 0%, rgba(22,17,14,0.35) 55%, rgba(22,17,14,0.20) 100%);"
+    ></div>
+    <div class="relative z-10 h-full max-w-[1400px] mx-auto px-card flex items-center">
+      <div class="max-w-[720px]">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-gold mb-comfort">
+          Est. 2005 · Queenstown District
+        </div>
+        <h1 class="font-display font-medium uppercase text-cream text-[clamp(36px,6vw,72px)] leading-[1.05] tracking-[-0.01em] mb-card">
+          The Story Behind<br />LA Medspa
+        </h1>
+        <p class="font-body font-light text-[clamp(16px,2vw,20px)] leading-[1.6] text-cream/90 max-w-[520px]">
+          Nineteen years of medical aesthetics under one roof.
+        </p>
+      </div>
+    </div>
   </section>
+
+  {/* 2 — Our Story */}
+  <section class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
+    <div class="grid md:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
+      <div class="relative">
+        <Picture
+          src={jenImg}
+          formats={['avif', 'webp']}
+          widths={[480, 720, 960]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          alt="Jennifer Kapur, RN — Managing Director, LA Medspa"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-auto aspect-[4/5] object-cover object-[center_20%] rounded-[10px]"
+        />
+      </div>
+      <div class="max-w-[560px]">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+          Our Story
+        </div>
+        <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05] mb-card">
+          One Clinic,<br />One Standard
+        </h2>
+        <div class="font-body font-light text-[16px] leading-[1.75] text-charcoal space-y-[14px]">
+          <p>
+            LA Medspa was founded in 2005 by Jennifer Kapur, RN. Before opening the clinic
+            she worked at Sault Area Hospital; over the past decade she's trained with
+            plastic surgeons across Canada and Europe, and has continued to refine the
+            practice's technique with every new modality the industry has introduced.
+          </p>
+          <p>
+            What distinguishes the practice is who does the work. Every consultation sits
+            with a prescriber — a Registered Nurse, a Nurse Practitioner, or a
+            board-certified plastic surgeon. Medical estheticians carry the standard
+            between visits. The roster has grown deliberately: ten clinicians across
+            face, body, hormone therapy, and skin care, under one prescriber-led roof.
+          </p>
+          {/* TODO Phase 3: deeper founder narrative from Jennifer — the early years at
+              the clinic, why medical aesthetics specifically, how the team grew. Either
+              pull from the live site if they refresh their About page, or capture
+              directly from Natalie. */}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 3 — Mission pull-quote (verbatim from ssmlaseradvantage.com/about-us/) */}
+  <section class="bg-beige">
+    <div class="max-w-[900px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l text-center">
+      <blockquote class="font-serif italic text-ink text-[clamp(22px,3vw,32px)] leading-[1.4]">
+        "We believe that everyone has a personalized and unique way of expressing
+        beauty. Our mission and goal is to help you optimize a more youthful and
+        confident version of you."
+      </blockquote>
+      <div class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-charcoal-soft mt-card">
+        LA Medspa · Mission
+      </div>
+    </div>
+  </section>
+
+  {/* 4 — Full Team — id="team" for the /about#team deep-link from homepage */}
+  <section id="team" class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-comfort mb-stack">
+      <div class="max-w-[560px]">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+          Eleven practitioners · Ten specialists
+        </div>
+        <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+          The Team
+        </h2>
+      </div>
+      <p class="max-w-[420px] font-body font-light text-[15px] leading-[1.7] text-charcoal">
+        Prescribers, medical estheticians, and the operational roles that keep
+        a full-service clinic running.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack">
+      {team.map((p) => (
+        <article class="bg-cream border border-hairline rounded-card p-card flex flex-col items-start gap-card">
+          <div class="w-[120px] h-[120px] md:w-[140px] md:h-[140px] rounded-pill overflow-hidden border border-gold/30 flex-shrink-0">
+            <Picture
+              src={p.image}
+              formats={['avif', 'webp']}
+              widths={[180, 280]}
+              sizes="140px"
+              alt={`${p.name} — ${p.role}`}
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover object-[center_20%]"
+            />
+          </div>
+          <div class="flex-1">
+            <div class="font-display font-medium uppercase text-ink text-[18px] leading-[1.2]">
+              {p.name}
+            </div>
+            <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mt-[6px] mb-comfort">
+              {p.role}
+            </div>
+            <p class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
+              {p.bio}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {/* 5 — Recognition */}
+  <section class="bg-beige">
+    <div class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
+      <div class="max-w-[560px] mb-stack">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+          Recognition · Credentials
+        </div>
+        <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+          The Standard Behind<br />The Work
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 border-t border-b border-hairline mb-stack">
+        <div class="py-[16px] md:py-card md:px-card border-b md:border-b-0 md:border-r border-hairline">
+          <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[10px]">
+            Experience
+          </div>
+          <div class="font-display font-medium text-[clamp(48px,6vw,64px)] leading-[1] text-ink mb-[8px]">
+            19<span class="text-gold">+</span>
+          </div>
+          <div class="font-body font-light text-[14px] leading-[1.55] text-charcoal-soft">
+            years of medical aesthetics in one clinic.
+          </div>
+        </div>
+        <div class="py-[16px] md:py-card md:px-card border-b md:border-b-0 md:border-r border-hairline">
+          <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[10px]">
+            Team
+          </div>
+          <div class="font-display font-medium text-[clamp(48px,6vw,64px)] leading-[1] text-ink mb-[8px]">
+            10
+          </div>
+          <div class="font-body font-light text-[14px] leading-[1.55] text-charcoal-soft">
+            clinicians — RN, NP, MD, and medical estheticians.
+          </div>
+        </div>
+        <div class="py-[16px] md:py-card md:px-card">
+          <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[10px]">
+            Recognition
+          </div>
+          <div class="font-display font-medium text-[clamp(48px,6vw,64px)] leading-[1] text-ink mb-[8px]">
+            1<span class="text-charcoal-soft text-[clamp(28px,3.5vw,36px)]">/15</span>
+          </div>
+          <div class="font-body font-light text-[14px] leading-[1.55] text-charcoal-soft">
+            North American Cynoglow Pioneer Award recipients — recognized for
+            excellence with PicoSure and Potenza. 2023.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-[1fr_1fr] gap-stack">
+        <div>
+          <div class="font-display font-medium text-[12px] uppercase tracking-[0.14em] text-brown mb-comfort">
+            Dr. Cory Goldberg · Affiliations
+          </div>
+          <ul class="space-y-[8px] font-body font-light text-[14px] leading-[1.55] text-charcoal">
+            <li>Royal College of Physicians and Surgeons of Canada</li>
+            <li>College of Physicians and Surgeons of Ontario — CPSO #73687</li>
+            <li>Medical Board of California — License 97840</li>
+            <li>Canadian Society of Plastic Surgeons</li>
+            <li>American Society of Plastic Surgeons</li>
+            <li>Ontario Medical Association</li>
+            <li>Canadian Association for Accreditation of Ambulatory Surgical Facilities</li>
+            <li>University of Toronto Division of Plastic Surgery · Appointed Lecturer</li>
+            <li>Operation Smile · Volunteer Surgeon</li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-display font-medium text-[12px] uppercase tracking-[0.14em] text-brown mb-comfort">
+            Clinic Credentials
+          </div>
+          <p class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
+            LA Medspa's prescriber-led team holds the Ontario and federal credentials
+            required for every treatment offered here. Nursing staff are registered
+            with the College of Nurses of Ontario.
+          </p>
+          {/* TODO Phase 3: specific registration numbers and society affiliations for
+              Jennifer, Angie, Sara, and Andrew to come from Natalie. Includes CNO
+              registration numbers and Andrew's NP-PHC designation number. */}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 6 — Before & After — reuses homepage component */}
+  <BeforeAfter />
+
+  {/* 7 — Financing & Rewards */}
+  <section class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
+    <div class="max-w-[560px] mb-stack">
+      <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
+        Payment · Value
+      </div>
+      <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+        Financing &<br />Rewards
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-comfort">
+      <article class="bg-cream border border-hairline rounded-card p-card flex flex-col gap-card">
+        <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-gold">
+          Beautifi
+        </div>
+        <div class="font-display font-medium uppercase text-ink text-[22px] leading-[1.15]">
+          Pay Over Time
+        </div>
+        <p class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
+          Monthly payment plans from $1,000–$25,000+, terms from six months to six
+          years, rates starting at 5.99%. Apply online in under three minutes —
+          instant decision, soft credit pull, no impact on your score.
+        </p>
+        <a
+          href={BEAUTIFI_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-auto inline-flex items-center gap-[6px] font-display font-medium text-[12px] uppercase tracking-[0.14em] text-gold no-underline hover:text-gold-hover focus-visible:text-gold-hover transition-colors duration-la-base ease-la-ease"
+        >
+          Apply with Beautifi <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+
+      <article class="bg-cream border border-hairline rounded-card p-card flex flex-col gap-card">
+        <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-gold">
+          LA Medspa Rewards
+        </div>
+        <div class="font-display font-medium uppercase text-ink text-[22px] leading-[1.15]">
+          Earn Money Back
+        </div>
+        <p class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
+          Earn money back on every visit. Redemption runs through the LA Medspa app
+          on iOS and Android — sign up once, carry it across every treatment.
+          {/* TODO Phase 3: earning percentage, redemption thresholds, and any tier
+              structure from Natalie. Live /cash-back-rewards-program/ is thin. */}
+        </p>
+        <a
+          href={REWARDS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-auto inline-flex items-center gap-[6px] font-display font-medium text-[12px] uppercase tracking-[0.14em] text-gold no-underline hover:text-gold-hover focus-visible:text-gold-hover transition-colors duration-la-base ease-la-ease"
+        >
+          Program details <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+
+      <article class="bg-cream border border-hairline rounded-card p-card flex flex-col gap-card">
+        <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-gold">
+          Gift Cards
+        </div>
+        <div class="font-display font-medium uppercase text-ink text-[22px] leading-[1.15]">
+          Give The Visit
+        </div>
+        <p class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
+          Ackroo gift cards redeemable against any treatment or product at the clinic.
+          Purchase online; the recipient brings the card in at any visit.
+        </p>
+        <a
+          href={ACKROO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-auto inline-flex items-center gap-[6px] font-display font-medium text-[12px] uppercase tracking-[0.14em] text-gold no-underline hover:text-gold-hover focus-visible:text-gold-hover transition-colors duration-la-base ease-la-ease"
+        >
+          Purchase gift card <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  {/* 8 — Visit Us */}
+  <section class="bg-brown text-cream">
+    <div class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
+      <div class="max-w-[560px] mb-stack">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-cream/60 mb-comfort">
+          Visit Us
+        </div>
+        <h2 class="font-display font-medium uppercase text-cream text-[clamp(32px,4.5vw,48px)] tracking-[-0.01em] leading-[1.05]">
+          Sault Ste. Marie<br />Queenstown District
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-stack lg:gap-section-s">
+        <div class="space-y-stack">
+          <div>
+            <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-cream/60 mb-[10px]">
+              Address
+            </div>
+            <div class="font-body font-light text-[16px] leading-[1.6] text-cream/90">
+              Historic Queenstown District<br />
+              Sault Ste. Marie, Ontario
+              {/* TODO Phase 3: street address from Natalie for the full postal address. */}
+            </div>
+          </div>
+
+          <div>
+            <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-cream/60 mb-[10px]">
+              Call
+            </div>
+            <a
+              href={PHONE_TEL}
+              class="font-display font-medium text-[20px] tracking-[0.08em] text-cream no-underline hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+            >
+              {PHONE}
+            </a>
+          </div>
+
+          <div>
+            <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-cream/60 mb-[10px]">
+              Email
+            </div>
+            <a
+              href={`mailto:${EMAIL}`}
+              class="font-body font-light text-[14px] text-cream/80 no-underline break-all hover:text-gold focus-visible:text-gold transition-colors duration-la-base ease-la-ease"
+            >
+              {EMAIL}
+            </a>
+          </div>
+
+          <div>
+            <div class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-cream/60 mb-[10px]">
+              Hours
+            </div>
+            <ul class="flex flex-col gap-[4px]">
+              {hours.map((h) => (
+                <li class="flex justify-between gap-comfort font-body font-light text-[13px] text-cream/85">
+                  <span class="font-display font-medium uppercase tracking-[0.1em] text-[11px] text-cream/90 min-w-[90px]">
+                    {h.day}
+                  </span>
+                  <span>{h.time}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="pt-card">
+            <a
+              href={JANE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-[10px] font-display font-medium uppercase tracking-[0.12em] rounded-pill border border-cream text-cream bg-transparent px-[28px] py-[14px] text-[13px] no-underline transition-all duration-la-base ease-la-ease hover:bg-gold hover:text-ink hover:border-gold focus-visible:outline-none focus-visible:shadow-focus"
+            >
+              Book on Jane App <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="aspect-[4/3] bg-cream/10 border border-cream/15 rounded-[10px] flex items-center justify-center relative overflow-hidden">
+          <div class="text-center max-w-[320px] px-card">
+            <div class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-cream/60 mb-[8px]">
+              Coming With Phase 3
+            </div>
+            <div class="font-display font-medium uppercase text-cream text-[18px] leading-[1.3] mb-comfort">
+              Interactive Map
+            </div>
+            <p class="font-body font-light text-[13px] leading-[1.6] text-cream/70">
+              Street address, parking notes, and a live map view will land with the
+              Phase 3 contact page.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </Layout>
