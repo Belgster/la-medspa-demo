@@ -124,7 +124,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
         </button>
       </div>
       {open && !active && (
-        <div className="animate-la-fade-rise py-[12px] bg-cream border-b border-hairline">
+        <div className="fixed inset-x-0 top-[64px] bottom-0 bg-cream z-50 overflow-y-auto animate-la-fade-rise">
           {CATEGORIES.map((c) => (
             <button
               key={c.key}
@@ -172,6 +172,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
             href={shopHref}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
             className={
               'w-full text-left px-[24px] py-[18px] border-b border-beige ' +
               'font-display font-medium text-[16px] uppercase tracking-[0.1em] text-brown ' +
@@ -193,7 +194,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
         </div>
       )}
       {open && active && (
-        <div className="animate-la-fade-rise py-[12px] bg-cream border-b border-hairline">
+        <div className="fixed inset-x-0 top-[64px] bottom-0 bg-cream z-50 overflow-y-auto animate-la-fade-rise">
           <button
             onClick={() => setActive(null)}
             className="w-full text-left px-[24px] py-[14px] font-display text-[11px] uppercase tracking-[0.14em] text-charcoal-soft bg-transparent border-none"
@@ -201,7 +202,12 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
             ← All Categories
           </button>
           {(treatmentsByCategory[active] ?? []).map((t) => (
-            <a key={t.name} href={t.href} className="block px-[24px] py-[16px] border-b border-beige no-underline">
+            <a
+              key={t.name}
+              href={t.href}
+              onClick={() => { setOpen(false); setActive(null); }}
+              className="block px-[24px] py-[16px] border-b border-beige no-underline"
+            >
               <div className="font-display font-medium text-[15px] uppercase text-brown">{t.name}</div>
               <div className="font-body font-light text-[12px] text-charcoal-soft mt-[2px]">{t.meta}</div>
             </a>

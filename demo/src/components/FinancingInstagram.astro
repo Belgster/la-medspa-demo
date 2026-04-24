@@ -77,7 +77,7 @@ const tiles = [
       </p>
     </div>
 
-    <div class="grid grid-cols-4 gap-[6px] mb-stack">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-[8px] md:gap-[6px] mb-stack">
       {tiles.map((t) => (
         <a
           href={IG_URL}
@@ -90,7 +90,7 @@ const tiles = [
             src={t.src}
             formats={['avif', 'webp']}
             widths={[160, 240, 320, 480]}
-            sizes="(min-width: 768px) 12vw, 25vw"
+            sizes="(min-width: 768px) 12vw, 50vw"
             alt={t.alt}
             loading="lazy"
             decoding="async"

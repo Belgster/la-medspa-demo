@@ -43,13 +43,13 @@ const [mobileWebp, desktopWebp, fallback] = await Promise.all([
     />
   </picture>
 
-  {/* Warm dark overlay — diagonal on mobile (darker upper-left, where the
-      text lives; clear lower-right over the subject), horizontal on
-      desktop (darker-left, lighter-right). Scoped via <style> below. */}
+  {/* Warm dark overlay — vertical on mobile (darker top band where copy lives,
+      clearing toward the subject at the bottom), horizontal on desktop
+      (darker-left, lighter-right). Scoped via <style> below. */}
   <div aria-hidden="true" class="absolute inset-0 hero-overlay"></div>
 
   <div class="relative z-10 min-h-screen min-h-[100svh] flex items-start md:items-center">
-    <div class="max-w-[1400px] mx-auto w-full px-card pt-[max(64px,15vh)] pb-section-s md:py-section-s lg:py-section-l max-h-[55vh] md:max-h-none md:pl-[8%]">
+    <div class="max-w-[1400px] mx-auto w-full px-card pt-[80px] pb-section-s md:py-section-s lg:py-section-l md:pl-[8%]">
       <div class="max-w-[640px]">
         <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-cream/80 mb-comfort">
           Medical Aesthetics · Sault Ste. Marie
@@ -83,12 +83,13 @@ const [mobileWebp, desktopWebp, fallback] = await Promise.all([
 </section>
 
 <style>
-  /* Mobile (default): diagonal — darker top-left over copy, clear bottom-right over subject */
+  /* Mobile (default): vertical — darker top band over copy, clearing toward the subject at the bottom */
   .hero-overlay {
     background: linear-gradient(
-      135deg,
-      rgba(22, 17, 14, 0.62) 0%,
-      rgba(22, 17, 14, 0.15) 65%,
+      180deg,
+      rgba(22, 17, 14, 0.72) 0%,
+      rgba(22, 17, 14, 0.45) 38%,
+      rgba(22, 17, 14, 0.18) 70%,
       rgba(22, 17, 14, 0.10) 100%
     );
   }
