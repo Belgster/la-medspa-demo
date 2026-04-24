@@ -7,16 +7,21 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
 const SHOP_URL = 'https://laseradvantage.myshopify.com/';
 ---
 <!--
-  display: contents so the sticky <header> inside each nav becomes a direct
-  child of <body> for layout purposes. Without this the wrapper box is only
-  ~72px tall and sticky releases on the first px of scroll.
+  display: contents so the sticky <header> becomes a direct child of <body>
+  for layout purposes. Without this the wrapper box is only ~72px tall and
+  sticky releases on the first px of scroll.
+
+  MobileNav composes a Provider + Header + Drawer internally so the drawer
+  renders as a sibling of <header> (not a descendant). That keeps the
+  drawer's position: fixed resolving against the viewport rather than
+  whatever containing block the sticky header creates on some browsers.
 -->
 <div class="hidden md:contents">
   <DesktopNav />
 </div>
 <div class="contents md:hidden">
   <MobileNav
-    client:visible
+    client:load
     treatmentsByCategory={treatmentsByCategory}
     bookHref={JANE_URL}
     shopHref={SHOP_URL}
