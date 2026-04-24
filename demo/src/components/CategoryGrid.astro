@@ -1,22 +1,9 @@
 ---
 /*
- * §3 — Six service categories
- *
- * Tailwind can't resolve dynamic utility names like `bg-category-${key}-line`
- * without safelisting, so the rail + ink classes are emitted via a static
- * lookup (same pattern as the shipped TreatmentCard.tsx CAT_CLASSES).
+ * §3 — Six service categories.
  */
 
 type CategoryKey = 'face' | 'body' | 'hair' | 'medical' | 'wellness' | 'skincare';
-
-const CAT_CLASSES: Record<CategoryKey, { rail: string; ink: string; tone: string }> = {
-  face:     { rail: 'bg-category-face-line',     ink: 'text-category-face-ink',     tone: 'bg-category-face-tone'     },
-  body:     { rail: 'bg-category-body-line',     ink: 'text-category-body-ink',     tone: 'bg-category-body-tone'     },
-  hair:     { rail: 'bg-category-hair-line',     ink: 'text-category-hair-ink',     tone: 'bg-category-hair-tone'     },
-  medical:  { rail: 'bg-category-medical-line',  ink: 'text-category-medical-ink',  tone: 'bg-category-medical-tone'  },
-  wellness: { rail: 'bg-category-wellness-line', ink: 'text-category-wellness-ink', tone: 'bg-category-wellness-tone' },
-  skincare: { rail: 'bg-category-skincare-line', ink: 'text-category-skincare-ink', tone: 'bg-category-skincare-tone' },
-};
 
 interface CategoryCard {
   key: CategoryKey;
@@ -99,8 +86,7 @@ const CATEGORIES: CategoryCard[] = [
     </div>
     <p class="max-w-[420px] font-body font-light text-[15px] leading-[1.7] text-charcoal">
       From injectables to hormone therapy, every category sits under one
-      prescriber-led roof. The color you see on each card is how we mark
-      it across the site.
+      prescriber-led roof.
     </p>
   </div>
 
@@ -109,13 +95,12 @@ const CATEGORIES: CategoryCard[] = [
       <article
         class="group relative flex flex-col bg-cream border border-hairline rounded-card overflow-hidden transition-all duration-la-base ease-la-ease hover:border-[#D4C8B8] hover:shadow-md focus-within:border-[#D4C8B8] focus-within:shadow-md"
       >
-        <span aria-hidden="true" class:list={['absolute top-0 inset-x-0 h-[3px] z-10', CAT_CLASSES[c.key].rail]} />
         <div class="p-card flex flex-col flex-1">
-          <div class="flex items-baseline justify-between mb-comfort">
-            <div class:list={['font-mono text-[10.5px] uppercase tracking-[0.14em]', CAT_CLASSES[c.key].ink]}>
-              Category · {c.index}
+          <div class="flex items-start justify-between mb-comfort">
+            <div class="font-display font-medium text-[44px] leading-none text-gold">
+              {c.index}
             </div>
-            <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft">
+            <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft pt-[6px]">
               {c.marquee.length}+ treatments
             </div>
           </div>
@@ -138,8 +123,7 @@ const CATEGORIES: CategoryCard[] = [
                     rel="noopener noreferrer"
                     class:list={[
                       base,
-                      CAT_CLASSES[c.key].tone,
-                      CAT_CLASSES[c.key].ink,
+                      'bg-beige text-brown',
                       'no-underline transition-all duration-la-base ease-la-ease hover:brightness-95 focus-visible:brightness-95 focus-visible:outline-none focus-visible:shadow-focus',
                     ]}
                   >
@@ -149,7 +133,7 @@ const CATEGORIES: CategoryCard[] = [
                 );
               }
               return (
-                <span class:list={[base, CAT_CLASSES[c.key].tone, CAT_CLASSES[c.key].ink]}>
+                <span class:list={[base, 'bg-beige text-brown']}>
                   {label}
                 </span>
               );
@@ -160,7 +144,7 @@ const CATEGORIES: CategoryCard[] = [
             class:list={[
               'mt-auto font-display font-medium text-[11px] uppercase tracking-[0.14em] no-underline flex items-center gap-[8px] w-fit',
               'focus-visible:outline-none focus-visible:shadow-focus rounded-[4px]',
-              CAT_CLASSES[c.key].ink,
+              'text-gold',
             ]}
           >
             <span>Explore {c.label.toLowerCase()}</span>

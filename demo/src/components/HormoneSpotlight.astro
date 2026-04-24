@@ -4,8 +4,8 @@
  *
  * Side-by-side with copy on the left, image on the right (inverted from §2
  * for visual variation). Background is beige — warmer than cream — so the
- * section reads as an emphasized beat. All category-color references use
- * the Medical triplet (oxblood) to cross-reference §3's color system.
+ * section reads as an emphasized beat. Gold is the single accent color —
+ * this is the page's one featured-treatment spotlight and earns its hierarchy.
  *
  * Copy is mined verbatim-adjacent from ssmlaseradvantage.com/bhrt-hormone-therapy/
  * and /trt-hormone-therapy/: 1-3% annual hormone decline, the 3-step protocol,
@@ -44,10 +44,10 @@ const steps = [
   <div class="max-w-[1400px] mx-auto px-card py-section-s lg:py-section-l">
     <div class="grid md:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
       <div class="max-w-[560px] order-2 md:order-1">
-        {/* Category chip — Medical oxblood */}
-        <div class="inline-flex items-center gap-[8px] px-[12px] py-[6px] rounded-pill bg-category-medical-tone mb-comfort">
-          <span aria-hidden="true" class="w-[6px] h-[6px] rounded-pill bg-category-medical-line"></span>
-          <span class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-category-medical-ink">
+        {/* Category chip — neutral beige with brown dot */}
+        <div class="inline-flex items-center gap-[8px] px-[12px] py-[6px] rounded-pill bg-beige mb-comfort">
+          <span aria-hidden="true" class="w-[6px] h-[6px] rounded-pill bg-brown"></span>
+          <span class="font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-brown">
             Featured · Medical
           </span>
         </div>
@@ -55,7 +55,7 @@ const steps = [
         <h2 class="font-display font-medium uppercase text-ink text-[clamp(32px,4.8vw,56px)] tracking-[-0.01em] leading-[1.02] mb-card">
           Hormone Therapy
         </h2>
-        <div class="font-display font-medium uppercase text-category-medical-ink text-[13px] tracking-[0.14em] mb-card">
+        <div class="font-display font-medium uppercase text-brown text-[13px] tracking-[0.14em] mb-card">
           Bioidentical · Prescriber-Led · Men & Women
         </div>
 
@@ -71,7 +71,7 @@ const steps = [
         <ol class="space-y-comfort mb-stack">
           {steps.map((s) => (
             <li class="flex gap-comfort">
-              <div class="font-display font-medium text-[22px] leading-none text-category-medical-line min-w-[36px]">
+              <div class="font-display font-medium text-[22px] leading-none text-gold min-w-[36px]">
                 {s.n}
               </div>
               <div>
@@ -107,8 +107,8 @@ const steps = [
           decoding="async"
           class="w-full h-auto aspect-[4/5] object-cover object-[60%_center] rounded-[10px]"
         />
-        {/* Decorative oxblood hairline accent — reinforces Medical category */}
-        <div aria-hidden="true" class="hidden md:block absolute -left-[18px] top-[32px] bottom-[32px] w-[2px] bg-category-medical-line opacity-70"></div>
+        {/* Decorative gold hairline accent — the page's one featured spotlight earns this hierarchy */}
+        <div aria-hidden="true" class="hidden md:block absolute -left-[18px] top-[32px] bottom-[32px] w-[2px] bg-gold opacity-60"></div>
       </div>
     </div>
   </div>

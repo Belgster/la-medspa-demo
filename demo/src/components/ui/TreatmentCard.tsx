@@ -2,7 +2,7 @@ import * as React from 'react';
 
 /**
  * TreatmentCard — tag-based, multi-category.
- * A 3px top rail picks up the PRIMARY category; tag pills below declare all.
+ * Category tags are monochrome (beige/brown) — information preserved, color-coding removed.
  * Bela MD wears both Face and Skin Care without being duplicated in the IA.
  */
 
@@ -17,20 +17,11 @@ export const CATEGORY_LABEL: Record<CategoryKey, string> = {
   skincare: 'Skin Care',
 };
 
-// Tailwind can't resolve nested palette keys to arbitrary bg-/text-/border-
-// without safelisting — use a static lookup for the three emitted utilities.
-const CAT_CLASSES: Record<CategoryKey, { tag: string; rail: string }> = {
-  face:     { tag: 'bg-category-face-tone text-category-face-ink',       rail: 'bg-category-face-line' },
-  body:     { tag: 'bg-category-body-tone text-category-body-ink',       rail: 'bg-category-body-line' },
-  hair:     { tag: 'bg-category-hair-tone text-category-hair-ink',       rail: 'bg-category-hair-line' },
-  medical:  { tag: 'bg-category-medical-tone text-category-medical-ink', rail: 'bg-category-medical-line' },
-  wellness: { tag: 'bg-category-wellness-tone text-category-wellness-ink', rail: 'bg-category-wellness-line' },
-  skincare: { tag: 'bg-category-skincare-tone text-category-skincare-ink', rail: 'bg-category-skincare-line' },
-};
+const TAG_CLASS = 'bg-beige text-brown';
 
 export interface TreatmentCardProps {
   name: string;
-  /** Primary category — drives the top rail color. First entry in `categories`. */
+  /** Tag pills under the image. First entry is treated as primary for data purposes only. */
   categories: CategoryKey[];
   /** Optional. Omit to hide the "From" column — duration stays, right-aligned. */
   price?: string;
@@ -44,7 +35,6 @@ export const TreatmentCard: React.FC<TreatmentCardProps> = ({
   name, categories, price, duration, concerns, image, href,
 }) => {
   const Tag = href ? 'a' : 'div';
-  const primary = categories[0];
 
   return (
     <Tag
@@ -55,7 +45,6 @@ export const TreatmentCard: React.FC<TreatmentCardProps> = ({
         'hover:border-[#D4C8B8] hover:shadow-md'
       }
     >
-      <span aria-hidden className={`absolute top-0 inset-x-0 h-[3px] z-10 ${CAT_CLASSES[primary].rail}`} />
       {image && (
         <img src={image.src} alt={image.alt} className="w-full aspect-[4/5] object-cover" />
       )}
@@ -67,7 +56,7 @@ export const TreatmentCard: React.FC<TreatmentCardProps> = ({
               className={
                 'font-display font-medium text-[10px] uppercase tracking-[0.12em] ' +
                 'px-[10px] py-[4px] rounded-pill ' +
-                CAT_CLASSES[ck].tag
+                TAG_CLASS
               }
             >
               {CATEGORY_LABEL[ck]}
@@ -86,7 +75,7 @@ export const TreatmentCard: React.FC<TreatmentCardProps> = ({
           {price && (
             <div>
               <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-charcoal-soft mb-[2px]">From</div>
-              <div className="font-display font-medium text-[17px] text-ink">{price}</div>
+              <div className="font-display font-medium text-[17px] text-gold">{price}</div>
             </div>
           )}
           <div className={price ? 'text-right' : 'text-right ml-auto'}>

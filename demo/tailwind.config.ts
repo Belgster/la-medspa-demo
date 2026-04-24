@@ -3,9 +3,6 @@ import type { Config } from 'tailwindcss';
 /**
  * LA Medspa — Tailwind design tokens
  * Paired with handoff/design-system.md and handoff/components/*.
- *
- * DO NOT RENAME the category triplet keys (tone/line/ink) or the warm
- * neutral scale — category-aware components consume them by name.
  */
 const config: Config = {
   content: ['./src/**/*.{astro,ts,tsx,mdx}'],
@@ -25,17 +22,6 @@ const config: Config = {
         'charcoal-soft': '#6B6461',
         hairline:      '#E8E1D8',
         focus:         '#C98A1C',
-
-        // ——— Treatment-category IA (editorial, warm) ———
-        // Tone/Line/Ink triplet — API contract for category-aware components.
-        category: {
-          face:     { tone: '#F4E0D4', line: '#C9765A', ink: '#7A3A2A' }, // terracotta
-          body:     { tone: '#E3E8D8', line: '#8AA06C', ink: '#4A5A3C' }, // sage
-          hair:     { tone: '#EEE0CE', line: '#B88250', ink: '#6B4426' }, // clay
-          medical:  { tone: '#E8D4CE', line: '#8A3A30', ink: '#4A1F1C' }, // oxblood — warm authority
-          wellness: { tone: '#F1DEE3', line: '#B8798E', ink: '#7A4458' }, // dusty rose
-          skincare: { tone: '#E9E6CC', line: '#99955A', ink: '#5C5A2A' }, // olive
-        },
 
         // ——— Semantic ———
         success: '#6E8A5E',
