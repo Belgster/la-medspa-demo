@@ -121,6 +121,7 @@ const CATEGORIES: CategoryCard[] = [
   <div class="grid grid-cols-2 lg:grid-cols-3 gap-[12px] lg:gap-comfort">
     {CATEGORIES.map((c) => (
       <article
+        id={`category-${c.key}`}
         class="group relative flex flex-col bg-cream border border-hairline rounded-card overflow-hidden transition-all duration-la-base ease-la-ease hover:border-[#D4C8B8] hover:shadow-md focus-within:border-[#D4C8B8] focus-within:shadow-md"
       >
         <div class="image-band aspect-[4/3] md:aspect-[16/10] overflow-hidden">
