@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import FeaturedSpecial from '../components/FeaturedSpecial.astro';
 import LeaderIntro from '../components/LeaderIntro.astro';
 import CategoryGrid from '../components/CategoryGrid.astro';
 import HormoneSpotlight from '../components/HormoneSpotlight.astro';
@@ -13,6 +14,7 @@ import heroMobile from '../assets/hero-mobile.jpg';
 ---
 <Layout preloadImage={heroDesktop} preloadImageMobile={heroMobile}>
   <Hero />
+  <FeaturedSpecial />
   <LeaderIntro />
   <CategoryGrid />
   <HormoneSpotlight />

@@ -1,0 +1,97 @@
+---
+/*
+ * §2 — Featured Specials
+ *
+ * Single hero featured promotion (LA Skin Days — Anniversary Edition).
+ * Sits between Hero and LeaderIntro as the first editorial moment on the
+ * page. Designed to scale to 2–3 promotions side-by-side without restructure.
+ *
+ * Copy is verbatim from ssmlaseradvantage.com/specials/ as of the v2 brief.
+ */
+import { Picture } from 'astro:assets';
+import editorial from '../assets/245.jpg';
+import ButtonLink from './ui/ButtonLink.astro';
+
+const JANE_URL = 'https://laseradvantage.janeapp.com/';
+
+const offers = [
+  {
+    name: 'LA Skin Days Anniversary Consultation',
+    perks: [
+      'Free mini facial',
+      'Custom treatment plan',
+      'Anniversary pricing on all treatments and skincare',
+      '$150 goodie bag with every package purchased',
+    ],
+    availability: 'Available with Jenna, Mariah, and Riley',
+  },
+  {
+    name: 'LA Anniversary Consultation',
+    perks: [
+      'Custom treatment plan',
+      'Anniversary pricing on all treatments and skincare',
+      '$150 goodie bag with every package purchased',
+    ],
+    availability: 'Available with Jen and Angie',
+  },
+];
+---
+<section id="specials" class="bg-cream">
+  <div class="max-w-[1400px] mx-auto px-card py-section-s lg:py-section-l">
+    <div class="grid lg:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
+
+      <div class="relative">
+        <Picture
+          src={editorial}
+          formats={['avif', 'webp']}
+          widths={[480, 720, 960, 1200]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          alt="LA Medspa anniversary — editorial moment"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-auto aspect-[4/3] object-cover rounded-[10px]"
+        />
+      </div>
+
+      <div class="max-w-[620px]">
+        <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-gold mb-comfort">
+          Featured · Limited Availability
+        </div>
+
+        <h2 class="font-display font-medium uppercase text-ink text-[clamp(36px,5vw,56px)] tracking-[-0.01em] leading-[1.05] mb-card">
+          LA Skin Days — Anniversary Edition
+        </h2>
+
+        <p class="font-body font-light text-[16px] leading-[1.7] text-charcoal mb-stack">
+          Two consultation paths to the same anniversary perks.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-stack">
+          {offers.map((o) => (
+            <div class="bg-beige border border-hairline rounded-[4px] p-[20px] flex flex-col">
+              <div class="font-display font-medium uppercase text-[18px] text-brown leading-[1.2] mb-[14px]">
+                {o.name}
+              </div>
+              <ul class="space-y-[8px] mb-[14px] flex-1">
+                {o.perks.map((p) => (
+                  <li class="flex gap-[8px] font-body font-light text-[14px] leading-[1.55] text-charcoal">
+                    <span aria-hidden="true" class="text-gold font-display font-medium">+</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft pt-[12px] border-t border-hairline">
+                {o.availability}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <ButtonLink href={JANE_URL} external variant="primary">
+          Book Anniversary Consultation →
+        </ButtonLink>
+      </div>
+
+    </div>
+  </div>
+</section>
