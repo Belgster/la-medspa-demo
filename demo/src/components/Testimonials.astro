@@ -64,18 +64,6 @@ const team: Person[] = [
     </p>
   </div>
 
-  {/* Coming-soon stamp — editorial badge above the placeholder cards */}
-  <div class="flex justify-center mb-stack">
-    <div class="bg-cream border border-hairline rounded-card px-stack py-card text-center max-w-[420px] shadow-md -rotate-[3deg]">
-      <div class="font-mono text-[10.5px] uppercase tracking-[0.18em] text-charcoal-soft mb-[8px]">
-        Coming with Phase 3
-      </div>
-      <div class="font-display font-medium uppercase text-ink text-[clamp(18px,2.4vw,22px)] leading-[1.3]">
-        Real Google Reviews,<br />Pulled Live
-      </div>
-    </div>
-  </div>
-
   <div class="grid grid-cols-1 md:grid-cols-3 gap-comfort">
     {[0, 1, 2].map((i) => (
       <article
@@ -128,7 +116,7 @@ const team: Person[] = [
       </p>
     </div>
 
-    <div class="overflow-x-auto pb-card la-team-scroll -mx-card px-card">
+    <div class="overflow-x-auto pb-card la-team-scroll -mx-card px-card mb-stack">
       <ul class="flex gap-comfort snap-x snap-mandatory w-max">
         {team.map((p) => (
           <li class="snap-start flex-shrink-0 w-[220px] bg-cream border border-hairline rounded-card p-card flex flex-col gap-base">
@@ -163,6 +151,15 @@ const team: Person[] = [
           </li>
         ))}
       </ul>
+    </div>
+
+    <div class="text-center">
+      <a
+        href="/about#team"
+        class="inline-flex items-center gap-[6px] font-display font-medium text-[11px] uppercase tracking-[0.14em] text-gold no-underline hover:text-gold-hover focus-visible:text-gold-hover transition-colors duration-la-base ease-la-ease"
+      >
+        Meet the team <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>

@@ -38,22 +38,22 @@ const offers = [
 ---
 <section id="specials" class="bg-cream">
   <div class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
-    <div class="grid lg:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
+    <div class="flex flex-col gap-stack">
 
-      <div class="relative">
-        <Picture
-          src={editorial}
-          formats={['avif', 'webp']}
-          widths={[480, 720, 960, 1200]}
-          sizes="(min-width: 1024px) 50vw, 100vw"
-          alt="LA Medspa anniversary — editorial moment"
-          loading="lazy"
-          decoding="async"
-          class="w-full h-auto aspect-[4/3] object-cover rounded-[10px]"
-        />
-      </div>
+      {/* Full-width editorial banner — avoids the column-height mismatch the
+          side-by-side layout created on desktop. */}
+      <Picture
+        src={editorial}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280, 1600, 1920]}
+        sizes="(min-width: 1400px) 1336px, 100vw"
+        alt="LA Medspa anniversary — editorial moment"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-auto aspect-[16/7] object-cover rounded-[10px]"
+      />
 
-      <div class="max-w-[620px]">
+      <div class="max-w-[820px] mx-auto w-full">
         <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-gold mb-comfort">
           Featured · Limited Availability
         </div>
@@ -87,7 +87,7 @@ const offers = [
           ))}
         </div>
 
-        <ButtonLink href={JANE_URL} external variant="primary">
+        <ButtonLink href={JANE_URL} external variant="primary" size="lg">
           Book Anniversary Consultation →
         </ButtonLink>
       </div>

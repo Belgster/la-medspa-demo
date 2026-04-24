@@ -125,6 +125,8 @@ interface MobileNavCtx {
   treatmentsByCategory: Record<CategoryKey, Treatment[]>;
   bookHref: string;
   shopHref: string;
+  /** Current pathname, passed from Nav.astro — drives the drawer's active-row styling. */
+  currentPath: string;
 }
 
 const MobileNavContext = React.createContext<MobileNavCtx | null>(null);
@@ -140,11 +142,13 @@ interface MobileNavProviderProps {
   bookHref: string;
   /** Outbound Shopify URL — rendered as a secondary drawer link with an ↗ glyph. */
   shopHref: string;
+  /** Current pathname from the parent Astro template — used to mark the active drawer row. */
+  currentPath?: string;
   children: React.ReactNode;
 }
 
 export const MobileNavProvider: React.FC<MobileNavProviderProps> = ({
-  treatmentsByCategory, bookHref, shopHref, children,
+  treatmentsByCategory, bookHref, shopHref, currentPath = '', children,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [view, setView] = React.useState<DrawerView>('root');
@@ -152,7 +156,7 @@ export const MobileNavProvider: React.FC<MobileNavProviderProps> = ({
   const value: MobileNavCtx = {
     open, view, activeCategory,
     setOpen, setView, setActiveCategory,
-    treatmentsByCategory, bookHref, shopHref,
+    treatmentsByCategory, bookHref, shopHref, currentPath,
   };
   return (
     <MobileNavContext.Provider value={value}>
@@ -192,10 +196,12 @@ export const MobileNavDrawer: React.FC = () => {
   const {
     open, view, activeCategory,
     setOpen, setView, setActiveCategory,
-    treatmentsByCategory, bookHref, shopHref,
+    treatmentsByCategory, bookHref, shopHref, currentPath,
   } = useMobileNav();
 
   if (!open) return null;
+
+  const isAbout = currentPath === '/about' || currentPath === '/about/';
 
   const drawerCx = 'fixed inset-x-0 top-[64px] bottom-0 bg-cream z-50 overflow-y-auto animate-la-fade-rise';
   const rowCx = (
@@ -286,8 +292,13 @@ export const MobileNavDrawer: React.FC = () => {
         <span>Specials</span>
         <span aria-hidden="true" className="text-[#B8A898]">→</span>
       </a>
-      {/* About — /about route */}
-      <a href="/about" onClick={close} className={rowCx}>
+      {/* About — /about route; active row swaps brown for gold when on /about */}
+      <a
+        href="/about"
+        onClick={close}
+        aria-current={isAbout ? 'page' : undefined}
+        className={rowCx + (isAbout ? ' !text-gold' : '')}
+      >
         <span>About</span>
         <span aria-hidden="true" className="text-[#B8A898]">→</span>
       </a>

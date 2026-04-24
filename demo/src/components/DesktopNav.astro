@@ -3,6 +3,12 @@ import { CATEGORIES, treatmentsByCategory } from '../data/navigation';
 import ButtonLink from './ui/ButtonLink.astro';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
+
+// Current-page highlighting. Only About is a real route today; Services/
+// Specials are in-page or flyout triggers, B&A is outbound. Extend here if
+// more routes land in Phase 3.
+const pathname = Astro.url.pathname;
+const isAbout = pathname === '/about' || pathname === '/about/';
 ---
 <header class="la-nav sticky top-0 z-40">
   <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-stack px-card py-[20px]">
@@ -56,13 +62,15 @@ const JANE_URL = 'https://laseradvantage.janeapp.com/';
       >
         Specials
       </a>
-      {/* About — /about route */}
+      {/* About — /about route; active when pathname matches */}
       <a
         href="/about"
+        aria-current={isAbout ? 'page' : undefined}
         class:list={[
           'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
-          'py-[6px] border-b border-transparent no-underline',
+          'py-[6px] border-b no-underline',
           'hover:border-gold focus-visible:border-gold',
+          isAbout ? 'text-ink border-gold' : 'border-transparent',
         ]}
       >
         About

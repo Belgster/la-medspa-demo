@@ -5,6 +5,7 @@ import { treatmentsByCategory } from '../data/navigation';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
 const SHOP_URL = 'https://laseradvantage.myshopify.com/';
+const currentPath = Astro.url.pathname;
 ---
 <!--
   display: contents so the sticky <header> becomes a direct child of <body>
@@ -25,5 +26,6 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
     treatmentsByCategory={treatmentsByCategory}
     bookHref={JANE_URL}
     shopHref={SHOP_URL}
+    currentPath={currentPath}
   />
 </div>
