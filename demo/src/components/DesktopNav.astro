@@ -29,7 +29,32 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
           {c.label}
         </a>
       ))}
-      {/* Shopify — outbound, no flyout, 7th link per Natalie's ask */}
+      {/* Specials — in-page anchor to the FeaturedSpecial section (Phase C) */}
+      <a
+        href="#specials"
+        class:list={[
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
+          'py-[6px] border-b border-transparent no-underline relative',
+          'hover:border-gold focus-visible:border-gold',
+        ]}
+      >
+        Specials
+      </a>
+      {/* Before & After — outbound to WordPress until Phase 3 brings it in-house */}
+      <a
+        href="https://ssmlaseradvantage.com/before-after/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
+          'py-[6px] border-b border-transparent no-underline',
+          'hover:border-gold focus-visible:border-gold',
+          'inline-flex items-center gap-[4px]',
+        ]}
+      >
+        Before &amp; After <span aria-hidden="true">↗</span>
+      </a>
+      {/* Shopify — outbound, no flyout */}
       <a
         href={SHOP_URL}
         target="_blank"

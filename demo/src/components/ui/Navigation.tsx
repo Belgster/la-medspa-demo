@@ -139,7 +139,35 @@ export const MobileNav: React.FC<MobileNavProps> = ({ treatmentsByCategory, book
               <span className="text-[#B8A898]">→</span>
             </button>
           ))}
-          {/* Shopify — 7th drawer entry, outbound */}
+          {/* Specials — in-page anchor to FeaturedSpecial section (Phase C) */}
+          <a
+            href="#specials"
+            onClick={() => setOpen(false)}
+            className={
+              'w-full text-left px-[24px] py-[18px] border-b border-beige ' +
+              'font-display font-medium text-[16px] uppercase tracking-[0.1em] text-brown ' +
+              'flex justify-between items-center no-underline'
+            }
+          >
+            <span>Specials</span>
+            <span aria-hidden="true" className="text-[#B8A898]">→</span>
+          </a>
+          {/* Before & After — outbound to WordPress until Phase 3 brings it in-house */}
+          <a
+            href="https://ssmlaseradvantage.com/before-after/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className={
+              'w-full text-left px-[24px] py-[18px] border-b border-beige ' +
+              'font-display font-medium text-[16px] uppercase tracking-[0.1em] text-brown ' +
+              'flex justify-between items-center no-underline'
+            }
+          >
+            <span>Before &amp; After</span>
+            <span aria-hidden="true" className="text-[#B8A898]">↗</span>
+          </a>
+          {/* Shopify — outbound, sits after the editorial entries */}
           <a
             href={shopHref}
             target="_blank"
