@@ -113,11 +113,15 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ treatmentsByCategory }) 
  * React so they share one tree.
  */
 
+type DrawerView = 'root' | 'services' | 'category';
+
 interface MobileNavCtx {
   open: boolean;
-  active: CategoryKey | null;
+  view: DrawerView;
+  activeCategory: CategoryKey | null;
   setOpen: (v: boolean) => void;
-  setActive: (v: CategoryKey | null) => void;
+  setView: (v: DrawerView) => void;
+  setActiveCategory: (v: CategoryKey | null) => void;
   treatmentsByCategory: Record<CategoryKey, Treatment[]>;
   bookHref: string;
   shopHref: string;
@@ -134,7 +138,7 @@ const useMobileNav = (): MobileNavCtx => {
 interface MobileNavProviderProps {
   treatmentsByCategory: Record<CategoryKey, Treatment[]>;
   bookHref: string;
-  /** Outbound Shopify URL — rendered as a drawer link with an ↗ glyph. */
+  /** Outbound Shopify URL — rendered as a secondary drawer link with an ↗ glyph. */
   shopHref: string;
   children: React.ReactNode;
 }
@@ -143,9 +147,11 @@ export const MobileNavProvider: React.FC<MobileNavProviderProps> = ({
   treatmentsByCategory, bookHref, shopHref, children,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [active, setActive] = React.useState<CategoryKey | null>(null);
+  const [view, setView] = React.useState<DrawerView>('root');
+  const [activeCategory, setActiveCategory] = React.useState<CategoryKey | null>(null);
   const value: MobileNavCtx = {
-    open, active, setOpen, setActive,
+    open, view, activeCategory,
+    setOpen, setView, setActiveCategory,
     treatmentsByCategory, bookHref, shopHref,
   };
   return (
@@ -156,7 +162,7 @@ export const MobileNavProvider: React.FC<MobileNavProviderProps> = ({
 };
 
 export const MobileNavHeader: React.FC = () => {
-  const { open, setOpen, setActive } = useMobileNav();
+  const { open, setOpen, setView, setActiveCategory } = useMobileNav();
   return (
     <header className="la-nav sticky top-0 z-40">
       <div className="flex items-center justify-between px-[20px] py-[16px]">
@@ -164,7 +170,15 @@ export const MobileNavHeader: React.FC = () => {
           LA Medspa
         </a>
         <button
-          onClick={() => { setOpen(!open); setActive(null); }}
+          onClick={() => {
+            if (open) {
+              setOpen(false);
+              setView('root');
+              setActiveCategory(null);
+            } else {
+              setOpen(true);
+            }
+          }}
           className="la-nav-item font-display font-medium text-[11px] uppercase tracking-[0.14em] bg-transparent border-none px-[12px] py-[8px]"
         >
           {open ? 'Close' : 'Menu'}
@@ -176,7 +190,8 @@ export const MobileNavHeader: React.FC = () => {
 
 export const MobileNavDrawer: React.FC = () => {
   const {
-    open, active, setOpen, setActive,
+    open, view, activeCategory,
+    setOpen, setView, setActiveCategory,
     treatmentsByCategory, bookHref, shopHref,
   } = useMobileNav();
 
@@ -188,81 +203,112 @@ export const MobileNavDrawer: React.FC = () => {
     'font-display font-medium text-[16px] uppercase tracking-[0.1em] text-brown ' +
     'flex justify-between items-center no-underline'
   );
-  const close = () => setOpen(false);
-  const closeAndClear = () => { setOpen(false); setActive(null); };
+  const backCx = (
+    'w-full text-left px-[24px] py-[14px] font-display text-[11px] uppercase tracking-[0.14em] ' +
+    'text-charcoal-soft bg-transparent border-none'
+  );
+  const close = () => { setOpen(false); setView('root'); setActiveCategory(null); };
 
-  if (!active) {
+  // Level 3 — treatments for the selected category
+  if (view === 'category' && activeCategory) {
+    const cat = CATEGORIES.find((c) => c.key === activeCategory);
     return (
       <div className={drawerCx}>
+        <button
+          onClick={() => { setView('services'); setActiveCategory(null); }}
+          className={backCx}
+        >
+          ← Services
+        </button>
+        <div className="px-[24px] py-[10px] font-display font-medium text-[13px] uppercase tracking-[0.14em] text-charcoal-soft">
+          {cat?.label}
+        </div>
+        {(treatmentsByCategory[activeCategory] ?? []).map((t) => (
+          <a
+            key={t.name}
+            href={t.href}
+            onClick={close}
+            className="block px-[24px] py-[16px] border-b border-beige no-underline"
+          >
+            <div className="font-display font-medium text-[15px] uppercase text-brown">{t.name}</div>
+            <div className="font-body font-light text-[12px] text-charcoal-soft mt-[2px]">{t.meta}</div>
+          </a>
+        ))}
+      </div>
+    );
+  }
+
+  // Level 2 — the 6 categories under Services
+  if (view === 'services') {
+    return (
+      <div className={drawerCx}>
+        <button onClick={() => setView('root')} className={backCx}>
+          ← Menu
+        </button>
         {CATEGORIES.map((c) => (
           <button
             key={c.key}
-            onClick={() => setActive(c.key)}
-            className={rowCx + ' bg-transparent border-none border-b border-beige'}
+            onClick={() => { setActiveCategory(c.key); setView('category'); }}
+            className={rowCx + ' bg-transparent border-l-0 border-r-0 border-t-0'}
           >
             {c.label}
-            <span className="text-[#B8A898]">→</span>
+            <span aria-hidden="true" className="text-[#B8A898]">→</span>
           </button>
         ))}
-        {/* Specials — in-page anchor to FeaturedSpecial section */}
-        <a href="#specials" onClick={close} className={rowCx}>
-          <span>Specials</span>
-          <span aria-hidden="true" className="text-[#B8A898]">→</span>
-        </a>
-        {/* Before & After — outbound until Phase 3 brings it in-house */}
-        <a
-          href="https://ssmlaseradvantage.com/before-after/"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={close}
-          className={rowCx}
+      </div>
+    );
+  }
+
+  // Level 1 — root menu
+  return (
+    <div className={drawerCx}>
+      {/* Services — drills into the 6 categories */}
+      <button
+        onClick={() => setView('services')}
+        className={rowCx + ' bg-transparent border-l-0 border-r-0 border-t-0'}
+      >
+        <span>Services</span>
+        <span aria-hidden="true" className="text-[#B8A898]">→</span>
+      </button>
+      {/* Before & After — outbound to WordPress until Phase 3 brings it in-house */}
+      <a
+        href="https://ssmlaseradvantage.com/before-after/"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={close}
+        className={rowCx}
+      >
+        <span>Before &amp; After</span>
+        <span aria-hidden="true" className="text-[#B8A898]">↗</span>
+      </a>
+      {/* Specials — in-page anchor */}
+      <a href="#specials" onClick={close} className={rowCx}>
+        <span>Specials</span>
+        <span aria-hidden="true" className="text-[#B8A898]">→</span>
+      </a>
+      {/* About — /about route */}
+      <a href="/about" onClick={close} className={rowCx}>
+        <span>About</span>
+        <span aria-hidden="true" className="text-[#B8A898]">→</span>
+      </a>
+      <div className="px-[24px] py-[18px] flex flex-col gap-[12px]">
+        <Button
+          variant="primary"
+          className="w-full justify-center"
+          onClick={() => window.open(bookHref, '_blank', 'noopener,noreferrer')}
         >
-          <span>Before &amp; After</span>
-          <span aria-hidden="true" className="text-[#B8A898]">↗</span>
-        </a>
-        {/* Shopify — outbound */}
+          Book Consultation
+        </Button>
         <a
           href={shopHref}
           target="_blank"
           rel="noopener noreferrer"
           onClick={close}
-          className={rowCx}
+          className="inline-flex items-center justify-center gap-[6px] font-display font-medium text-[12px] uppercase tracking-[0.14em] text-charcoal-soft no-underline py-[6px] hover:text-gold focus-visible:text-gold"
         >
-          <span>Shop</span>
-          <span aria-hidden="true" className="text-[#B8A898]">↗</span>
+          Shop <span aria-hidden="true">↗</span>
         </a>
-        <div className="px-[24px] py-[18px]">
-          <Button
-            variant="primary"
-            className="w-full justify-center"
-            onClick={() => window.open(bookHref, '_blank', 'noopener,noreferrer')}
-          >
-            Book Consultation
-          </Button>
-        </div>
       </div>
-    );
-  }
-
-  return (
-    <div className={drawerCx}>
-      <button
-        onClick={() => setActive(null)}
-        className="w-full text-left px-[24px] py-[14px] font-display text-[11px] uppercase tracking-[0.14em] text-charcoal-soft bg-transparent border-none"
-      >
-        ← All Categories
-      </button>
-      {(treatmentsByCategory[active] ?? []).map((t) => (
-        <a
-          key={t.name}
-          href={t.href}
-          onClick={closeAndClear}
-          className="block px-[24px] py-[16px] border-b border-beige no-underline"
-        >
-          <div className="font-display font-medium text-[15px] uppercase text-brown">{t.name}</div>
-          <div className="font-body font-light text-[12px] text-charcoal-soft mt-[2px]">{t.meta}</div>
-        </a>
-      ))}
     </div>
   );
 };

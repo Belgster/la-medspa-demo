@@ -108,7 +108,7 @@ export const ConcernCheckCard: React.FC<ConcernCheckCardProps> = ({ checked, onT
     </span>
     <span>
       <span className="block font-display font-medium text-[14px] uppercase text-brown">{label}</span>
-      {meta && <span className="hidden md:block font-body font-light text-[12px] text-charcoal-soft mt-[4px]">{meta}</span>}
+      {meta && <span className="block font-body font-light text-[12px] text-charcoal-soft mt-[4px]">{meta}</span>}
     </span>
   </button>
 );

@@ -3,7 +3,6 @@ import { CATEGORIES, treatmentsByCategory } from '../data/navigation';
 import ButtonLink from './ui/ButtonLink.astro';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
-const SHOP_URL = 'https://laseradvantage.myshopify.com/';
 ---
 <header class="la-nav sticky top-0 z-40">
   <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-stack px-card py-[20px]">
@@ -16,37 +15,29 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
     </a>
 
     <nav aria-label="Primary" class="flex gap-stack">
-      {CATEGORIES.map((c) => (
-        <a
-          data-flyout-trigger={c.key}
-          href={`#category-${c.key}`}
-          class:list={[
-            'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.1em]',
-            'py-[6px] border-b border-transparent no-underline relative',
-            'hover:border-gold focus-visible:border-gold',
-          ]}
-        >
-          {c.label}
-        </a>
-      ))}
-      {/* Specials — in-page anchor to the FeaturedSpecial section (Phase C) */}
-      <a
-        href="#specials"
+      {/* Services — mega-menu parent, not a link */}
+      <button
+        type="button"
+        data-services-trigger
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="services-flyout"
         class:list={[
-          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.1em]',
-          'py-[6px] border-b border-transparent no-underline relative',
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
+          'py-[6px] border-b border-transparent bg-transparent cursor-pointer',
           'hover:border-gold focus-visible:border-gold',
+          'inline-flex items-center gap-[4px] relative',
         ]}
       >
-        Specials
-      </a>
+        Services <span aria-hidden="true">▾</span>
+      </button>
       {/* Before & After — outbound to WordPress until Phase 3 brings it in-house */}
       <a
         href="https://ssmlaseradvantage.com/before-after/"
         target="_blank"
         rel="noopener noreferrer"
         class:list={[
-          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.1em]',
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
           'py-[6px] border-b border-transparent no-underline',
           'hover:border-gold focus-visible:border-gold',
           'inline-flex items-center gap-[4px]',
@@ -54,19 +45,27 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
       >
         Before &amp; After <span aria-hidden="true">↗</span>
       </a>
-      {/* Shopify — outbound, no flyout */}
+      {/* Specials — in-page anchor to FeaturedSpecial section */}
       <a
-        href={SHOP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+        href="#specials"
         class:list={[
-          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.1em]',
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
           'py-[6px] border-b border-transparent no-underline',
           'hover:border-gold focus-visible:border-gold',
-          'inline-flex items-center gap-[4px]',
         ]}
       >
-        Shop <span aria-hidden="true">↗</span>
+        Specials
+      </a>
+      {/* About — /about route */}
+      <a
+        href="/about"
+        class:list={[
+          'la-nav-item font-display font-medium text-[12px] uppercase tracking-[0.14em]',
+          'py-[6px] border-b border-transparent no-underline',
+          'hover:border-gold focus-visible:border-gold',
+        ]}
+      >
+        About
       </a>
     </nav>
 
@@ -75,55 +74,58 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
     </ButtonLink>
   </div>
 
-  {CATEGORIES.map((c) => (
-    <div
-      data-flyout={c.key}
-      role="region"
-      aria-label={`${c.label} treatments`}
-      class:list={[
-        'la-flyout',
-        'absolute left-0 right-0 top-full',
-        'bg-cream border-b border-hairline shadow-md',
-      ]}
-    >
-      <div class="max-w-[1400px] mx-auto grid grid-cols-[220px_1fr] gap-stack px-card py-card">
-        <div>
-          <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-[14px]">
-            Category
-          </div>
-          <div class="font-display font-medium text-[32px] uppercase leading-[1.05] text-ink mb-[16px]">
-            {c.label}
-          </div>
-          <ButtonLink href={`#category-${c.key}`} variant="secondary" size="sm">
-            See all {c.label.toLowerCase()} →
-          </ButtonLink>
-        </div>
-        <div class="grid grid-cols-3 gap-[4px]">
-          {(treatmentsByCategory[c.key] ?? []).map((t) => (
+  {/* Services mega-menu — single flyout, all six categories */}
+  <div
+    id="services-flyout"
+    data-services-flyout
+    role="region"
+    aria-label="All services"
+    class:list={[
+      'la-flyout',
+      'absolute left-0 right-0 top-full',
+      'bg-cream border-b border-hairline shadow-md',
+    ]}
+  >
+    <div class="max-w-[1400px] mx-auto px-card py-card">
+      <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft mb-card">
+        Services
+      </div>
+      <div class="grid grid-cols-3 min-[1200px]:grid-cols-6 gap-stack">
+        {CATEGORIES.map((c) => (
+          <div class="flex flex-col">
+            <div class="font-display font-medium text-[16px] uppercase text-ink mb-[14px]">
+              {c.label}
+            </div>
+            <ul class="space-y-[8px] mb-[16px] flex-1">
+              {(treatmentsByCategory[c.key] ?? []).slice(0, 4).map((t) => (
+                <li>
+                  <a
+                    href={t.href}
+                    class="block font-body font-light text-[13px] leading-[1.4] text-brown no-underline hover:text-gold focus-visible:text-gold focus-visible:outline-none transition-colors duration-la-base ease-la-ease"
+                  >
+                    {t.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
             <a
-              href={t.href}
-              class="block px-[18px] py-[14px] rounded-[8px] no-underline transition-colors duration-la-base ease-la-ease hover:bg-gold-wash focus-visible:bg-gold-wash"
+              href={`#category-${c.key}`}
+              class="inline-flex items-center gap-[4px] font-display font-medium text-[10.5px] uppercase tracking-[0.14em] text-gold no-underline hover:text-gold-hover focus-visible:text-gold-hover focus-visible:outline-none transition-colors duration-la-base ease-la-ease"
             >
-              <div class="font-display font-medium text-[14px] uppercase text-brown mb-[4px]">
-                {t.name}
-              </div>
-              <div class="font-body font-light text-[12px] text-charcoal-soft">
-                {t.meta}
-              </div>
+              <span aria-hidden="true">+</span> See all {c.label.toLowerCase()}
             </a>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
-  ))}
+  </div>
 </header>
 
 <style is:global>
   /*
-   * DesktopNav flyouts — pure CSS using :has() and :focus-within.
-   * Shown on trigger hover/focus-visible OR when the flyout itself is hovered
-   * or contains focus. Motion follows the 400ms la-ease rule, fade + 8px rise.
-   * No JS; no scroll listener.
+   * DesktopNav mega-menu — single SERVICES flyout. Visuals driven by
+   * :has() + :focus-within; small inline script (below) mirrors open/
+   * closed state to aria-expanded so screen readers stay in sync.
    */
   .la-flyout {
     opacity: 0;
@@ -137,46 +139,22 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
   }
 
   /*
-   * Hover bridge — the top bar's py-[20px] leaves ~29px of dead space
-   * between the trigger and the flyout below. Pseudo-element extends the
-   * trigger's hover target down to the flyout's top edge so the cursor
-   * never leaves the trigger's hover zone during transit. :hover on ::after
-   * propagates to the parent anchor, keeping `:has(trigger:hover)` true.
+   * Hover bridge — pseudo-element extends the trigger's hover target down
+   * to the flyout's top edge so the cursor never leaves during transit.
    */
-  [data-flyout-trigger]::after {
+  [data-services-trigger]::after {
     content: '';
     position: absolute;
     left: -12px;
     right: -12px;
     top: 100%;
     height: 32px;
-    /* transparent — purely hover-catching */
   }
 
-  header:has([data-flyout-trigger='face']:hover) [data-flyout='face'],
-  header:has([data-flyout-trigger='face']:focus-visible) [data-flyout='face'],
-  header [data-flyout='face']:hover,
-  header [data-flyout='face']:focus-within,
-  header:has([data-flyout-trigger='body']:hover) [data-flyout='body'],
-  header:has([data-flyout-trigger='body']:focus-visible) [data-flyout='body'],
-  header [data-flyout='body']:hover,
-  header [data-flyout='body']:focus-within,
-  header:has([data-flyout-trigger='hair']:hover) [data-flyout='hair'],
-  header:has([data-flyout-trigger='hair']:focus-visible) [data-flyout='hair'],
-  header [data-flyout='hair']:hover,
-  header [data-flyout='hair']:focus-within,
-  header:has([data-flyout-trigger='medical']:hover) [data-flyout='medical'],
-  header:has([data-flyout-trigger='medical']:focus-visible) [data-flyout='medical'],
-  header [data-flyout='medical']:hover,
-  header [data-flyout='medical']:focus-within,
-  header:has([data-flyout-trigger='wellness']:hover) [data-flyout='wellness'],
-  header:has([data-flyout-trigger='wellness']:focus-visible) [data-flyout='wellness'],
-  header [data-flyout='wellness']:hover,
-  header [data-flyout='wellness']:focus-within,
-  header:has([data-flyout-trigger='skincare']:hover) [data-flyout='skincare'],
-  header:has([data-flyout-trigger='skincare']:focus-visible) [data-flyout='skincare'],
-  header [data-flyout='skincare']:hover,
-  header [data-flyout='skincare']:focus-within {
+  header:has([data-services-trigger]:hover) [data-services-flyout],
+  header:has([data-services-trigger]:focus-visible) [data-services-flyout],
+  header [data-services-flyout]:hover,
+  header [data-services-flyout]:focus-within {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -184,3 +162,35 @@ const SHOP_URL = 'https://laseradvantage.myshopify.com/';
     transition-delay: 0s;
   }
 </style>
+
+<script>
+  // Mirror the flyout's visible state to aria-expanded; wire Escape-to-close.
+  // Keyboard navigation inside the flyout is handled by native Tab order
+  // through the focusable <a> elements — no custom arrow-key handling here.
+  const trigger = document.querySelector<HTMLButtonElement>('[data-services-trigger]');
+  const flyout = document.querySelector<HTMLElement>('[data-services-flyout]');
+  if (trigger && flyout) {
+    const sync = () => {
+      const isOpen =
+        trigger.matches(':hover') ||
+        flyout.matches(':hover') ||
+        document.activeElement === trigger ||
+        flyout.contains(document.activeElement);
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+    trigger.addEventListener('mouseenter', sync);
+    trigger.addEventListener('mouseleave', sync);
+    flyout.addEventListener('mouseenter', sync);
+    flyout.addEventListener('mouseleave', sync);
+    document.addEventListener('focusin', sync);
+    document.addEventListener('focusout', () => setTimeout(sync, 0));
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const active = document.activeElement as HTMLElement | null;
+      if (active && (active === trigger || flyout.contains(active))) {
+        active.blur();
+        setTimeout(sync, 0);
+      }
+    });
+  }
+</script>
