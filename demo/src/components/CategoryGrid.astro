@@ -102,7 +102,7 @@ const CATEGORIES: CategoryCard[] = [
   },
 ];
 ---
-<section id="services" class="max-w-[1400px] mx-auto px-card py-section-s lg:py-section-l">
+<section id="services" class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
   <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-comfort mb-stack">
     <div class="max-w-[620px]">
       <div class="font-display font-medium text-[11px] uppercase tracking-[0.14em] text-charcoal-soft mb-comfort">
@@ -151,7 +151,7 @@ const CATEGORIES: CategoryCard[] = [
             {c.blurb}
           </p>
           <div class="flex flex-wrap gap-[6px] mb-stack">
-            {c.marquee.map((m) => {
+            {c.marquee.slice(0, 3).map((m) => {
               const isLink = typeof m !== 'string';
               const label = isLink ? m.name : m;
               const base = 'font-display font-medium text-[10px] uppercase tracking-[0.12em] px-[10px] py-[4px] rounded-pill inline-flex items-center gap-[4px]';
@@ -178,6 +178,40 @@ const CATEGORIES: CategoryCard[] = [
                 </span>
               );
             })}
+            {c.marquee.length > 3 && (
+              <span class="md:hidden font-display font-medium text-[10px] uppercase tracking-[0.12em] px-[10px] py-[4px] rounded-pill bg-beige text-charcoal-soft">
+                +{c.marquee.length - 3} more
+              </span>
+            )}
+            <div class="hidden md:contents">
+              {c.marquee.slice(3).map((m) => {
+                const isLink = typeof m !== 'string';
+                const label = isLink ? m.name : m;
+                const base = 'font-display font-medium text-[10px] uppercase tracking-[0.12em] px-[10px] py-[4px] rounded-pill inline-flex items-center gap-[4px]';
+                if (isLink) {
+                  return (
+                    <a
+                      href={m.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class:list={[
+                        base,
+                        'bg-beige text-brown',
+                        'no-underline transition-all duration-la-base ease-la-ease hover:brightness-95 focus-visible:brightness-95 focus-visible:outline-none focus-visible:shadow-focus',
+                      ]}
+                    >
+                      {label}
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  );
+                }
+                return (
+                  <span class:list={[base, 'bg-beige text-brown']}>
+                    {label}
+                  </span>
+                );
+              })}
+            </div>
           </div>
           <a
             href={`#category-${c.key}`}
