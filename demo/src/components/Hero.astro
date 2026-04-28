@@ -83,13 +83,15 @@ const [mobileWebp, desktopWebp, fallback] = await Promise.all([
 </section>
 
 <style>
-  /* Mobile (default): vertical — darker top band over copy, clearing toward the subject at the bottom */
+  /* Mobile (default): vertical — darker top band over copy, clearing toward the subject at the bottom.
+     Stop densities chosen so the H1 contrast against the image lands at ~6:1 (AA strong) rather than
+     the previous 4.53:1 (AA marginal). Bottom of hero stays light enough to preserve the subject. */
   .hero-overlay {
     background: linear-gradient(
       180deg,
-      rgba(22, 17, 14, 0.72) 0%,
-      rgba(22, 17, 14, 0.45) 38%,
-      rgba(22, 17, 14, 0.18) 70%,
+      rgba(22, 17, 14, 0.82) 0%,
+      rgba(22, 17, 14, 0.55) 50%,
+      rgba(22, 17, 14, 0.20) 75%,
       rgba(22, 17, 14, 0.10) 100%
     );
   }

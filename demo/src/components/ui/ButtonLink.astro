@@ -39,8 +39,12 @@ const variants: Record<Variant, string> = {
   ghost:
     'bg-transparent text-brown border-transparent px-[14px] ' +
     'hover:bg-gold-wash hover:text-ink',
+  // Sits on photographic backgrounds where image luminance varies. The
+  // semi-transparent dark fill + backdrop blur guarantees AA text contrast
+  // independent of the underlying image — the previous transparent + cream
+  // border failed on the lighter zones of the hero image.
   'on-dark':
-    'bg-transparent text-cream border-cream ' +
+    'bg-ink/50 backdrop-blur-sm text-cream border-cream/40 ' +
     'hover:bg-gold hover:text-ink hover:border-gold',
 };
 ---

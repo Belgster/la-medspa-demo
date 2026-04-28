@@ -120,8 +120,11 @@ const team: Person[] = [
   </div>
 </section>
 
-{/* Team preview — beige surface for emphasis */}
-<section class="bg-beige">
+{/* Team preview — beige surface for emphasis. overflow-x-hidden contains the
+    -mx-card bleed used by the horizontal team scroll below; without it the
+    bleed leaks past the viewport edge and triggers page-wide horizontal scroll
+    on iPhone SE / 12 widths. */}
+<section class="bg-beige overflow-x-hidden">
   <div class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-comfort mb-stack">
       <div class="max-w-[560px]">
