@@ -7,15 +7,15 @@ export type { Concern, Area, FinderTreatment };
  * want display-ready strings throughout, not machine ids.
  */
 export const concerns: Concern[] = [
-  { v: 'Fine Lines & Wrinkles', label: 'Fine Lines & Wrinkles', meta: "Crow's feet, 11s, forehead lines" },
-  { v: 'Acne & Blemishes',      label: 'Acne & Blemishes',      meta: 'Active breakouts, scarring, hormonal' },
-  { v: 'Pigmentation',          label: 'Pigmentation',          meta: 'Sun damage, melasma, dark spots' },
+  { v: 'Fine Lines & Wrinkles', label: 'Fine Lines & Wrinkles', meta: "Crow's feet, 11s, forehead" },
+  { v: 'Acne & Blemishes',      label: 'Acne & Blemishes',      meta: 'Breakouts, scarring, hormonal' },
+  { v: 'Pigmentation',          label: 'Pigmentation',          meta: 'Sun damage, melasma, spots' },
   { v: 'Skin Texture',          label: 'Skin Texture',          meta: 'Pores, roughness, dullness' },
   { v: 'Volume Loss',           label: 'Volume Loss',           meta: 'Cheeks, temples, lips' },
   { v: 'Body Contouring',       label: 'Body Contouring',       meta: 'Stubborn fat, tone, laxity' },
   { v: 'Unwanted Hair',         label: 'Unwanted Hair',         meta: 'Face, body, underarms' },
   { v: 'Hair Thinning',         label: 'Hair Thinning',         meta: 'Density, shedding, scalp' },
-  { v: 'Hormonal Changes',      label: 'Hormonal Changes',      meta: 'Energy, sleep, libido, mood' },
+  { v: 'Hormonal Changes',      label: 'Hormonal Changes',      meta: 'Energy, sleep, libido' },
 ];
 
 export const areas: Area[] = [

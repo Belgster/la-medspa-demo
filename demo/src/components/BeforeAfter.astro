@@ -43,8 +43,8 @@ const [p1bA, p1bW, p1aA, p1aW, p2bA, p2bW, p2aA, p2aW] = await Promise.all([
       </h2>
     </div>
     <p class="max-w-[420px] font-body font-light text-[15px] leading-[1.7] text-charcoal">
-      Two clients, one treatment. The gallery opens wider in Phase 3 —
-      for now, see what lip filler actually looks like done by our team.
+      Real client results. The gallery opens wider in Phase 3 — for now,
+      see what lip filler actually looks like done by our team.
     </p>
   </div>
 
@@ -58,15 +58,20 @@ const [p1bA, p1bW, p1aA, p1aW, p2bA, p2bW, p2aA, p2aW] = await Promise.all([
       alt="Lip filler client 1"
       caption="Lip Filler · LA Medspa"
     />
-    <BeforeAfterPair
-      client:visible
-      beforeAvif={p2bA}
-      beforeWebp={p2bW}
-      afterAvif={p2aA}
-      afterWebp={p2aW}
-      alt="Lip filler client 2"
-      caption="Lip Filler · LA Medspa"
-    />
+    {/* Second pair stays mobile-hidden — at 390px width two stacked pairs of
+        the same treatment read as repetition rather than proof. Side-by-side
+        at md+ they demonstrate technique consistency. */}
+    <div class="hidden md:contents">
+      <BeforeAfterPair
+        client:visible
+        beforeAvif={p2bA}
+        beforeWebp={p2bW}
+        afterAvif={p2aA}
+        afterWebp={p2aW}
+        alt="Lip filler client 2"
+        caption="Lip Filler · LA Medspa"
+      />
+    </div>
   </div>
 
   <div class="mt-stack text-center">

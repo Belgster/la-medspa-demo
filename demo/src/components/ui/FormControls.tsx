@@ -87,7 +87,8 @@ export const ConcernCheckCard: React.FC<ConcernCheckCardProps> = ({ checked, onT
     onClick={onToggle}
     aria-pressed={checked}
     className={
-      'group w-full flex items-start gap-[14px] px-[22px] py-[18px] text-left ' +
+      'group w-full flex items-start gap-[8px] sm:gap-[14px] ' +
+      'px-[12px] py-[10px] sm:px-[22px] sm:py-[18px] text-left ' +
       'border rounded-[14px] cursor-pointer bg-cream ' +
       'transition-all duration-la-base ease-la-ease ' +
       'hover:bg-gold-wash hover:border-gold ' +
@@ -97,18 +98,18 @@ export const ConcernCheckCard: React.FC<ConcernCheckCardProps> = ({ checked, onT
     <span
       aria-hidden
       className={
-        'relative flex-shrink-0 mt-[2px] w-[20px] h-[20px] rounded-[6px] ' +
+        'relative flex-shrink-0 mt-[2px] w-[16px] h-[16px] sm:w-[20px] sm:h-[20px] rounded-[5px] sm:rounded-[6px] ' +
         'flex items-center justify-center transition-all duration-la-base ease-la-ease ' +
         (checked ? 'bg-gold border-gold' : 'bg-cream border-[1.5px] border-[#B8A898]')
       }
     >
       {checked && (
-        <span className="block w-[10px] h-[5px] border-l-2 border-b-2 border-ink -rotate-45 translate-x-[0.5px] -translate-y-[0.5px]" />
+        <span className="block w-[8px] h-[4px] sm:w-[10px] sm:h-[5px] border-l-2 border-b-2 border-ink -rotate-45 translate-x-[0.5px] -translate-y-[0.5px]" />
       )}
     </span>
-    <span>
-      <span className="block font-display font-medium text-[14px] uppercase text-brown">{label}</span>
-      {meta && <span className="block font-body font-light text-[12px] text-charcoal-soft mt-[4px]">{meta}</span>}
+    <span className="min-w-0">
+      <span className="block font-display font-medium text-[11px] sm:text-[14px] uppercase text-brown leading-[1.2] tracking-[0] sm:tracking-[0.02em] text-balance">{label}</span>
+      {meta && <span className="block font-body font-light text-[10.5px] sm:text-[12px] text-charcoal-soft mt-[3px] sm:mt-[4px] leading-[1.35]">{meta}</span>}
     </span>
   </button>
 );

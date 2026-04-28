@@ -106,7 +106,7 @@ export const ConcernFinder: React.FC<ConcernFinderProps> = ({
           <p className="font-body font-light text-[15px] text-charcoal leading-[1.75] max-w-[520px] m-0 mb-card">
             Pick one or a few. We'll show you the treatments that best address these concerns.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[12px] mb-card">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-[10px] sm:gap-[12px] mb-card">
             {concerns.map((c) => (
               <ConcernCheckCard
                 key={c.v}
