@@ -7,7 +7,7 @@ export type { Concern, Area, FinderTreatment };
  * want display-ready strings throughout, not machine ids.
  */
 export const concerns: Concern[] = [
-  { v: 'Fine Lines & Wrinkles', label: 'Fine Lines & Wrinkles', meta: "Crow's feet, 11s, forehead" },
+  { v: 'Fine Lines & Wrinkles', label: 'Lines & Wrinkles',      meta: "Crow's feet, 11s, forehead" },
   { v: 'Acne & Blemishes',      label: 'Acne & Blemishes',      meta: 'Breakouts, scarring, hormonal' },
   { v: 'Pigmentation',          label: 'Pigmentation',          meta: 'Sun damage, melasma, spots' },
   { v: 'Skin Texture',          label: 'Skin Texture',          meta: 'Pores, roughness, dullness' },
