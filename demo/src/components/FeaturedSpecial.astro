@@ -14,26 +14,10 @@ import ButtonLink from './ui/ButtonLink.astro';
 
 const JANE_URL = 'https://laseradvantage.janeapp.com/';
 
-const offers = [
-  {
-    name: 'LA Skin Days Anniversary Consultation',
-    perks: [
-      'Free mini facial',
-      'Custom treatment plan',
-      'Anniversary pricing on all treatments and skincare',
-      '$150 goodie bag with every package purchased',
-    ],
-    availability: 'Available with Jenna, Mariah, and Riley',
-  },
-  {
-    name: 'LA Anniversary Consultation',
-    perks: [
-      'Custom treatment plan',
-      'Anniversary pricing on all treatments and skincare',
-      '$150 goodie bag with every package purchased',
-    ],
-    availability: 'Available with Jen and Angie',
-  },
+const perks = [
+  'Custom treatment plan',
+  'Anniversary pricing on all treatments and skincare',
+  '$150 goodie bag with every package purchased',
 ];
 ---
 <section id="specials" class="bg-cream">
@@ -66,25 +50,19 @@ const offers = [
           Two consultation paths to the same anniversary perks.
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-stack">
-          {offers.map((o) => (
-            <div class="bg-beige border border-hairline rounded-[4px] p-[20px] flex flex-col">
-              <div class="font-display font-medium uppercase text-[18px] text-brown leading-[1.2] mb-[14px]">
-                {o.name}
-              </div>
-              <ul class="space-y-[8px] mb-[14px] flex-1">
-                {o.perks.map((p) => (
-                  <li class="flex gap-[8px] font-body font-light text-[14px] leading-[1.55] text-charcoal">
-                    <span aria-hidden="true" class="text-gold font-display font-medium">+</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-              <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft pt-[12px] border-t border-hairline">
-                {o.availability}
-              </div>
-            </div>
-          ))}
+        <div class="bg-beige border border-hairline rounded-[4px] p-[20px] md:p-[28px] mb-stack">
+          <ul class="space-y-[10px] mb-[18px]">
+            {perks.map((p) => (
+              <li class="flex gap-[10px] font-body font-light text-[15px] leading-[1.55] text-charcoal">
+                <span aria-hidden="true" class="text-gold font-display font-medium">+</span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-charcoal-soft pt-[14px] border-t border-hairline space-y-[4px]">
+            <div>Add a free mini facial when booking with Jenna, Mariah, or Riley.</div>
+            <div>Standard consultation available with Jen and Angie.</div>
+          </div>
         </div>
 
         <ButtonLink href={JANE_URL} external variant="primary" size="lg">

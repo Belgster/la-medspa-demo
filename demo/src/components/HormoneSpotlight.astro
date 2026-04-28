@@ -25,23 +25,23 @@ const BHRT_URL = 'https://ssmlaseradvantage.com/bhrt-hormone-therapy/';
 const steps = [
   {
     n: '01',
-    label: 'Comprehensive Testing',
-    body: 'A full lab panel — estrogen, progesterone, testosterone, thyroid, cortisol, DHEA.',
+    label: 'Comprehensive testing',
+    body: 'full lab panel',
   },
   {
     n: '02',
-    label: 'Personalized Plan',
-    body: 'Built from your labs, not a template. Transdermal cream, injection, troche, pellet — whatever fits.',
+    label: 'Personalized plan',
+    body: 'built from your labs',
   },
   {
     n: '03',
-    label: 'Ongoing Monitoring',
-    body: 'Follow-ups across the first year, dosage tuned to symptoms as much as numbers.',
+    label: 'Ongoing monitoring',
+    body: 'first-year follow-up',
   },
 ];
 ---
 <section class="bg-beige">
-  <div class="max-w-[1400px] mx-auto px-card py-[56px] md:py-section-s lg:py-section-l">
+  <div class="max-w-[1400px] mx-auto px-card py-[40px] md:py-section-s lg:py-section-l">
     <div class="grid md:grid-cols-[1fr_1fr] gap-stack lg:gap-section-s items-center">
       <div class="max-w-[560px] order-2 md:order-1">
         {/* Category chip — neutral beige with brown dot */}
@@ -68,19 +68,19 @@ const steps = [
           yourself.
         </p>
 
-        <ol class="space-y-comfort mb-stack">
+        <ol class="border-t border-hairline mb-stack">
           {steps.map((s) => (
-            <li class="flex gap-comfort">
-              <div class="font-display font-medium text-[22px] leading-none text-gold min-w-[36px]">
+            <li class="flex items-baseline gap-[14px] py-[12px] border-b border-hairline">
+              <div class="font-display font-medium text-[14px] leading-none text-gold min-w-[28px] tracking-[0.06em]">
                 {s.n}
               </div>
-              <div>
-                <div class="font-display font-medium text-[13px] uppercase tracking-[0.12em] text-ink mb-[4px]">
+              <div class="flex-1 flex flex-wrap items-baseline gap-x-[8px]">
+                <span class="font-display font-medium text-[14px] tracking-[0.02em] text-ink">
                   {s.label}
-                </div>
-                <div class="font-body font-light text-[14px] leading-[1.65] text-charcoal">
-                  {s.body}
-                </div>
+                </span>
+                <span class="font-body font-light text-[13px] leading-[1.5] text-charcoal-soft">
+                  — {s.body}
+                </span>
               </div>
             </li>
           ))}
